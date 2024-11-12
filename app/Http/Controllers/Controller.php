@@ -9,5 +9,14 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function test3()
+    {
+        return view('user.select_mode');
+    }
+
+    public function test4()
+    {
+        return view('user.select_level');
+    }
 }
