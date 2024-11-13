@@ -14,4 +14,8 @@ class FunctionController extends Controller
     {
         return view('user.ranking');
     }
+    public function miss_question()
+    {
+        return view('user.miss_question');
+    }
 }
