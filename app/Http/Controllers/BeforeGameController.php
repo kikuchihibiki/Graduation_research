@@ -36,4 +36,10 @@ class BeforeGameController extends Controller
         $request->session()->put('level', $level);
         return view('user.game_display', ['mode' => $mode]);
     }
+    public function wrong_answer(Request $request)
+    {
+        $mode = $request->input('mode');
+        $request->session()->put('mode', $mode);
+        return view('user.game_display', ['mode' => $mode]);
+    }
 }
