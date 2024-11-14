@@ -36,11 +36,11 @@ class BeforeGameController extends Controller
         $request->session()->put('level', $level);
         $question = [
             ['question' => 'HTMLの拡張子は何ですか？', 'answer' => '.html'],
-            ['question' => 'Phaserは何のために使われますか？', 'answer' => 'ゲーム開発'],
-            ['question' => 'PHPはサーバーサイドの言語ですか？', 'answer' => 'はい'],
-            ['question' => 'JavaScriptのデフォルトポートは何番ですか？', 'answer' => '80'],
-            ['question' => 'CSSは何の略ですか？', 'answer' => 'Cascading Style Sheets'],
-            ['question' => 'Linuxのlsコマンドは何を表示しますか？', 'answer' => 'ディレクトリ内容']
+            ['question' => 'Webアプリケーションの開発に広く使用されるPythonの軽量フレームワークは何ですか？', 'answer' => 'flask'],
+            ['question' => 'PythonでHTTPリクエストを処理するためのライブラリは何ですか？', 'answer' => 'requests'],
+            ['question' => 'PythonでJSONデータを処理するための標準ライブラリは何ですか？', 'answer' => 'json'],
+            ['question' => '整数型のデータタイプは何ですか？', 'answer' => 'int'],
+            ['question' => '小数点数のデータタイプは何ですか？', 'answer' => 'float']
         ];
         return view('user.game_display', [
             'mode' => $mode,
