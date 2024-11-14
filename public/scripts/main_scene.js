@@ -20,7 +20,7 @@ class StartScene extends Phaser.Scene {
 
         // Enterキーを待機
         this.input.keyboard.on('keydown-ENTER', () => {
-            this.scene.start('QuizScene', { questionIndex: 0 }); // 最初の問題を渡す
+            this.scene.start('QuizScene', { questionIndex: 0, totalQuestions: questionData.length, correctAnswers: 0 }); // 最初の問題を渡す
         });
     }
 }
@@ -39,13 +39,17 @@ class QuizScene extends Phaser.Scene {
         const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
 
-        // 受け取ったデータから問題と解答を取得
-        const questionIndex = data.questionIndex;
-        const questionText = questionData[questionIndex].question;
-        this.correctAnswer = questionData[questionIndex].answer;
+        // 受け取ったデータから問題インデックスと総問題数を取得
+        this.questionIndex = data.questionIndex;
+        this.totalQuestions = data.totalQuestions;
+        this.correctAnswers = data.correctAnswers; // 正解数を受け取る
+
+        // 質問と解答を取得
+        this.questionText = questionData[this.questionIndex].question;
+        this.correctAnswer = questionData[this.questionIndex].answer;
 
         // 質問の表示
-        this.questionLabel = this.add.text(100, 100, `問題: ${questionText}`, {
+        this.questionLabel = this.add.text(100, 100, `問題: ${this.questionText}`, {
             fontSize: '30px',
             fill: '#ffffff'
         });
@@ -91,6 +95,7 @@ class QuizScene extends Phaser.Scene {
     checkAnswer() {
         // 回答が正しいかどうかをチェック
         if (this.userAnswer === this.correctAnswer) {
+            this.correctAnswers++;
             this.add.text(100, 300, '正解！', {
                 fontSize: '24px',
                 fill: '#00ff00'
@@ -102,7 +107,26 @@ class QuizScene extends Phaser.Scene {
             });
         }
 
-        // 次の問題に進むなど、追加の処理を行うこともできます。
+        // 次の問題に進む
+        this.questionIndex++;
+
+        // すべての問題が終了した場合
+        if (this.questionIndex < this.totalQuestions) {
+            // 次の問題を表示
+            this.time.delayedCall(1000, () => {
+                this.scene.restart({ questionIndex: this.questionIndex, totalQuestions: this.totalQuestions, correctAnswers: this.correctAnswers });
+            });
+        } else {
+            // ゲーム終了後、結果を表示
+            this.showResult();
+        }
+    }
+
+    showResult() {
+        this.add.text(100, 400, `ゲーム終了！ 正解数: ${this.correctAnswers}/${this.totalQuestions}`, {
+            fontSize: '24px',
+            fill: '#ffffff'
+        });
     }
 }
 
