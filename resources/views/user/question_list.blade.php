@@ -2,14 +2,13 @@
 @section('title', 'ゲーム一覧')
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
+<link rel="stylesheet" href="{{ asset('css/question_list.blade.css') }}">
 @endsection
 @section('content')
 <h1>問題一覧</h1>
 java python php
-<form action="">
-    <input type="text">
-    <input type="submit">
-</form>
+<!-- 検索窓 -->
+<input type="text" id="searchInput" placeholder="検索..." onkeyup="searchTable()">
 <table border="1">
     <tr>
         <th>No</th>

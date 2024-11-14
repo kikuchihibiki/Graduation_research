@@ -1,0 +1,30 @@
+/* 偶数行の背景色と文字色 */
+table tr:nth-child(even) {    
+    background-color: #ffffff; /* 白 */
+    color:#000000
+}
+
+/* 奇数行の背景色と文字色*/
+table tr:nth-child(odd) {
+    background-color: #dedcdc; /* ライトグレー */
+    color:#000000
+}
+
+/* 画面全体の背景色と文字色を設定 */
+body {
+    background-color: #000000; /* 背景色を黒 */
+    color: #ffffff;            /* 文字色を白 */
+}
+
+/* テーブル全体に枠線を設定 */
+table {
+    margin: auto;
+    border-collapse: collapse; /* セルの枠線を結合して重複をなくす */
+    width: 70%;               /* テーブルの幅を100%に設定（任意） */
+}
+
+/* テーブルのセル（thとtd）に枠線を設定 */
+table, th, td {
+    border: 1px solid #333; /* 枠線の色を濃いグレーに */
+    padding: 8px;           /* セル内の余白を指定 */
+}
