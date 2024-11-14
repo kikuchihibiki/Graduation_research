@@ -21,6 +21,5 @@ document.addEventListener('DOMContentLoaded', () => {
         scene: MainScene
     };
 
-    // ゲーム開始
     new Phaser.Game(config);
 });

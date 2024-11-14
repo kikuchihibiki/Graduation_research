@@ -34,12 +34,30 @@ class BeforeGameController extends Controller
         $mode = $request->session()->get('mode');
         $level = $request->input('level');
         $request->session()->put('level', $level);
-        return view('user.game_display', ['mode' => $mode]);
+        $question = [
+            ['question' => 'Phaserは何のために使われますか？', 'answer' => 'ゲーム開発'],
+            ['question' => 'HTMLの拡張子は何ですか？', 'answer' => '.html'],
+            ['question' => 'PHPはサーバーサイドの言語ですか？', 'answer' => 'はい'],
+            ['question' => 'JavaScriptのデフォルトポートは何番ですか？', 'answer' => '80'],
+            ['question' => 'CSSは何の略ですか？', 'answer' => 'Cascading Style Sheets'],
+            ['question' => 'Linuxのlsコマンドは何を表示しますか？', 'answer' => 'ディレクトリ内容']
+        ];
+        return view('user.game_display', [
+            'mode' => $mode,
+            'question' => $question
+        ]);
     }
     public function wrong_answer(Request $request)
     {
         $mode = $request->input('mode');
         $request->session()->put('mode', $mode);
-        return view('user.game_display', ['mode' => $mode]);
+        $question = [
+            'question' => '問題です',
+            'answer' => '解答です'
+        ];
+        return view('user.game_display', [
+            'mode' => $mode,
+            'question' => $question
+        ]);
     }
 }

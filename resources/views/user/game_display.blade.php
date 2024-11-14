@@ -19,9 +19,12 @@
 </head>
 
 <body>
+
     <!-- Phaserゲームを表示する要素 -->
     <div id="phaser-example"></div>
-
+    <script>
+        var questionData = @json($question);
+    </script>
     <!-- ゲームの初期化スクリプト -->
     <script src="{{ asset('scripts/main_scene.js') }}"></script>
     <script src="{{ asset('scripts/game_boot.js') }}"></script>
