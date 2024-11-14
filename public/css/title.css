@@ -1,0 +1,16 @@
+body {
+    background-color: black;
+}
+h1 {
+    text-align: center;
+    color: white;
+}
+p{
+    text-align: center;
+    color: yellow;
+}
+#nameInput {
+    width: 300px; /* 幅を300pxに設定 */
+    height: 40px; /* 高さを40pxに設定 */
+    margin-left: 480px; /* 左から300pxの位置に配置 */
+}

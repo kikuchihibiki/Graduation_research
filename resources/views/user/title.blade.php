@@ -1,12 +1,12 @@
 @extends('layout.layout')
 @section('title', 'タイトル画面')
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/layout.css') }}">
+<link rel="stylesheet" href="{{ asset('css/title.css') }}">
 @endsection
 @section('content')
 <h1>コマンドクイズアプリ</h1>
-<p>ランキングに表示される名前を入力してください</p>
-<p>入力しない場合は名無しになります</p>
+<p class="p1">ランキングに表示される名前を入力してください</p>
+<p class="p2">入力しない場合は名無しになります</p>
 <form action="{{ route('save_name') }}" method="post" id="nameForm">
     @csrf
     <input type="text" name="name" placeholder="名無し" id="nameInput">
