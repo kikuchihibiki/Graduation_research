@@ -35,8 +35,8 @@ class BeforeGameController extends Controller
         $level = $request->input('level');
         $request->session()->put('level', $level);
         $question = [
-            ['question' => 'Phaserは何のために使われますか？', 'answer' => 'ゲーム開発'],
             ['question' => 'HTMLの拡張子は何ですか？', 'answer' => '.html'],
+            ['question' => 'Phaserは何のために使われますか？', 'answer' => 'ゲーム開発'],
             ['question' => 'PHPはサーバーサイドの言語ですか？', 'answer' => 'はい'],
             ['question' => 'JavaScriptのデフォルトポートは何番ですか？', 'answer' => '80'],
             ['question' => 'CSSは何の略ですか？', 'answer' => 'Cascading Style Sheets'],

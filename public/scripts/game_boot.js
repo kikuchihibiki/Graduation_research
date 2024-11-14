@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 debug: false
             }
         },
-        scene: MainScene
+        scene: [StartScene, QuizScene]  // スタート画面とクイズ画面のシーン
     };
 
     new Phaser.Game(config);
