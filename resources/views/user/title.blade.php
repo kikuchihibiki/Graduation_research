@@ -12,7 +12,7 @@
     <input type="text" name="name" placeholder="名無し" id="nameInput">
     <input type="submit" style="display:none;">
 </form>
-<p>不適切な名前の場合記録が削除される場合があります</p>
-<p>--enter--</p>
+<p class="p3">不適切な名前の場合記録が削除される場合があります</p>
+<p class="p4">--Enter--</p>
 <script src="{{ asset('js/before_game.js') }}"></script>
 @endsection
