@@ -1,0 +1,59 @@
+body {
+    background-color: black;
+    color: white;
+}
+.set {
+margin-left: 5%;
+}
+h1 {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 40px;
+}
+p,img{
+    /* margin-left: 5%; */
+    font-size: 25px;
+}
+/* 横並び配置用のコンテナ */
+.div_img {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    margin-bottom: 30px;
+}
+
+/* 画像のスタイル */
+.div_img img {
+    margin-right: 15px; /* 画像とテキストの間に余白 */
+    width: 200px;
+    height: auto;
+}
+
+/* テキストのスタイル */
+.p_img {
+    font-size: 1.4em;
+    color:white;
+    text-align: left;
+    line-height: 1.5;
+}
+.div_enter {
+    margin-left: 70%;
+    font-size: 20px;
+}
+/* フォーム全体のスタイル */
+#input_setup {
+    width: 90%; /* フォームの幅を少し狭める */
+    max-width: 100%; /* 最大幅を設定してレスポンシブに対応 */
+    margin: 0 auto; /* 左右中央揃え */
+    padding: 20px 20px; /* 上下のpaddingを増やして縦幅を広げる */
+}
+
+/* 入力フィールドのスタイル */
+#setupInput {
+    width: 100%; /* フィールドの幅をフォームいっぱいに広げる */
+    padding: 12px; /* 入力フィールドの内側余白 */
+    font-size: 1.2em; /* 文字サイズを大きく */
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}

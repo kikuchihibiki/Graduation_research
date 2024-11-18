@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\BeforeGameController;
 use App\Http\Controllers\FunctionController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,8 @@ Route::post('/wrong_answer', [BeforeGameController::class, 'wrong_answer'])->nam
 Route::get('/question_list', [FunctionController::class, 'question_list']);
 Route::get('/ranking', [FunctionController::class, 'ranking']);
 Route::get('/miss_question', [FunctionController::class, 'miss_question']);
+Route::get('/admin', [AdminController::class, 'admin']);
+Route::get('/admin_menu', [AdminController::class, 'admin_menu']);
+Route::get('/admin_questionlist', [AdminController::class, 'admin_questionlist']);
+Route::get('/admin_ranking', [AdminController::class, 'admin_ranking']);
+Route::get('/admin_newAdmin', [AdminController::class, 'admin_newAdmin']);
