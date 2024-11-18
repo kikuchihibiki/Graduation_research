@@ -1,4 +1,3 @@
-// スタート画面のシーン
 class StartScene extends Phaser.Scene {
     constructor() {
         super({ key: 'StartScene' });
@@ -60,17 +59,10 @@ class QuizScene extends Phaser.Scene {
 
         this.userAnswer = '';
 
-        // ユーザー入力の処理
-        this.input.keyboard.on('keydown', (event) => {
-            if (event.key === 'Enter') {
-                this.checkAnswer();
-            } else if (event.key === 'Backspace') {
-                this.userAnswer = this.userAnswer.slice(0, -1);
-                this.updateAnswerDisplay();
-            } else if (event.key.length === 1) {
-                this.userAnswer += event.key;
-                this.updateAnswerDisplay();
-            }
+        // 最後の回答表示の初期化
+        this.lastAnswer = this.add.text(100, 350, '', {
+            fontSize: '24px',
+            fill: '#ff0000'
         });
 
         // タイマーの設定
@@ -84,6 +76,19 @@ class QuizScene extends Phaser.Scene {
             callback: this.updateTimer,
             callbackScope: this,
             repeat: this.timeLimit - 1
+        });
+
+        // ユーザー入力の処理
+        this.input.keyboard.on('keydown', (event) => {
+            if (event.key === 'Enter') {
+                this.checkAnswer();
+            } else if (event.key === 'Backspace') {
+                this.userAnswer = this.userAnswer.slice(0, -1);
+                this.updateAnswerDisplay();
+            } else if (event.key.length === 1) {
+                this.userAnswer += event.key;
+                this.updateAnswerDisplay();
+            }
         });
 
         // 15秒後にタイムアウトとして処理
@@ -104,48 +109,38 @@ class QuizScene extends Phaser.Scene {
     checkAnswer(timeout = false) {
         let resultText = '';
         let color = '#ff0000';
-    
+
         // タイマー停止
-        
-    
+
         // 正解の場合
         if (this.userAnswer === this.correctAnswer) {
             resultText = '正解！';
             color = '#00ff00';
             this.correctAnswers++;
-            this.timerEvent.remove();
+            if (this.timerEvent) this.timerEvent.remove();
         }
         // 時間切れの場合
         else if (timeout) {
             resultText = '時間切れ！不正解';
-        } 
+        }
         // 不正解の場合
         else {
-            // 前回の解答を保持し、表示を更新
+            // 前回の解答を保持して表示
             this.answerresult = this.userAnswer;
-    
-            // 前回の解答をリセットして更新
             this.userAnswer = '';
             this.updateAnswerDisplay();
-    
-            // 以前の解答表示があれば更新、なければ新規作成
-            if (this.lastAnswer) {
-                this.lastAnswer.setText(`前回の解答: ${this.answerresult}`);
-            } else {
-                this.lastAnswer = this.add.text(100, 350, `前回の解答: ${this.answerresult}`, {
-                    fontSize: '24px',
-                    fill: color
-                });
-            }
+
+            // 前回の解答を更新
+            this.lastAnswer.setText(`前回の解答: ${this.answerresult}`);
             return; // 不正解の場合、ここで処理終了
         }
-    
+
         // 正解または時間切れの場合、結果を表示して次へ
         this.resultLabel = this.add.text(100, 300, resultText, {
             fontSize: '24px',
             fill: color
         });
-    
+
         // 2秒後に次のシーンへ遷移
         this.time.delayedCall(2000, () => {
             this.scene.start('AnswerResultScene', {
@@ -156,7 +151,6 @@ class QuizScene extends Phaser.Scene {
             });
         });
     }
-    
 }
 
 // 正誤結果を表示するシーン
@@ -222,19 +216,13 @@ class EndScene extends Phaser.Scene {
             fill: '#ffcc00'
         });
 
-        // Enterキーで再スタート
         this.input.keyboard.on('keydown-ENTER', () => {
             this.scene.start('StartScene');
         });
     }
 }
 
-// ゲーム初期化
-const config = {
-    type: Phaser.AUTO,
-    width: D_WIDTH,
-    height: D_HEIGHT,
-    scene: [StartScene, QuizScene, AnswerResultScene, EndScene]
-};
-
-const game = new Phaser.Game(config);
+window.StartScene = StartScene;
+window.QuizScene = QuizScene;
+window.AnswerResultScene = AnswerResultScene;
+window.EndScene = EndScene;
