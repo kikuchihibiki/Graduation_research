@@ -17,6 +17,5 @@
     <a>ログアウト</a>
     <input type="submit" style="display:none;">
 </form>
-<a href="/miss_question">誤答問題</a>
-<script src="{{ asset('js/before_game.js') }}"></script>
+<script src="{{ asset('js/admin_menu.js') }}"></script>
 @endsection
