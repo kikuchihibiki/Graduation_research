@@ -1,0 +1,97 @@
+@charset 'utf-8';
+
+* {
+    box-sizing: border-box;
+}
+
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* 必須: 高さ100%を指定 */
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    display: flex; /* body全体もフレックスにしてメインコンテンツを中央寄せ */
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    position: relative;
+    width: 100%; /* 必須: フル幅確保 */
+    height: 100%;
+    display: flex; /* フレックスボックスを適用 */
+    flex-direction: column; /* 子要素を縦方向に並べる */
+    justify-content: center; /* 垂直方向の中央寄せ */
+    align-items: center; /* 水平方向の中央寄せ */
+}
+
+/* 戻るボタンの設定 */
+#back_button {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    display: block;
+    margin-top: 50px;
+    padding: 20px 40px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s;
+}
+
+/* タイトルに戻るボタン (左上配置) */
+#title_back_button {
+    position: fixed; /* 画面上で固定配置 */
+    top: 10px; /* 上端からの位置調整 */
+    left: 10px; /* 左端からの位置調整 */
+    padding: 10px 20px;
+    background-color: #000000;
+    color: #fff;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#title_back_button:hover {
+    background-color: #666;
+    transform: scale(1.05);
+}
+
+
+
+#back_button:hover {
+    background-color: #666;
+}
+
+
+/* 右上リンクの設定 */
+.top-right-links {
+    position: absolute;
+    top: 10px; /* 上からの位置調整 */
+    right: 10px; /* 右からの位置調整 */
+    display: flex;
+    gap: 15px; /* リンク間のスペース */
+}
+
+.top-right-links a {
+    color: #fff; /* リンク色 */
+    text-decoration: none; /* 下線をなくす */
+    font-size: 1.2em; /* フォントサイズ調整 */
+}
+
+.top-right-links a:hover {
+    text-decoration: underline; /* ホバー時の下線表示 */
+}
