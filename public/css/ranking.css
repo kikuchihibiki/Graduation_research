@@ -1,0 +1,144 @@
+/* 画面全体の背景と余白を調整 */
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #222; /* 全体の背景色 */
+}
+
+/* コンテナ要素 */
+.q-body {
+    color: white;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding: 20px;
+    max-width: 1000px; /* 必要に応じて幅を調整 */
+    margin: 0 auto; /* 中央揃え */
+}
+
+/* ボタンのスタイル */
+.mode button {
+    background-color: white; /* ボタン背景色 */
+    color: black;
+    border: none;
+    padding: 10px 0;
+    cursor: pointer;
+    font-size: 1.2em;
+    width: 100%; /* ボタンをthの幅に合わせる */
+}
+
+/* テーブル全体のスタイル */
+.data {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+thead {
+    background-color: #333; /* ヘッダー背景色 */
+}
+
+.level th {
+    font-weight: bold;
+    border-bottom: 2px solid black;
+    text-align: center;
+}
+
+tbody tr {
+    background-color: #444; /* 行の背景色 */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #555; /* 奇数行の背景色 */
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #333; /* セルの枠線 */
+}
+
+.rank, .rank2, .rank3, .rank4 {
+    font-weight: bold;
+}
+
+.rank-name, .rank-score, .rank2-name, .rank2-score,
+.rank3-name, .rank3-score, .text-white {
+    color: white;
+}
+
+.score {
+    margin-top: 20px;
+    font-size: 1.5em;
+}
+
+.back-button a {
+    text-decoration: none;
+    font-size: 1.2em;
+    color: #FFC45D;
+}
+
+.tab_item {
+  width: calc(100%/3);
+  height: 50px;
+  border-bottom: 3px solid #FFC45D;
+  background-color: #d9d9d9;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #565656;
+  display: block;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_item:hover {
+  opacity: 0.75;
+}
+
+/*ラジオボタンを全て消す*/
+input[name="tab_item"] {
+  display: none;
+}
+/*選択されているタブのスタイルを変える*/
+input:checked + .tab_item {
+  background-color: #FFC45D;
+  color: #fff;
+}
+
+.checkBox{
+  width: 100%;
+}
+
+.tab_item2 {
+  width: calc(100%/3);
+  height: 50px;
+  border-bottom: 3px solid #FFC45D;
+  background-color: #d9d9d9;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #565656;
+  display: block;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_item2:hover {
+  opacity: 0.75;
+}
+
+/*ラジオボタンを全て消す*/
+input[name="tab_item2"] {
+  display: none;
+}
+/*選択されているタブのスタイルを変える*/
+input:checked + .tab_item2 {
+  background-color: #FFC45D;
+  color: #fff;
+}
+
+.checkBox2{
+  width: 100%;
+}
+
