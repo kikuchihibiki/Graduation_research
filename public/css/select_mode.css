@@ -1,0 +1,101 @@
+body {
+    background-color: black !important;;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Mode selection area styling */
+#mode_form {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    align-items: center;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+label {
+    font-size: 2em;
+    margin: 10px 0;
+    padding: 10px 20px;
+    color: #888;
+    cursor: pointer;
+    display: block;
+    width: fit-content;
+    position: relative;
+}
+
+/* Highlight the selected mode */
+input[type="radio"]:checked + label {
+    color: #fff;
+    background-color: #333;
+    padding-left: 40px;
+    position: relative;
+}
+
+/* Adding the arrow for the selected label */
+input[type="radio"]:checked + label::before {
+    content: '>';
+    color: #fff;
+    font-size: 1.5em;
+    position: absolute;
+    left: 10px;
+}
+
+/* Sidebar links */
+a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5em;
+    margin: 10px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Additional text descriptions for each mode */
+#java ~ label:after, #python ~ label:after, #php ~ label:after {
+    display: block;
+    color: #aaa;
+    font-size: 1.2em;
+    margin-top: 5px;
+}
+
+#java:checked ~ label[for="java"]::after {
+    content: "WebページやWebアプリケーション家電製品などにも使用できるのが特徴";
+}
+
+#python:checked ~ label[for="python"]::after {
+    content: "ソースコードが少なく文法もシンプルでコードの読み書きがしやすいのが特徴";
+}
+
+#php:checked ~ label[for="php"]::after {
+    content: "変数の型を意識しなくていい「配列の定義が自由」など制約が少ないのが特徴";
+}
+
+/* Bottom link to the incorrect questions section */
+#mode_form + a {
+    display: block;
+    margin: 20px 0 0;
+    color: #aaa;
+    font-size: 1.2em;
+}
+
+/* Adjust link styles on hover */
+#mode_form + a:hover {
+    color: #fff;
+}
