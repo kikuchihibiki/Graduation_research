@@ -1,0 +1,78 @@
+/* 全体の背景設定 */
+body {
+    background-color: black; 
+    color: #fff; /* 白い文字色 */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    height: 100vh;
+    display: flex; /* フレックスボックスを適用 */
+    justify-content: center; /* 横方向の中央揃え */
+    align-items: center; /* 縦方向の中央揃え */
+}
+
+/* タイトルのスタイル */
+h1 {
+    font-size: 36px; /* タイトルを大きく */
+    margin-bottom: 20px; /* タイトルとフォームの間のスペース */
+    color: #fff;
+}
+
+/* 難易度選択フォーム全体の設定 */
+#level_form {
+    width: 100%; /* フォームの幅を100%に設定 */
+    max-width: 600px; /* 最大幅を設定 */
+    padding: 20px; /* フォーム内に余白を設定 */
+    border-radius: 10px;
+    background-color: #000000; /* 背景を濃いグレーに */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* フォーム内要素を中央揃え */
+    justify-content: center; /* フォーム内要素の上下中央揃え */
+}
+
+/* 各難易度のラベルスタイル */
+#level_form label {
+    display: block;
+    font-size: 24px; /* ラベルを大きく */
+    color: #888; /* 未選択状態は薄いグレー */
+    margin: 10px 0; /* 各ラベル間のスペース */
+    padding: 15px 20px; /* クリックしやすくするため余白を広げる */
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    text-align: left; /* テキストを左揃え */
+    width: 100%; /* 幅を全体に広げる */
+    max-width: 550px; /* ラベルの最大幅 */
+}
+
+/* ラジオボタンを非表示にしてカスタムデザイン */
+#level_form input[type="radio"] {
+    display: none;
+}
+
+/* 選択された難易度のラベルスタイル */
+#level_form input[type="radio"]:checked + label {
+    background-color: #444; /* 選択状態の背景色を濃いグレーに */
+    color: #fff; /* 白い文字で視認性を向上 */
+    font-weight: bold;
+    position: relative;
+}
+
+/* 選択中の難易度に矢印を追加 */
+#level_form input[type="radio"]:checked + label::before {
+    content: ">";
+    position: absolute;
+    left: -30px;
+    color: #fff;
+    font-size: 28px;
+}
+
+/* ラベルを囲む親コンテナのスタイル */
+.select_level {
+    display: flex; /* フォーム全体を中央揃え */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
