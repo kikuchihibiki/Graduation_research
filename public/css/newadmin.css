@@ -1,0 +1,21 @@
+body {
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+h2 {
+    margin-top: 70px;
+}
+.form {
+    display: flex;
+    flex-direction: column; /* 子要素を縦に並べる */
+    align-items: center;    /* 子要素を中央揃え */
+    justify-content: center; /* 縦方向の中央揃え */
+    gap: 20px;              /* 各フォームグループ間のスペースを設定 */
+}
+.form-group {
+    display: flex;
+    flex-direction: column; /* 要素を縦に並べる */
+    width: 300px;
+    gap: 10px; /* aタグとボタンの間にスペースを設定 */
+}
