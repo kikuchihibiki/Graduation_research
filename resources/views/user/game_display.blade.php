@@ -24,6 +24,7 @@
     <div id="phaser-example"></div>
     <script>
         var questionData = @json($question);
+        var timeLimitData = @json($TimeLimit);
     </script>
     <!-- ゲームの初期化スクリプト -->
     <script src="{{ asset('scripts/main_scene.js') }}"></script>
