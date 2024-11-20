@@ -24,6 +24,14 @@
   <button class="searchForm-submit" type="button" onclick="searchTable()">🔍</button>
 </div>
 
+<!--トグルボタン-->
+<div class="toggle-container">
+  <span id="toggle-label">Hidden</span>
+  <label class="toggle">
+    <input type="checkbox" id="toggle-all">
+    <span class="slider"></span>
+  </label>
+</div>
 
 <table border="1">
     <thead>
@@ -41,7 +49,10 @@
             <tr class="java">
                 <td>{{ $i + 1 }}</td>
                 <td class="question">java問題{{ $i + 1 }}</td>
-                <td class="answer">java解答{{ $i + 1 }}</td>
+                <td class="answer-cell">
+                <button class="toggle-answer eye-closed"></button>
+                <span class="answer">java解答{{ $i + 1 }}</span>
+                </td>
                 <td>java解説 {{ $i + 1 }}</td>
                 <td>java回答状況 {{ $i + 1 }}</td>
             </tr>
@@ -52,7 +63,10 @@
             <tr class="python">
                 <td>{{ $i + 1 }}</td>
                 <td class="question">python問題{{ $i + 1 }}</td>
-                <td class="answer">python解答{{ $i + 1 }}</td>
+                <td class="answer-cell">
+                <button class="toggle-answer eye-closed"></button>
+                <span class="answer">python解答{{ $i + 1 }}</span>
+                </td>
                 <td>python解説 {{ $i + 1 }}</td>
                 <td>python回答状況 {{ $i + 1 }}</td>
             </tr>
@@ -63,7 +77,10 @@
             <tr class="php">
                 <td>{{ $i + 1 }}</td>
                 <td class="question">php問題{{ $i + 1 }}</td>
-                <td class="answer">php解答{{ $i + 1 }}</td>
+                <td class="answer-cell">
+                <button class="toggle-answer eye-closed"></button>
+                <span class="answer">php解答{{ $i + 1 }}</span>
+                </td>
                 <td>php解説 {{ $i + 1 }}</td>
                 <td>php回答状況 {{ $i + 1 }}</td>
             </tr>
@@ -107,6 +124,55 @@
 }
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleAllCheckbox = document.getElementById("toggle-all");
+  const toggleLabel = document.getElementById("toggle-label");
+  const toggleButtons = document.querySelectorAll(".toggle-answer");
+  const answers = document.querySelectorAll(".answer");
+
+  // 一括表示/非表示の切り替え
+  toggleAllCheckbox.addEventListener("change", () => {
+    const isChecked = toggleAllCheckbox.checked;
+
+    // 解答を一括表示/非表示
+    answers.forEach(answer => {
+      answer.style.display = isChecked ? "inline" : "none";
+    });
+
+    // 個別ボタンの状態を一括更新
+    toggleButtons.forEach(button => {
+      if (isChecked) {
+        button.classList.remove("eye-closed");
+        button.classList.add("eye-open");
+      } else {
+        button.classList.remove("eye-open");
+        button.classList.add("eye-closed");
+      }
+    });
+
+    // ラベルを変更
+    toggleLabel.textContent = isChecked ? "Visible" : "Hidden";
+  });
+
+  // 個別表示/非表示の切り替え
+  toggleButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const cell = button.closest(".answer-cell");
+      const answer = cell.querySelector(".answer");
+
+      // 解答セルの表示/非表示切り替え
+      if (answer.style.display === "none" || !answer.style.display) {
+        answer.style.display = "inline";
+        button.classList.remove("eye-closed");
+        button.classList.add("eye-open");
+      } else {
+        answer.style.display = "none";
+        button.classList.remove("eye-open");
+        button.classList.add("eye-closed");
+      }
+    });
+  });
+});
 </script>
 
 <a href="/select_mode">戻る</a>
