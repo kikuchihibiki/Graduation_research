@@ -97,7 +97,6 @@ class ProgressBar {
 }
 
 
-
 // クイズ画面のシーン
 class QuizScene extends Phaser.Scene {
     constructor() {
@@ -167,13 +166,13 @@ class QuizScene extends Phaser.Scene {
         this.userAnswer = '';
 
         // 最後の回答表示の初期化
-        this.lastAnswer = this.add.text(100, 350, '', {
-            fontSize: '24px',
+        this.lastAnswer = this.add.text(750, 700, '', {
+            fontSize: '40px',
             fill: '#ff0000'
         });
 
         this.livesText = this.add.text(1600, 140, `残機:✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' });
-        this.scoreText = this.add.text(100, 150, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '50px', fill: '#ff0000' });
+        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' });
 
         // タイマーの設定
         this.timerText = this.add.text(880, 100, `${this.timeLimit} `, {
@@ -282,7 +281,7 @@ class QuizScene extends Phaser.Scene {
 
         
         // 正解または時間切れの場合、結果を表示して次へ
-        this.resultLabel = this.add.text(100, 300, resultText, { fontSize: '24px', fill: color });
+        this.resultLabel = this.add.text(870, 150, resultText, { fontSize: '24px', fill: color });
         this.progressBar.update(progressData);
         this.registry.set('progressData', progressData);
         // 2秒後に次のシーンへ遷移
@@ -321,14 +320,24 @@ class AnswerResultScene extends Phaser.Scene {
         this.progressBar = new ProgressBar(this, data.totalQuestions);
         this.progressBar.update(data.progress);
         this.registry.set('lastScore', this.registry.get('lastScore') + this.score);
-        this.add.text(100, 250, `正しい答え: ${data.correctAnswer}`, {
-            fontSize: '24px',
-            fill: '#ffffff'
-        });
-        this.livesText = this.add.text(100, 400, `残機: ${this.lives}`, { fontSize: '24px', fill: '#ff0000' });
-        this.progressText = this.add.text(400, 400, ` ${this.progress}`, { fontSize: '24px', fill: '#ff0000' });
-        this.missText = this.add.text(600, 400, ` ${this.missCount}`, { fontSize: '24px', fill: '#ff0000' });
-        this.scoreText = this.add.text(600, 600, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '24px', fill: '#ff0000' });
+        const backgroundRectWidth = D_WIDTH;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
+        const backgroundRectHeight = 400; // 背景の高さ
+        const backgroundRectX = D_WIDTH / 2;
+        const backgroundRectY = 400;
+
+    // 背景矩形を追加
+    this.add.graphics()
+        .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
+        .fillRect(backgroundRectX - backgroundRectWidth / 2, backgroundRectY - backgroundRectHeight / 2, backgroundRectWidth, backgroundRectHeight);
+        this.answerLabel = this.add.text(D_WIDTH / 2, 400, `正答 \n ${data.correctAnswer}`, {
+            fontSize: '60px',
+            fill: '#ffffff',
+            align: 'center', // テキストの中央揃え
+            wordWrap: { width: 800, useAdvancedWrap: true }
+        }).setOrigin(0.5);
+        this.livesText = this.add.text(1600, 140,`残機✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' });
+        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' });
+        this.scoreresultText = this.add.text(100, 150, `+${this.score}`, { fontSize: '45px', fill: '#ff0000' });
 
         // 2秒後に次の問題に進むか終了
         this.time.delayedCall(2000, () => {
