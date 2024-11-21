@@ -42,9 +42,11 @@ class BeforeGameController extends Controller
             ['question' => '整数型のデータタイプは何ですか？', 'answer' => 'int'],
             ['question' => '小数点数のデータタイプは何ですか？', 'answer' => 'float']
         ];
+        $TimeLimit = 15;
         return view('user.game_display', [
             'mode' => $mode,
-            'question' => $question
+            'question' => $question,
+            'TimeLimit' => $TimeLimit
         ]);
     }
     public function wrong_answer(Request $request)
