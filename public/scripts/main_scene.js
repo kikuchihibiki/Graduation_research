@@ -41,7 +41,7 @@ class ProgressBar {
 
         // 全体背景を描画（角丸長方形）
         const totalWidth = totalQuestions * 50 + 100; // ステップ間隔 * 総ステップ数 + 余裕分
-        const totalHeight = 40; // 背景の高さ
+        const totalHeight = 60; // 背景の高さを増加
         const barX = 100 + totalWidth / 2 - 50; // 背景バーの中央X位置（余裕分を調整）
         const barY = 50; // 背景バーの中央Y位置
         const radius = 20; // 角丸の半径
@@ -53,7 +53,7 @@ class ProgressBar {
             barX - totalWidth / 2, // 長方形の左上X座標
             barY - totalHeight / 2, // 長方形の左上Y座標
             totalWidth, // 長方形の幅（全体幅＋余裕分）
-            totalHeight, // 長方形の高さ
+            totalHeight, // 長方形の高さ（60pxに増加）
             radius // 角丸の半径
         );
 
@@ -63,7 +63,7 @@ class ProgressBar {
             const y = 50;
 
             // 各ステップの個別背景を追加
-            const stepBg = this.scene.add.rectangle(x, y, 40, 30, 0x000000); // 黒背景
+            const stepBg = this.scene.add.rectangle(x, y, 40, 50, 0x000000); // 高さ50pxに調整
             stepBg.setOrigin(0.5);
             this.backgrounds.push(stepBg);
 
@@ -84,17 +84,18 @@ class ProgressBar {
             const step = this.steps[i];
             if (progressData[i] === true) {
                 step.text.setText('✓'); // 正解時
-                step.text.setStyle({ fill: '#00ff00' }); 
+                step.text.setStyle({ fill: '#00ff00' }); // 緑色
             } else if (progressData[i] === false) {
                 step.text.setText('✗'); // 不正解時
-                step.text.setStyle({ fill: '#ff0000' }); 
+                step.text.setStyle({ fill: '#ff0000' }); // 赤色
             } else {
                 step.text.setText(`${i + 1}`); // 非アクティブ時
-                step.text.setStyle({ fill: '#ffffff' });
+                step.text.setStyle({ fill: '#ffffff' }); // 白色
             }
         }
     }
 }
+
 
 
 // クイズ画面のシーン
@@ -131,16 +132,37 @@ class QuizScene extends Phaser.Scene {
         //     fill: '#ffffff'
         // });
         // 質問の表示
-        this.questionLabel = this.add.text(100, 100, `問題: ${this.questionText}`, {
-            fontSize: '30px',
-            fill: '#ffffff'
-        });
+        const backgroundRectWidth = 850;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
+        const backgroundRectHeight = 400; // 背景の高さ
+        const backgroundRectX = D_WIDTH / 2;
+        const backgroundRectY = 400;
 
+    // 背景矩形を追加
+    this.add.graphics()
+        .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
+        .fillRect(backgroundRectX - backgroundRectWidth / 2, backgroundRectY - backgroundRectHeight / 2, backgroundRectWidth, backgroundRectHeight);
+        this.questionLabel = this.add.text(D_WIDTH / 2, 400, `${this.questionText}`, {
+            fontSize: '60px',
+            fill: '#ffffff',
+            align: 'center', // テキストの中央揃え
+            wordWrap: { width: 800, useAdvancedWrap: true }
+        }).setOrigin(0.5); // テキスト基準を中央に
+        
+        const answerInputRectWidth = D_WIDTH;  // 幅を調整
+        const answerInputRectHeight = 100; // 高さを調整
+        const answerInputRectX = D_WIDTH / 2;
+        const answerInputRectY = 800;
+    
+        // 背景矩形を追加（薄い黒）
+        this.add.graphics()
+            .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
+            .fillRect(answerInputRectX - answerInputRectWidth / 2, answerInputRectY - answerInputRectHeight / 2, answerInputRectWidth, answerInputRectHeight);
         // 回答欄の表示
-        this.answerInput = this.add.text(100, 200, '答え: ', {
-            fontSize: '24px',
-            fill: '#ffcc00'
-        });
+        this.answerInput = this.add.text(D_WIDTH / 2, 800, '', {
+            fontSize: '50px',
+            fill: '#ffcc00',
+            align: 'center'
+        }).setOrigin(0.5);
 
         this.userAnswer = '';
 
@@ -150,12 +172,12 @@ class QuizScene extends Phaser.Scene {
             fill: '#ff0000'
         });
 
-        this.livesText = this.add.text(100, 400, `残機: ${this.lives}`, { fontSize: '24px', fill: '#ff0000' });
-        this.scoreText = this.add.text(600, 600, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '24px', fill: '#ff0000' });
+        this.livesText = this.add.text(1600, 140, `残機:✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' });
+        this.scoreText = this.add.text(100, 150, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '50px', fill: '#ff0000' });
 
         // タイマーの設定
-        this.timerText = this.add.text(100, 50, `残り時間: ${this.timeLimit} `, {
-            fontSize: '24px',
+        this.timerText = this.add.text(880, 100, `${this.timeLimit} `, {
+            fontSize: '40px',
             fill: '#ff0000'
         });
         this.time.delayedCall(1000, () => {
@@ -188,15 +210,35 @@ class QuizScene extends Phaser.Scene {
             this.checkAnswer(true);
             this.input.keyboard.removeListener('keydown');
         });
+
+        this.cursor = this.add.text(D_WIDTH / 2 , 800, '|', {
+            fontSize: '50px',
+            fill: '#ffcc00', // カーソルの色
+            align: 'center'
+        }).setOrigin(0.5);
+
+        this.cursorBlinkTimer = this.time.addEvent({
+            delay: 500, // 500msごとに点滅
+            callback: () => {
+                // 入力が空の場合にカーソルの表示状態を切り替え
+                if (this.userAnswer === '') {
+                    this.cursor.setVisible(!this.cursor.visible);
+                } else {
+                    this.cursor.setVisible(false); // 入力があるときはカーソルを非表示
+                }
+            },
+            loop: true
+        });
+        
     }
 
     updateAnswerDisplay() {
-        this.answerInput.setText(`答え: ${this.userAnswer}`);
+        this.answerInput.setText(`${this.userAnswer}`);
     }
 
     updateTimer() {
         this.timeLimit--;
-        this.timerText.setText(`残り時間: ${this.timeLimit}秒`);
+        this.timerText.setText(`${this.timeLimit}`);
     }
 
     checkAnswer(timeout = false) {
