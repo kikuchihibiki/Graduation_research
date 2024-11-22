@@ -2,6 +2,7 @@
 @section('title', 'タイトル画面')
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/title.css') }}">
+<link rel="stylesheet" href="{{ asset('css/layout.css') }}">
 @endsection
 @section('content')
 <h1>コマンドクイズアプリ</h1>

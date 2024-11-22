@@ -2,6 +2,7 @@
 @section('title', 'セットアップ')
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/setup.css') }}">
+<link rel="stylesheet" href="{{ asset('css/layout.css') }}">
 @endsection
 @section('content')
 <h1>セットアップ</h1>

@@ -4,7 +4,7 @@ body {
     color: white;
 }
 h2 {
-    margin-top: 70px;
+    margin-top: 4c0px;
 }
 .form {
     display: flex;
@@ -12,10 +12,32 @@ h2 {
     align-items: center;    /* 子要素を中央揃え */
     justify-content: center; /* 縦方向の中央揃え */
     gap: 20px;              /* 各フォームグループ間のスペースを設定 */
+    margin-top: 10px;
 }
 .form-group {
     display: flex;
     flex-direction: column; /* 要素を縦に並べる */
-    width: 300px;
+    width: 350px;
     gap: 10px; /* aタグとボタンの間にスペースを設定 */
+    font-size: 20px;
+}
+.form-control {
+    height: 20px;
+}
+
+.registar-from{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row; /* 要素を縦に並べる */
+    justify-content: center;
+}
+p{
+    margin-right: 10px;
+    font-size: 28px;
+}
+button {
+    all: unset; /* ボタンの全てのデフォルトスタイルをリセット */
+    color: white; /* 必要に応じてテキストカラーを指定 */
+    cursor: pointer; /* クリック可能なポインターを表示 */
+    font-size: 20px;
 }
