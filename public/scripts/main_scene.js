@@ -9,11 +9,21 @@ class StartScene extends Phaser.Scene {
     create() {
         const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
-
-        const startLabel = this.add.text(D_WIDTH / 2, D_HEIGHT / 2, 'Press ENTER to Start', {
-            fontSize: '30px',
-            fill: '#ffffff'
-        }).setOrigin(0.5);
+        const answerInputRectWidth = D_WIDTH;  // 幅を調整
+        const answerInputRectHeight = 100; // 高さを調整
+        const answerInputRectX = D_WIDTH / 2;
+        const answerInputRectY = 800;
+    
+        // 背景矩形を追加（薄い黒）
+        this.add.graphics()
+            .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
+            .fillRect(answerInputRectX - answerInputRectWidth / 2, answerInputRectY - answerInputRectHeight / 2, answerInputRectWidth, answerInputRectHeight);
+        // 回答欄の表示
+        this.answerInput = this.add.text(D_WIDTH / 2, 800, '回答欄：エンターを押してスタート', {
+            fontSize: '50px',
+            fill: '#ffffff',
+            align: 'center'
+        }).setOrigin(0.5).setPadding(6);
 
         this.registry.set('timeLimit',timeLimitData);
         // Enterキーを待機してクイズシーンへ
@@ -145,7 +155,7 @@ class QuizScene extends Phaser.Scene {
             fill: '#ffffff',
             align: 'center', // テキストの中央揃え
             wordWrap: { width: 800, useAdvancedWrap: true }
-        }).setOrigin(0.5); // テキスト基準を中央に
+        }).setOrigin(0.5).setPadding(6); // テキスト基準を中央に
         
         const answerInputRectWidth = D_WIDTH;  // 幅を調整
         const answerInputRectHeight = 100; // 高さを調整
@@ -161,7 +171,7 @@ class QuizScene extends Phaser.Scene {
             fontSize: '50px',
             fill: '#ffcc00',
             align: 'center'
-        }).setOrigin(0.5);
+        }).setOrigin(0.5).setPadding(6);
 
         this.userAnswer = '';
 
@@ -169,16 +179,16 @@ class QuizScene extends Phaser.Scene {
         this.lastAnswer = this.add.text(750, 700, '', {
             fontSize: '40px',
             fill: '#ff0000'
-        });
+        }).setPadding(6);
 
-        this.livesText = this.add.text(1600, 140, `残機:✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' });
-        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' });
+        this.livesText = this.add.text(1600, 140, `残機:✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(8);
+        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(6);
 
         // タイマーの設定
         this.timerText = this.add.text(880, 100, `${this.timeLimit} `, {
             fontSize: '40px',
             fill: '#ff0000'
-        });
+        }).setPadding(6);
         this.time.delayedCall(1000, () => {
             this.startTime = this.time.now; 
             console.log('タイマー開始！');
@@ -277,7 +287,7 @@ class QuizScene extends Phaser.Scene {
             this.lastAnswer.setText(`前回の解答: ${this.answerresult}`);
             return; // 不正解の場合、ここで処理終了
         }
-        this.livesText.setText(`残機: ${this.lives}`);
+        this.livesText.setText(`残機: ${this.lives}`).setPadding(6);
 
         
         // 正解または時間切れの場合、結果を表示して次へ
@@ -334,10 +344,10 @@ class AnswerResultScene extends Phaser.Scene {
             fill: '#ffffff',
             align: 'center', // テキストの中央揃え
             wordWrap: { width: 800, useAdvancedWrap: true }
-        }).setOrigin(0.5);
-        this.livesText = this.add.text(1600, 140,`残機✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' });
-        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' });
-        this.scoreresultText = this.add.text(100, 150, `+${this.score}`, { fontSize: '45px', fill: '#ff0000' });
+        }).setOrigin(0.5).setPadding(6);
+        this.livesText = this.add.text(1600, 140,`残機✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(6);
+        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(6);
+        this.scoreresultText = this.add.text(100, 150, `+${this.score}`, { fontSize: '45px', fill: '#ff0000' }).setPadding(6);
 
         // 2秒後に次の問題に進むか終了
         this.time.delayedCall(2000, () => {
