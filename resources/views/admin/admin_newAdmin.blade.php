@@ -2,10 +2,11 @@
 @section('title', '管理者登録')
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/newadmin.css') }}">
+<link rel="stylesheet" href="{{ asset('css/layout.css') }}">
 @endsection
 @section('content')
 <div class="login-container">
-    <h2>管理者登録</h2>
+    <h1>管理者登録</h1>
     <form action="/" method="POST">
         @csrf
         <div class="form">
@@ -22,7 +23,10 @@
                 <input type="password" id="password" name="password" class="form-control" required>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">登録</button>
+        <div class="registar-from">
+            <p>></p>
+            <button type="submit" class="btn btn-primary">登録</button>
+        <div>
     </form>
 </div>
 @endsection
