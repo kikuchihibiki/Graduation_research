@@ -9,28 +9,109 @@ class StartScene extends Phaser.Scene {
     create() {
         const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
-
-        const startLabel = this.add.text(D_WIDTH / 2, D_HEIGHT / 2, 'Press ENTER to Start', {
-            fontSize: '30px',
-            fill: '#ffffff'
-        }).setOrigin(0.5);
+        const answerInputRectWidth = D_WIDTH;  // 幅を調整
+        const answerInputRectHeight = 100; // 高さを調整
+        const answerInputRectX = D_WIDTH / 2;
+        const answerInputRectY = 800;
+        console.log(questionData)
+        // 背景矩形を追加（薄い黒）
+        this.add.graphics()
+            .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
+            .fillRect(answerInputRectX - answerInputRectWidth / 2, answerInputRectY - answerInputRectHeight / 2, answerInputRectWidth, answerInputRectHeight);
+        // 回答欄の表示
+        this.answerInput = this.add.text(D_WIDTH / 2, 800, '回答欄：エンターを押してスタート', {
+            fontSize: '50px',
+            fill: '#ffffff',
+            align: 'center'
+        }).setOrigin(0.5).setPadding(6);
 
         this.registry.set('timeLimit',timeLimitData);
-        // Enterキーを待機してクイズシーンへ
+        
         this.newScore = 0;
         this.registry.set('lastScore',this.newScore);
         this.registry.set('progressData', Array(6).fill(null));
         this.input.keyboard.on('keydown-ENTER', () => {
-            this.scene.start('QuizScene', { 
-                questionIndex: 0,//持ってきた問題
-                totalQuestions: questionData.length,//全問題
-                correctAnswers: 0,//正答数
-                lives: 3, // 残機を初期化
-                progress: 0,//現在の進行度
+            this.scene.start('CharacterScene', { 
+                questionIndex: 0,
+                totalQuestions: questionData.length,
+                correctAnswers: 0,
+                lives: 3, 
+                progress: 0,
             });
         });
     }
 }
+
+
+class CharacterScene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'CharacterScene' });
+    }
+    preload(){
+        this.load.image('background', 'assets/background.png');
+        this.load.image('character', 'assets/character.png');
+
+    }
+    create(data){
+        const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
+        background.setDisplaySize(D_WIDTH, D_HEIGHT);
+
+        this.questionIndex= data.questionIndex;
+        this.totalQuestions= data.totalQuestions;
+        this.correctAnswers= data.correctAnswers;
+        this.lives =data.lives;
+        this.progress=data.progress;
+
+        const character = this.add.image(-400, this.cameras.main.centerY , 'character');
+        character.setScale(0.5);
+
+        const backgroundRectWidth = 850;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
+        const backgroundRectHeight = 400; // 背景の高さ
+        const backgroundRectX = D_WIDTH / 2;
+        const backgroundRectY = 400;
+
+        this.add.graphics()
+        .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
+        .fillRect(backgroundRectX - backgroundRectWidth / 2, backgroundRectY - backgroundRectHeight / 2, backgroundRectWidth, backgroundRectHeight);
+        this.questionText = this.add.text(-400, this.cameras.main.centerY, '', {
+            fontSize: '60px',
+            fill: '#ffffff',
+            align: 'center', // テキストの中央揃え
+            wordWrap: { width: 800, useAdvancedWrap: true }
+        }).setOrigin(0.5).setPadding(16);
+
+        this.questionText.setText(questionData[this.questionIndex].question);
+
+        this.tweens.add({
+            targets: character,
+            x: this.cameras.main.centerX,
+            duration: 1000,
+            ease: 'Expo.In',
+            onComplete: () => {
+                this.tweens.add({
+                    targets: this.questionText,
+                    x: this.cameras.main.centerX,
+                    y: this.cameras.main.centerY,
+                    duration: 1000,
+                    ease: 'Expo.In',
+                    onComplete: () => {
+                        this.time.delayedCall(1000, () => {
+                        console.log("Starting QuizScene...");
+                        this.scene.start('QuizScene', {
+                            questionIndex: this.questionIndex,
+                            totalQuestions: this.totalQuestions,
+                            correctAnswers: this.correctAnswers,
+                            lives: this.lives,
+                            progress: this.progress,
+                        });
+                    });
+                }
+                });
+            }
+        });
+    }
+}
+
 
 class ProgressBar {
     constructor(scene, totalQuestions) {
@@ -80,6 +161,7 @@ class ProgressBar {
     update() {
         // 現在の進捗データを元に更新
         const progressData = this.scene.registry.get('progressData');
+        console.log(progressData);
         for (let i = 0; i < this.steps.length; i++) {
             const step = this.steps[i];
             if (progressData[i] === true) {
@@ -95,8 +177,6 @@ class ProgressBar {
         }
     }
 }
-
-
 // クイズ画面のシーン
 class QuizScene extends Phaser.Scene {
     constructor() {
@@ -106,6 +186,8 @@ class QuizScene extends Phaser.Scene {
 
     preload() {
         this.load.image('background', '/assets/background.png');
+        this.load.image('block', '/assets/block.png');
+        this.load.image('attack', '/assets/attack.png');
     }
 
     create(data) {
@@ -125,16 +207,12 @@ class QuizScene extends Phaser.Scene {
         // 現在の問題を取得
         this.questionText = questionData[this.questionIndex].question;
         this.correctAnswer = questionData[this.questionIndex].answer;
-        // 問題進行度の表示
-        // this.progressText = this.add.text(0, 50, ` ${this.progress}`, {
-        //     fontSize: '30px',
-        //     fill: '#ffffff'
-        // });
         // 質問の表示
         const backgroundRectWidth = 850;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
         const backgroundRectHeight = 400; // 背景の高さ
         const backgroundRectX = D_WIDTH / 2;
         const backgroundRectY = 400;
+        
 
     // 背景矩形を追加
     this.add.graphics()
@@ -145,7 +223,7 @@ class QuizScene extends Phaser.Scene {
             fill: '#ffffff',
             align: 'center', // テキストの中央揃え
             wordWrap: { width: 800, useAdvancedWrap: true }
-        }).setOrigin(0.5); // テキスト基準を中央に
+        }).setOrigin(0.5).setPadding(6); // テキスト基準を中央に
         
         const answerInputRectWidth = D_WIDTH;  // 幅を調整
         const answerInputRectHeight = 100; // 高さを調整
@@ -161,7 +239,7 @@ class QuizScene extends Phaser.Scene {
             fontSize: '50px',
             fill: '#ffcc00',
             align: 'center'
-        }).setOrigin(0.5);
+        }).setOrigin(0.5).setPadding(6);
 
         this.userAnswer = '';
 
@@ -169,16 +247,16 @@ class QuizScene extends Phaser.Scene {
         this.lastAnswer = this.add.text(750, 700, '', {
             fontSize: '40px',
             fill: '#ff0000'
-        });
+        }).setPadding(6);
 
-        this.livesText = this.add.text(1600, 140, `残機:✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' });
-        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' });
+        this.livesText = this.add.text(1600, 140, `残機:✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(8);
+        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(6);
 
         // タイマーの設定
         this.timerText = this.add.text(880, 100, `${this.timeLimit} `, {
             fontSize: '40px',
             fill: '#ff0000'
-        });
+        }).setPadding(6);
         this.time.delayedCall(1000, () => {
             this.startTime = this.time.now; 
             console.log('タイマー開始！');
@@ -247,6 +325,10 @@ class QuizScene extends Phaser.Scene {
         // this.progressBar.updateProgress(this.progress);
         // 正解の場合
         if (this.userAnswer === this.correctAnswer) {
+            const attack = this.add.image(this.cameras.main.centerX, 350, 'attack');
+            this.time.delayedCall(1000, () => {
+                attack.destroy(); // 画像を削除
+            });
             resultText = '正解！';
             color = '#00ff00';
             this.correctAnswers++;
@@ -268,6 +350,10 @@ class QuizScene extends Phaser.Scene {
         // 不正解の場合
         else {
             // 前回の解答を保持して表示
+            const block = this.add.image(this.cameras.main.centerX, 500, 'block').setScale(0.3);
+            this.time.delayedCall(1000, () => {
+                block.destroy(); // 画像を削除
+            });
             this.answerresult = this.userAnswer;
             this.userAnswer = '';
             this.updateAnswerDisplay();
@@ -277,7 +363,7 @@ class QuizScene extends Phaser.Scene {
             this.lastAnswer.setText(`前回の解答: ${this.answerresult}`);
             return; // 不正解の場合、ここで処理終了
         }
-        this.livesText.setText(`残機: ${this.lives}`);
+        this.livesText.setText(`残機: ${this.lives}`).setPadding(6);
 
         
         // 正解または時間切れの場合、結果を表示して次へ
@@ -334,15 +420,15 @@ class AnswerResultScene extends Phaser.Scene {
             fill: '#ffffff',
             align: 'center', // テキストの中央揃え
             wordWrap: { width: 800, useAdvancedWrap: true }
-        }).setOrigin(0.5);
-        this.livesText = this.add.text(1600, 140,`残機✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' });
-        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' });
-        this.scoreresultText = this.add.text(100, 150, `+${this.score}`, { fontSize: '45px', fill: '#ff0000' });
+        }).setOrigin(0.5).setPadding(6);
+        this.livesText = this.add.text(1600, 140,`残機✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(6);
+        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(6);
+        this.scoreresultText = this.add.text(100, 150, `+${this.score}`, { fontSize: '45px', fill: '#ff0000' }).setPadding(6);
 
         // 2秒後に次の問題に進むか終了
         this.time.delayedCall(2000, () => {
             if (this.lives != 0 === data.questionIndex + 1 < data.totalQuestions) {
-                this.scene.start('QuizScene', {
+                this.scene.start('CharacterScene', {
                     questionIndex: data.questionIndex + 1,
                     totalQuestions: data.totalQuestions,
                     correctAnswers: data.correctAnswers,
@@ -370,7 +456,6 @@ class EndScene extends Phaser.Scene {
         const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
         this.resultScore =  this.registry.get('lastScore') + data.lives * 100;
-
         this.add.text(600, 600, `最終スコア: ${this.resultScore}`, {
             fontSize: '24px',
             fill: '#ffffff'
@@ -400,3 +485,4 @@ window.StartScene = StartScene;
 window.QuizScene = QuizScene;
 window.AnswerResultScene = AnswerResultScene;
 window.EndScene = EndScene;
+window.CharacterScene = CharacterScene;
