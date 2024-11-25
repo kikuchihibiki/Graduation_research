@@ -62,7 +62,7 @@ class CharacterScene extends Phaser.Scene {
         this.lives =data.lives;
         this.progress=data.progress;
 
-        const character = this.add.image(-350, this.cameras.main.centerY , 'character');
+        const character = this.add.image(-400, this.cameras.main.centerY , 'character');
         character.setScale(0.5);
 
         const backgroundRectWidth = 850;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
@@ -73,13 +73,13 @@ class CharacterScene extends Phaser.Scene {
         this.add.graphics()
         .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
         .fillRect(backgroundRectX - backgroundRectWidth / 2, backgroundRectY - backgroundRectHeight / 2, backgroundRectWidth, backgroundRectHeight);
-        this.questionText = this.add.text(-350, this.cameras.main.centerY, '', {
+        this.questionText = this.add.text(-400, this.cameras.main.centerY, '', {
             fontSize: '60px',
             fill: '#ffffff',
             align: 'center', // テキストの中央揃え
             wordWrap: { width: 800, useAdvancedWrap: true }
         }).setOrigin(0.5).setPadding(16);
-        
+
         this.questionText.setText(questionData[this.questionIndex].question);
 
         this.tweens.add({
@@ -186,6 +186,8 @@ class QuizScene extends Phaser.Scene {
 
     preload() {
         this.load.image('background', '/assets/background.png');
+        this.load.image('block', '/assets/block.png');
+        this.load.image('attack', '/assets/attack.png');
     }
 
     create(data) {
@@ -205,16 +207,12 @@ class QuizScene extends Phaser.Scene {
         // 現在の問題を取得
         this.questionText = questionData[this.questionIndex].question;
         this.correctAnswer = questionData[this.questionIndex].answer;
-        // 問題進行度の表示
-        // this.progressText = this.add.text(0, 50, ` ${this.progress}`, {
-        //     fontSize: '30px',
-        //     fill: '#ffffff'
-        // });
         // 質問の表示
         const backgroundRectWidth = 850;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
         const backgroundRectHeight = 400; // 背景の高さ
         const backgroundRectX = D_WIDTH / 2;
         const backgroundRectY = 400;
+        
 
     // 背景矩形を追加
     this.add.graphics()
@@ -327,6 +325,10 @@ class QuizScene extends Phaser.Scene {
         // this.progressBar.updateProgress(this.progress);
         // 正解の場合
         if (this.userAnswer === this.correctAnswer) {
+            const attack = this.add.image(this.cameras.main.centerX, 350, 'attack');
+            this.time.delayedCall(1000, () => {
+                attack.destroy(); // 画像を削除
+            });
             resultText = '正解！';
             color = '#00ff00';
             this.correctAnswers++;
@@ -348,6 +350,10 @@ class QuizScene extends Phaser.Scene {
         // 不正解の場合
         else {
             // 前回の解答を保持して表示
+            const block = this.add.image(this.cameras.main.centerX, 500, 'block').setScale(0.3);
+            this.time.delayedCall(1000, () => {
+                block.destroy(); // 画像を削除
+            });
             this.answerresult = this.userAnswer;
             this.userAnswer = '';
             this.updateAnswerDisplay();
