@@ -10,7 +10,7 @@ body, html {
     color: white;
     font-family: 'Arial', sans-serif;
     text-align: center;
-    padding: 20px;
+    padding: 0px;
     max-width: 1000px; /* 必要に応じて幅を調整 */
     margin: 0 auto; /* 中央揃え */
 }
@@ -49,6 +49,7 @@ tbody tr {
 
 tbody tr:nth-child(odd) {
     background-color: #555; /* 奇数行の背景色 */
+    
 }
 
 td {
@@ -142,3 +143,13 @@ input:checked + .tab_item2 {
   width: 100%;
 }
 
+
+/* 作ったらまず最初はジャヴァのイージーだけ表示するCSS他は隠す */
+
+.ranking_tab{
+  display: none;
+}
+
+.selected{
+  display: contents;
+}
