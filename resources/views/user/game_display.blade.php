@@ -25,6 +25,8 @@
     <script>
         var questionData = @json($question);
         var timeLimitData = @json($TimeLimit);
+        var modeData = @json($mode);
+        var levelData = @json($level);
     </script>
     <!-- ゲームの初期化スクリプト -->
     <script src="{{ asset('scripts/main_scene.js') }}"></script>
