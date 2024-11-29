@@ -4,33 +4,132 @@ class StartScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', '/assets/background.png');
+        this.load.image('background', `assets/${modeData}/background${levelData}.png`);
     }
     create() {
         const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
-
-        const startLabel = this.add.text(D_WIDTH / 2, D_HEIGHT / 2, 'Press ENTER to Start', {
-            fontSize: '30px',
-            fill: '#ffffff'
-        }).setOrigin(0.5);
+        const answerInputRectWidth = D_WIDTH;  // 幅を調整
+        const answerInputRectHeight = 100; // 高さを調整
+        const answerInputRectX = D_WIDTH / 2;
+        const answerInputRectY = 800;
+        console.log(questionData)
+        // 背景矩形を追加（薄い黒）
+        this.add.graphics()
+            .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
+            .fillRect(answerInputRectX - answerInputRectWidth / 2, answerInputRectY - answerInputRectHeight / 2, answerInputRectWidth, answerInputRectHeight);
+        // 回答欄の表示
+        this.answerInput = this.add.text(D_WIDTH / 2, 800, '回答欄：エンターを押してスタート', {
+            fontSize: '50px',
+            fill: '#ffffff',
+            align: 'center'
+        }).setOrigin(0.5).setPadding(6);
 
         this.registry.set('timeLimit',timeLimitData);
-        // Enterキーを待機してクイズシーンへ
+        this.registry.set('mode',modeData);
+        this.registry.set('level',levelData);
+        console.log(this.registry.get('mode'));
+        console.log(this.registry.get('level'));
+        
         this.newScore = 0;
         this.registry.set('lastScore',this.newScore);
         this.registry.set('progressData', Array(6).fill(null));
         this.input.keyboard.on('keydown-ENTER', () => {
-            this.scene.start('QuizScene', { 
-                questionIndex: 0,//持ってきた問題
-                totalQuestions: questionData.length,//全問題
-                correctAnswers: 0,//正答数
-                lives: 3, // 残機を初期化
-                progress: 0,//現在の進行度
+            this.scene.start('CharacterScene', { 
+                questionIndex: 0,
+                totalQuestions: questionData.length,
+                correctAnswers: 0,
+                lives: 3, 
+                progress: 0,
             });
         });
     }
 }
+
+
+class CharacterScene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'CharacterScene' });
+    }
+    preload(){
+        this.textures.remove('character');
+
+        this.load.image('background', `assets/${this.registry.get('mode')}/background${this.registry.get('level')}.png`);
+
+        const characterIndex = this.progress <= 1 ? 1 : this.progress <= 3 ? 2 : 3;
+        const characterPath = `assets/${this.registry.get('mode')}/character${this.registry.get('level')}.png`;
+        console.log(characterPath);
+        this.registry.set('characterPath', characterPath);
+        this.load.image('character', characterPath);
+
+    }
+    create(data){
+        const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
+        background.setDisplaySize(D_WIDTH, D_HEIGHT);
+
+        this.questionIndex= data.questionIndex;
+        this.totalQuestions= data.totalQuestions;
+        this.correctAnswers= data.correctAnswers;
+        this.lives =data.lives;
+        this.progress=data.progress;
+
+        const character = this.add.image(-400, this.cameras.main.centerY , 'character');
+        const originalWidth = character.width;
+        const originalHeight = character.height;
+
+        if (originalWidth <= 300 || originalHeight <= 300) {
+            const scaleX = D_WIDTH *0.25 / originalWidth;
+            const scaleY = D_WIDTH  *0.25 / originalHeight;
+            const scale = Math.max(scaleX, scaleY); // 幅または高さに合わせて拡大
+            character.setScale(scale);
+        }
+        const backgroundRectWidth = 850;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
+        const backgroundRectHeight = 400; // 背景の高さ
+        const backgroundRectX = D_WIDTH / 2;
+        const backgroundRectY = 400;
+
+        this.add.graphics()
+        .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
+        .fillRect(backgroundRectX - backgroundRectWidth / 2, backgroundRectY - backgroundRectHeight / 2, backgroundRectWidth, backgroundRectHeight);
+        this.questionText = this.add.text(-400, this.cameras.main.centerY, '', {
+            fontSize: '60px',
+            fill: '#ffffff',
+            align: 'center', // テキストの中央揃え
+            wordWrap: { width: 800, useAdvancedWrap: true }
+        }).setOrigin(0.5).setPadding(16);
+
+        this.questionText.setText(questionData[this.questionIndex].question);
+
+        this.tweens.add({
+            targets: character,
+            x: this.cameras.main.centerX,
+            duration: 1000,
+            ease: 'Expo.In',
+            onComplete: () => {
+                this.tweens.add({
+                    targets: this.questionText,
+                    x: this.cameras.main.centerX,
+                    y: this.cameras.main.centerY,
+                    duration: 1000,
+                    ease: 'Expo.In',
+                    onComplete: () => {
+                        this.time.delayedCall(1000, () => {
+                        console.log("Starting QuizScene...");
+                        this.scene.start('QuizScene', {
+                            questionIndex: this.questionIndex,
+                            totalQuestions: this.totalQuestions,
+                            correctAnswers: this.correctAnswers,
+                            lives: this.lives,
+                            progress: this.progress,
+                        });
+                    });
+                }
+                });
+            }
+        });
+    }
+}
+
 
 class ProgressBar {
     constructor(scene, totalQuestions) {
@@ -80,6 +179,7 @@ class ProgressBar {
     update() {
         // 現在の進捗データを元に更新
         const progressData = this.scene.registry.get('progressData');
+        console.log(progressData);
         for (let i = 0; i < this.steps.length; i++) {
             const step = this.steps[i];
             if (progressData[i] === true) {
@@ -95,8 +195,6 @@ class ProgressBar {
         }
     }
 }
-
-
 // クイズ画面のシーン
 class QuizScene extends Phaser.Scene {
     constructor() {
@@ -105,13 +203,26 @@ class QuizScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', '/assets/background.png');
+        this.load.image('background', `assets/${this.registry.get('mode')}/background${this.registry.get('level')}.png`);
+        this.load.image('character', this.registry.get('characterPath'));  
+        this.load.image('block', '/assets/block.png');
+        this.load.image('attack', '/assets/attack.png');
     }
 
     create(data) {
+        console.log(`after${this.registry.get('characterPath')}`);
         const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
+        this.qCharacter = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'character');
+        const originalWidth = this.qCharacter.width;
+        const originalHeight = this.qCharacter.height;
+        if (originalWidth <= 300 || originalHeight <= 300) {
+            const scaleX = D_WIDTH *0.25 / originalWidth;
+            const scaleY = D_WIDTH  *0.25/ originalHeight;
+            const scale = Math.max(scaleX, scaleY); // 幅または高さに合わせて拡大
+            this.qCharacter.setScale(scale);
+        }
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
-
+        console.log(data.progress);
         this.questionIndex = data.questionIndex;
         this.totalQuestions = data.totalQuestions;
         this.correctAnswers = data.correctAnswers;
@@ -122,19 +233,23 @@ class QuizScene extends Phaser.Scene {
         this.timeLimit = this.registry.get('timeLimit');
         this.progressBar = new ProgressBar(this, this.totalQuestions);
         this.progressBar.update(this.registry.get('progressData'));
+        this.characterTween = this.tweens.add({
+            targets: this.qCharacter,
+            scale: this.qCharacter.scale * 2,  // 最大スケール
+            duration: this.timeLimit * 1000, // 制限時間いっぱいで拡大
+            ease: 'Linear',
+        });
+
+
         // 現在の問題を取得
         this.questionText = questionData[this.questionIndex].question;
         this.correctAnswer = questionData[this.questionIndex].answer;
-        // 問題進行度の表示
-        // this.progressText = this.add.text(0, 50, ` ${this.progress}`, {
-        //     fontSize: '30px',
-        //     fill: '#ffffff'
-        // });
         // 質問の表示
         const backgroundRectWidth = 850;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
         const backgroundRectHeight = 400; // 背景の高さ
         const backgroundRectX = D_WIDTH / 2;
         const backgroundRectY = 400;
+        
 
     // 背景矩形を追加
     this.add.graphics()
@@ -145,7 +260,7 @@ class QuizScene extends Phaser.Scene {
             fill: '#ffffff',
             align: 'center', // テキストの中央揃え
             wordWrap: { width: 800, useAdvancedWrap: true }
-        }).setOrigin(0.5); // テキスト基準を中央に
+        }).setOrigin(0.5).setPadding(6); // テキスト基準を中央に
         
         const answerInputRectWidth = D_WIDTH;  // 幅を調整
         const answerInputRectHeight = 100; // 高さを調整
@@ -161,7 +276,7 @@ class QuizScene extends Phaser.Scene {
             fontSize: '50px',
             fill: '#ffcc00',
             align: 'center'
-        }).setOrigin(0.5);
+        }).setOrigin(0.5).setPadding(6);
 
         this.userAnswer = '';
 
@@ -169,16 +284,16 @@ class QuizScene extends Phaser.Scene {
         this.lastAnswer = this.add.text(750, 700, '', {
             fontSize: '40px',
             fill: '#ff0000'
-        });
+        }).setPadding(6);
 
-        this.livesText = this.add.text(1600, 140, `残機:✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' });
-        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' });
+        this.livesText = this.add.text(1600, 140, `残機:✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(8);
+        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(6);
 
         // タイマーの設定
         this.timerText = this.add.text(880, 100, `${this.timeLimit} `, {
             fontSize: '40px',
             fill: '#ff0000'
-        });
+        }).setPadding(6);
         this.time.delayedCall(1000, () => {
             this.startTime = this.time.now; 
             console.log('タイマー開始！');
@@ -190,6 +305,11 @@ class QuizScene extends Phaser.Scene {
             callbackScope: this,
             repeat: this.timeLimit - 1
         });
+
+        this.blinkingRect = this.add.graphics();
+        this.blinkingRect.fillStyle(0xff0000, 0.5);
+        this.blinkingRect.fillRect(0, 0, D_WIDTH, D_HEIGHT);
+        this.blinkingRect.setAlpha(0); 
 
         // ユーザー入力の処理
         this.input.keyboard.on('keydown', (event) => {
@@ -238,6 +358,28 @@ class QuizScene extends Phaser.Scene {
     updateTimer() {
         this.timeLimit--;
         this.timerText.setText(`${this.timeLimit}`);
+        this.blinking = false; 
+        // timeLimit が 5 以下になったら背景を赤く滑らかに点滅させる
+        if (this.timeLimit <= 5 && !this.blinking) {
+            this.blinking = true; // 点滅中フラグ
+
+            // 透明度を変更するtweenを設定
+            this.tweens.add({
+                targets: this.blinkingRect,
+                alpha: 0.5, // 最大透明度
+                duration: 500, // 500msごとに
+                yoyo: true,  // 往復させて点滅を作成
+                repeat: -1,  // 無限ループ
+                ease: 'Sine.easeInOut' // なめらかな変化
+            });
+        }
+
+        // timeLimit が 0 以下になったら点滅を完全に止める
+        if (this.timeLimit <= 0) {
+            // 点滅を停止
+            this.tweens.killTweensOf(this.blinkingRect); // 点滅用のtweenを停止
+            this.blinkingRect.setAlpha(0); // 透明に戻す
+        }
     }
 
     checkAnswer(timeout = false) {
@@ -247,6 +389,10 @@ class QuizScene extends Phaser.Scene {
         // this.progressBar.updateProgress(this.progress);
         // 正解の場合
         if (this.userAnswer === this.correctAnswer) {
+            const attack = this.add.image(this.cameras.main.centerX, 350, 'attack');
+            this.time.delayedCall(2000, () => {
+                attack.destroy(); // 画像を削除
+            });
             resultText = '正解！';
             color = '#00ff00';
             this.correctAnswers++;
@@ -258,16 +404,43 @@ class QuizScene extends Phaser.Scene {
             this.score = Math.floor(200 - ((elapsedTime / this.timeLimit) * 100 + this.missCount * 10));
             this.score = this.score < 0 ? 0 : this.score;
             this.input.keyboard.removeListener('keydown');
+
+            this.stopBlinking = true;  // 正解時に点滅を停止
+
+        // 拡大アニメーションを停止
+        if (this.characterTween) {
+            this.characterTween.stop(); // 拡大アニメーションを停止
+        }
         }
         // 時間切れの場合
         else if (timeout) {
             resultText = '時間切れ！不正解';
             this.lives--;
-            progressData[this.questionIndex] = false; 
+            progressData[this.questionIndex] = false;
+
+            const explosion = this.add.sprite(this.cameras.main.centerX, this.cameras.main.centerY, 'attack').setScale(1.5);
+            explosion.play('explode'); // 'explode' アニメーションを再生する場合
+
+        // 1秒後に爆発を削除
+            this.time.delayedCall(1000, () => {
+            explosion.destroy();
+        });
+
+        // 画面揺れを追加
+        this.cameras.main.shake(500, 0.05); // 500ms間、揺れ幅0.05で揺れる
+
+        // 1秒後に揺れを止める
+        this.time.delayedCall(1000, () => {
+            this.cameras.main.resetFX();
+        });
         }
         // 不正解の場合
         else {
             // 前回の解答を保持して表示
+            const block = this.add.image(this.cameras.main.centerX, 500, 'block').setScale(0.3);
+            this.time.delayedCall(1000, () => {
+                block.destroy(); // 画像を削除
+            });
             this.answerresult = this.userAnswer;
             this.userAnswer = '';
             this.updateAnswerDisplay();
@@ -277,7 +450,7 @@ class QuizScene extends Phaser.Scene {
             this.lastAnswer.setText(`前回の解答: ${this.answerresult}`);
             return; // 不正解の場合、ここで処理終了
         }
-        this.livesText.setText(`残機: ${this.lives}`);
+        this.livesText.setText(`残機: ${this.lives}`).setPadding(6);
 
         
         // 正解または時間切れの場合、結果を表示して次へ
@@ -307,7 +480,8 @@ class AnswerResultScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', '/assets/background.png');
+        this.load.image('background', `assets/${this.registry.get('mode')}/background${this.registry.get('level')}.png`);
+
     }
 
     create(data) {
@@ -334,15 +508,15 @@ class AnswerResultScene extends Phaser.Scene {
             fill: '#ffffff',
             align: 'center', // テキストの中央揃え
             wordWrap: { width: 800, useAdvancedWrap: true }
-        }).setOrigin(0.5);
-        this.livesText = this.add.text(1600, 140,`残機✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' });
-        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' });
-        this.scoreresultText = this.add.text(100, 150, `+${this.score}`, { fontSize: '45px', fill: '#ff0000' });
+        }).setOrigin(0.5).setPadding(6);
+        this.livesText = this.add.text(1600, 140,`残機✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(6);
+        this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(6);
+        this.scoreresultText = this.add.text(100, 150, `+${this.score}`, { fontSize: '45px', fill: '#ff0000' }).setPadding(6);
 
         // 2秒後に次の問題に進むか終了
         this.time.delayedCall(2000, () => {
             if (this.lives != 0 === data.questionIndex + 1 < data.totalQuestions) {
-                this.scene.start('QuizScene', {
+                this.scene.start('CharacterScene', {
                     questionIndex: data.questionIndex + 1,
                     totalQuestions: data.totalQuestions,
                     correctAnswers: data.correctAnswers,
@@ -370,7 +544,6 @@ class EndScene extends Phaser.Scene {
         const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
         this.resultScore =  this.registry.get('lastScore') + data.lives * 100;
-
         this.add.text(600, 600, `最終スコア: ${this.resultScore}`, {
             fontSize: '24px',
             fill: '#ffffff'
@@ -400,3 +573,4 @@ window.StartScene = StartScene;
 window.QuizScene = QuizScene;
 window.AnswerResultScene = AnswerResultScene;
 window.EndScene = EndScene;
+window.CharacterScene = CharacterScene;
