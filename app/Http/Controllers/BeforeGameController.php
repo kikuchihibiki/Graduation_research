@@ -34,14 +34,15 @@ class BeforeGameController extends Controller
         $mode = $request->session()->get('mode');
         $level = $request->input('level');
         $question = [
-            ['question' => 'HTMLの拡張子は何ですか？', 'answer' => '.html'],
-            ['question' => 'Webアプリケーションの開発に広く使用されるPythonの軽量フレームワークは何ですか？', 'answer' => 'flask'],
-            ['question' => 'PythonでHTTPリクエストを処理するためのライブラリは何ですか？', 'answer' => 'requests'],
-            ['question' => 'PythonでJSONデータを処理するための標準ライブラリは何ですか？', 'answer' => 'json'],
-            ['question' => '整数型のデータタイプは何ですか？', 'answer' => 'int'],
-            ['question' => '小数点数のデータタイプは何ですか？', 'answer' => 'float']
+            ['id' => '1', 'question' => 'HTMLの拡張子は何ですか？', 'answer' => '.html'],
+            ['id' => '2', 'question' => 'Webアプリケーションの開発に広く使用されるPythonの軽量フレームワークは何ですか？', 'answer' => 'flask'],
+            ['id' => '3', 'question' => 'PythonでHTTPリクエストを処理するためのライブラリは何ですか？', 'answer' => 'requests'],
+            ['id' => '4', 'question' => 'PythonでJSONデータを処理するための標準ライブラリは何ですか？', 'answer' => 'json'],
+            ['id' => '5', 'question' => '整数型のデータタイプは何ですか？', 'answer' => 'int'],
+            ['id' => '6', 'question' => '小数点数のデータタイプは何ですか？', 'answer' => 'float']
         ];
         $TimeLimit = 15;
+
         return view('user.game_display', [
             'mode' => $mode,
             'level' => $level,
@@ -61,5 +62,15 @@ class BeforeGameController extends Controller
             'mode' => $mode,
             'question' => $question
         ]);
+    }
+
+    public function game_result_show()
+    {
+        $correctAnswers = session('correctAnswers');
+        $totalQuestions = session('totalQuestions');
+        $resultScore = session('resultScore');
+        $answerArray = session('answerArray');
+        $idArry = session('idArry');
+        return view('user.game_result');
     }
 }
