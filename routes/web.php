@@ -31,3 +31,4 @@ Route::get('/admin_menu', [AdminController::class, 'admin_menu']);
 Route::get('/admin_questionlist', [AdminController::class, 'admin_questionlist']);
 Route::get('/admin_ranking', [AdminController::class, 'admin_ranking']);
 Route::get('/admin_newAdmin', [AdminController::class, 'admin_newAdmin']);
+Route::get('/admin_passreset', [AdminController::class, 'admin_password']);

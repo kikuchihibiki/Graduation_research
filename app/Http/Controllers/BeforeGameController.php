@@ -33,7 +33,6 @@ class BeforeGameController extends Controller
     {
         $mode = $request->session()->get('mode');
         $level = $request->input('level');
-        $request->session()->put('level', $level);
         $question = [
             ['question' => 'HTMLの拡張子は何ですか？', 'answer' => '.html'],
             ['question' => 'Webアプリケーションの開発に広く使用されるPythonの軽量フレームワークは何ですか？', 'answer' => 'flask'],
@@ -45,6 +44,7 @@ class BeforeGameController extends Controller
         $TimeLimit = 15;
         return view('user.game_display', [
             'mode' => $mode,
+            'level' => $level,
             'question' => $question,
             'TimeLimit' => $TimeLimit
         ]);
