@@ -30,4 +30,8 @@ class AdminController extends Controller
     {
         return view('admin.admin_newAdmin');
     }
+    public function admin_password()
+    {
+        return view('admin.admin_passreset');
+    }
 }
