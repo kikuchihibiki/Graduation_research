@@ -1,0 +1,55 @@
+/* 全体のスタイル設定 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000; /* 背景を黒に設定 */
+    color: #fff; /* テキストを白に設定 */
+    display: flex;
+    justify-content: center; /* 水平方向の中央揃え */
+    align-items: center; /* 垂直方向の中央揃え */
+    height: 100vh; /* 高さを画面全体に設定 */
+    overflow: hidden; /* スクロールバーを防止 */
+}
+
+/* フォーム全体のスタイル */
+form#passreset {
+    text-align: center; /* テキストを中央揃え */
+    padding: 20px;
+    width: 90%; /* フォームの幅を画面の90%に制限 */
+    max-width: 500px; /* 最大幅を500pxに設定 */
+    margin: 0 auto; /* フォームを中央揃え */
+    border-radius: 10px;
+    box-sizing: border-box; /* パディングを幅に含める */
+    font-size: 20px;
+}
+
+/* 入力欄のスタイル */
+input[type="text"] {
+    width: 100%; /* 横幅をフォームの幅いっぱいに設定 */
+    padding: 10px;
+    margin-top: 10px; /* 上部の余白 */
+    margin-bottom: 20px; /* 下部の余白 */
+    border: 2px solid #fff;
+    border-radius: 5px;
+    background-color: white; 
+    color: #fff;
+    font-size: 1em;
+    box-sizing: border-box; /* パディングを幅に含める */
+}
+
+/* ボタンのスタイル */
+button {
+    width: auto; /* ボタンの幅を適切に調整 */
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #ffffff;
+    background-color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 2.5em;
+}
+
+
