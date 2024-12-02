@@ -19,5 +19,17 @@
     <label for="logout">　　　　　　　　ログアウト　　　　</label>
     <input type="submit" style="display:none;">
 </form>
+
+<!-- モーダル要素 -->
+<div class="modal-overlay">
+    <div id="logout_modal" class="modal">
+        <div class="modal_content">
+            <p>本当にログアウトしますか？</p>
+            <button id="confirm_logout">ログアウト</button>
+            <button id="close_modal">キャンセル</button>
+        </div>
+    </div>
+</div>
+
 <script src="{{ asset('js/admin_menu.js') }}"></script>
 @endsection

@@ -25,12 +25,12 @@ function formSwitch() {
 			console.log(element.checked);
             //selectedというクラスがついている要素が存在しているならば
             //そのselectedがついている要素を取得する
-            let todori = document.querySelector('.selected');
+            let select = document.querySelector('.selected');
             
             // selectedクラスが存在する場合取得したらselectedクラスを消す
-            if (todori) {
+            if (select) {
             // selectedクラスを削除
-            todori.classList.remove('selected');   
+            select.classList.remove('selected');   
             }
 
             //今現在の値を取ってくる

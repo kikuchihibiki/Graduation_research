@@ -46,14 +46,14 @@
 
             
             <th>
-                <input id="hard" type="radio" name="tab_item2" checked value="hard"> 
+                <input id="hard" type="radio" name="tab_item2" value="hard"> 
                 <label class="tab_item checkBox2" for="hard">ハード</label>
             </th>
         </tr>
     </thead>
 </form>
     
-        <tbody class="ranking_tab" id="java-eazy">
+        <tbody class="ranking_tab selected" id="java-eazy" >
             <tr class="rank_tr_1">
                 <td class="rank">1位</td>
                 <td class="rank-name">Omoto</td>
