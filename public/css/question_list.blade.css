@@ -1,0 +1,200 @@
+.hidden {
+  display: none;
+}
+
+/*標示非表示のトグルボタン*/
+/* トグルボタンのスタイル */
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 15px; /* テーブルとの余白 */
+}
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+}
+
+.toggle input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 25px;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 19px;
+  width: 19px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #007bff;
+}
+
+input:checked + .slider:before {
+  transform: translateX(25px);
+}
+
+#toggle-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+ 
+ /* ヘッダーの背景色 */
+ th {
+    background-color: #dcdcdc !important; /* グリーン */
+    color: white; /* 白文字 */
+  }
+
+/* 偶数行の背景色と文字色 */
+table tr:nth-child(even) {    
+    background-color: #dcdcdc; /* ライトグレー */
+    color: #000000; /* 黒色 */
+}
+
+/* 奇数行の背景色と文字色 */
+table tr:nth-child(odd) {
+    background-color: #ffffff; /* 白 */
+    color: #000000; /* 黒色 */
+}
+
+
+/* 画面全体の背景色と文字色を設定 */
+body {
+    background-color: #000000; /* 背景色を黒 */
+    color: #ffffff;            /* 文字色を白 */
+}
+
+/* テーブル全体に枠線を設定 */
+table {
+    margin: auto;
+    border-collapse: collapse; /* セルの枠線を結合して重複をなくす */
+    width: 70%;               /* テーブルの幅を100%に設定（任意） */
+}
+
+/* テーブルのセル（thとtd）に枠線を設定 */
+table, th, td {
+    border: 1px solid #333; /* 枠線の色を濃いグレーに */
+    padding: 8px;           /* セル内の余白を指定 */
+}
+
+/* 検索窓 */
+.searchForm {
+    position: relative;
+    width: 20%; /* 親要素の幅を20%に設定 */
+    min-width: 120px; /* 必要に応じて最小幅を指定 */
+    margin-left: 15%; /* 左側に15%の余白 */
+  }
+  
+  .searchForm-input {
+    width: 100%;
+    padding: 5px 35px 5px 5px; /* 右側の余白を追加してアイコンが重ならないようにする */
+    border: 1px solid #999;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+  
+  .searchForm-submit {
+    position: absolute;
+    width: 20px; /* アイコンの幅 */
+    height: 20px; /* アイコンの高さ */
+    top: 50%;
+    right: 10px; /* inputの右端から10pxの余白 */
+    transform: translateY(-50%); /* 垂直方向の中央揃え */
+  }
+  
+  .searchForm-submit {
+    position: absolute;
+    width: 30px; /* ボタンの幅 */
+    height: 30px; /* ボタンの高さ */
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background-color: #999; /* ボタンの背景色 */
+    color: #fff; /* アイコンの色 */
+    border: none; /* ボーダーを削除 */
+    border-radius: 50%; /* 丸いボタン */
+    cursor: pointer; /* クリック可能を示すカーソル */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px; /* アイコンサイズ */
+}
+ 
+/* 解答セルのスタイル */
+.answer-cell {
+  align-items: center;
+  gap: 10px; /* アイコンと解答の間隔 */
+  justify-content: start; /* 左寄せ */
+}
+
+/* 初期状態で解答を非表示 */
+.answer {
+  display: none;
+}
+
+/* 表示時の目のアイコン */
+.eye-open::after {
+  content: "👁️"; /* 表示中の目のアイコン */
+}
+
+/* 非表示時の線が入った目のアイコン */
+.eye-closed::after {
+  content: "🙈"; /* 非表示中の目のアイコン */
+}
+
+/* ボタンのデザインを調整 */
+.toggle-answer {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px; /* アイコンサイズ */
+}
+
+
+/*モーダル*/
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明の黒背景 */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: rgb(202, 202, 202);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 80%;
+  text-align: center;
+  position: relative;
+}
