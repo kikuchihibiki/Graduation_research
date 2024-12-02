@@ -53,7 +53,12 @@
                 <button class="toggle-answer eye-closed"></button>
                 <span class="answer">java解答{{ $i + 1 }}</span>
                 </td>
-                <td>java解説 {{ $i + 1 }}</td>
+                <td>
+                <!-- 解説リンクに解説データを設定 -->
+                <a href="javascript:void(0)" 
+                class="toggle-explanation" 
+                data-explanation="java解説 {{ $i + 1 }}">▽解説</a>
+                </td>
                 <td>java回答状況 {{ $i + 1 }}</td>
             </tr>
         @endfor
@@ -86,41 +91,60 @@
             </tr>
         @endfor
     </tbody>
+    <!-- モーダル -->
+    <div id="explanationModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <p id="explanationText"></p>
+    </div>
+</div>
+
 </table>
+
+<!-- モーダル構造 -->
+<div id="explanationModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <p id="explanationText"></p>
+    </div>
+</div>
 
 
 <script>
-  function filterTable(language) {
-    const rows = document.querySelectorAll("tbody tr");
-    rows.forEach(row => {
-      if (language === 'all') {
-        row.classList.remove("hidden");
-      } else if (row.classList.contains(language)) {
-        row.classList.remove("hidden");
-      } else {
-        row.classList.add("hidden");
-      }
-    });
-  }
+function filterTable(language, status = null) {
+  const rows = document.querySelectorAll("tbody tr");
+  rows.forEach(row => {
+    const isLanguageMatch = language === 'all' || row.classList.contains(language);
+    const isStatusMatch = !status || row.dataset.status === status;
 
-  function searchTable() {
-  // プルダウンで選択された検索対象（question または answer）
+    if (isLanguageMatch && isStatusMatch) {
+      row.classList.remove("hidden");
+    } else {
+      row.classList.add("hidden");
+    }
+  });
+}
+
+
+function searchTable() {
   const searchField = document.getElementById('searchField').value; 
-  const searchInput = document.getElementById('searchInput').value.toLowerCase(); // 検索キーワードを小文字に変換
-  const rows = document.querySelectorAll("tbody tr"); // テーブルの行を取得
+  const searchInput = document.getElementById('searchInput').value.toLowerCase();
+  const rows = document.querySelectorAll("tbody tr");
+  let matchFound = false;
 
   rows.forEach(row => {
-    // 対象のセルを選択（選択値によって切り替え）
     const targetCell = row.querySelector(`.${searchField}`);
     const cellText = targetCell ? targetCell.textContent.toLowerCase() : '';
 
-    // キーワードが一致するかを判定
     if (cellText.includes(searchInput)) {
-      row.classList.remove("hidden"); // 一致する行を表示
+      row.classList.remove("hidden");
+      matchFound = true;
     } else {
-      row.classList.add("hidden"); // 一致しない行を非表示
+      row.classList.add("hidden");
     }
   });
+
+  if (!matchFound) {
+    alert('該当する項目が見つかりませんでした。');
+  }
 }
 
 
@@ -173,6 +197,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+//モーダル
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("explanationModal");
+    const modalContent = document.getElementById("explanationText");
+    const explanationLinks = document.querySelectorAll(".toggle-explanation");
+
+    // 解説リンククリック時
+    explanationLinks.forEach(link => {
+        link.addEventListener("click", function () {
+            const explanation = this.getAttribute("data-explanation"); // 解説内容を取得
+            modalContent.textContent = explanation; // モーダル内に解説を挿入
+            modal.style.display = "flex"; // モーダルを表示
+        });
+    });
+
+    // モーダル背景クリック時に閉じる
+    modal.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none"; // モーダルを非表示
+        }
+    });
+});
+
 </script>
 
 <a href="/select_mode">戻る</a>
