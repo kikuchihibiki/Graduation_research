@@ -41,8 +41,15 @@ class FillauthController extends Controller
         $idArry = $request->input('idArry');
 
         $showAnswers = array_map(function ($value) {
-            return $value == 1 ? '〇' : '☓';
+            if ($value === true) {
+                return '〇';
+            } elseif ($value === false) {
+                return '☓';
+            } else {
+                return '未回答';
+            }
         }, $answerArray);
+
 
         session(([
             'correctAnswers' => $correctAnswers,

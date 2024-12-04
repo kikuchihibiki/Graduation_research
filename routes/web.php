@@ -25,7 +25,7 @@ Route::post('/select_level', [BeforeGameController::class, 'save_mode'])->name('
 Route::post('/start_game', [BeforeGameController::class, 'start_game'])->name('start_game');
 Route::post('/wrong_answer', [BeforeGameController::class, 'wrong_answer'])->name('wrong_answer');
 Route::get('/question_list', [FunctionController::class, 'question_list']);
-Route::get('/ranking', [FunctionController::class, 'ranking']);
+Route::get('/ranking', [FunctionController::class, 'ranking'])->name('ranking');
 Route::get('/miss_question', [FunctionController::class, 'miss_question']);
 Route::get('/admin', [AdminController::class, 'admin']);
 Route::get('/admin_menu', [AdminController::class, 'admin_menu']);
@@ -35,3 +35,4 @@ Route::get('/admin_newAdmin', [AdminController::class, 'admin_newAdmin']);
 Route::get('/admin_passreset', [AdminController::class, 'admin_password']);
 Route::post('/game_result', [FillauthController::class, 'game_result'])->name('game_result');
 Route::get('/game_result_show', [BeforeGameController::class, 'game_result_show'])->name('game_result_show');
+Route::get('/commentary', [BeforeGameController::class, 'commentary'])->name('commentary');

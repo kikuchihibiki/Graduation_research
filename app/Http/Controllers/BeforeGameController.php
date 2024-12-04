@@ -8,6 +8,28 @@ class BeforeGameController extends Controller
 {
     public function title_display()
     {
+        $userDirectory = getenv('APPDATA');
+
+        $appName = 'my_name';
+        $subDirectory = 'user_data';
+        $filename = 'user_data.json';
+
+        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
+        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
+
+        if (!is_dir($directoryPath)) {
+            if (!mkdir($directoryPath, 0777, true)) {
+                die("makefile");
+            }
+        }
+
+        $emptyData = json_encode([]);
+
+        if (file_put_contents($filePath, $emptyData)) {
+            echo "空のJSONファイルが作成されました: $filePath";
+        } else {
+            echo "JSONファイルの作成に失敗しました。";
+        }
         return view('user.title');
     }
     public function save_name(Request $request)
@@ -72,5 +94,10 @@ class BeforeGameController extends Controller
         $answerArray = session('answerArray');
         $idArry = session('idArry');
         return view('user.game_result');
+    }
+
+    public function commentary()
+    {
+        return view('user.commentary');
     }
 }
