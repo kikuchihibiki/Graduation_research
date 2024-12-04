@@ -287,27 +287,27 @@
 
             <tr class="rank_tr_1">
                 <td class="rank">1位</td>
-                <td class="rank-name">kimuti</td>
+                <td class="rank-name">kimutiｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄ</td>
                 <td class="rank-score">22450</td>
             </tr>
             <tr>
                 <td class="rank2">2位</td>
-                <td class="rank2-name">yamibaita-</td>
+                <td class="rank2-name">yamibaita-ｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄ</td>
                 <td class="rank2-score">22000</td>
             </tr>
             <tr >
                 <td class="rank3">3位</td>
-                <td class="rank3-name">NTR</td>
+                <td class="rank3-name">NTRｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄ</td>
                 <td class="rank3-score">19000</td>
             </tr>
             <tr>
                 <td class="rank4">4位</td>
-                <td class="text-white">arakida</td>
+                <td class="text-white">arakidaｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄｄ</td>
                 <td class="text-white">17800</td>
             </tr>
             <tr>
                 <td class="rank4">5位</td>
-                <td class="text-white">dadadsa</td>
+                <td class="text-white">dadadsaddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</td>
                 <td class="text-white">15000</td>
             </tr>
         </tbody>
@@ -315,8 +315,8 @@
 <div class="score">
     <p class="white">あなたのスコア: <span>11500</span></p>
 </div>
-<div class="back-button">
-    <a href="#" style="color:white;">≻戻る</a>
+<div>
+    <button id="back_button" onclick="history.back()">戻る</button>
 </div>
 </div>
 

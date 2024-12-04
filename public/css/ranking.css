@@ -56,6 +56,8 @@ tbody tr:nth-child(odd) {
 td {
     padding: 10px;
     border: 1px solid #333; /* セルの枠線 */
+    overflow: hidden; /* 溢れた部分を隠す */
+    text-overflow: ellipsis; /* 超えた部分を省略記号にする */
 }
 
 .rank, .rank2, .rank3, .rank4 {
@@ -153,4 +155,13 @@ input:checked + .tab_item2 {
 
 .selected{
   display: contents;
+}
+
+.lang{
+  width: 33%;
+}
+
+/*クラスの中のtdの2行目にCSSを魔法をかける*/
+.ranking_tab td:nth-of-type(2){
+  word-break: break-all;
 }
