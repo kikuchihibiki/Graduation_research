@@ -20,18 +20,31 @@ class BeforeGameController extends Controller
 
         if (!is_dir($directoryPath)) {
             if (!mkdir($directoryPath, 0777, true)) {
-                die("makefile");
+                $message = "ディレクトリの作成に失敗しました";
             }
         }
 
-        $emptyData = json_encode([]);
-
-        if (file_put_contents($filePath, $emptyData)) {
-            echo "空のJSONファイルが作成されました: $filePath";
+        if (!file_exists($filePath)) {
+            $emptyData = json_encode([]);
+            if (file_put_contents($filePath, $emptyData) === false) {
+                $message = "jsonファイルの作成に失敗しました";
+            }
         } else {
-            echo "JSONファイルの作成に失敗しました。";
+            $fileContents = file_get_contents($filePath);
+            $data = json_decode($fileContents, true);
+
+            if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
+                $emptyData = json_encode([]);
+                if (file_put_contents($filePath, $emptyData) === false) {
+                    $message = "不正なjsonファイルです";
+                }
+                $message = "jsonファイルを初期化しました";
+            } else {
+                $message = "内容を保持しています";
+            }
         }
-        return view('user.title');
+
+        return view('user.title', ['massage' => $message]);
     }
     public function save_name(Request $request)
     {
@@ -56,6 +69,7 @@ class BeforeGameController extends Controller
     {
         $mode = $request->session()->get('mode');
         $level = $request->input('level');
+        $request->session()->put('level', $level);
         $question = [
             ['id' => '1', 'question' => 'HTMLの拡張子は何ですか？', 'answer' => '.html'],
             ['id' => '2', 'question' => 'Webアプリケーションの開発に広く使用されるPythonの軽量フレームワークは何ですか？', 'answer' => 'flask'],
@@ -107,7 +121,7 @@ class BeforeGameController extends Controller
             $questionId = $idJsons['id'];
             $isCorrect = $idJsons['answer'];
 
-            if ($isCorrect === '未回答') {
+            if (is_null($isCorrect)) {
                 continue;
             }
 
@@ -117,19 +131,41 @@ class BeforeGameController extends Controller
 
             if ($isCorrect === true) {
                 $data[$questionId]['正解数']++;
-            } else {
+            } elseif ($isCorrect === false) {
                 $data[$questionId]['誤答数']++;
             }
         }
 
         file_put_contents($filePath, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 
-        var_dump(file_get_contents($filePath));
+        var_dump('jsonfile', file_get_contents($filePath));
+        var_dump('結果', $idJson);
         return view('user.game_result');
     }
 
     public function commentary()
     {
         return view('user.commentary');
+    }
+
+    public function game_restart()
+    {
+        $mode = session()->get('mode');
+        $level = session()->get('level');
+        $question = [
+            ['id' => '1', 'question' => 'HTMLの拡張子は何ですか？', 'answer' => '.html'],
+            ['id' => '2', 'question' => 'Webアプリケーションの開発に広く使用されるPythonの軽量フレームワークは何ですか？', 'answer' => 'flask'],
+            ['id' => '3', 'question' => 'PythonでHTTPリクエストを処理するためのライブラリは何ですか？', 'answer' => 'requests'],
+            ['id' => '4', 'question' => 'PythonでJSONデータを処理するための標準ライブラリは何ですか？', 'answer' => 'json'],
+            ['id' => '5', 'question' => '整数型のデータタイプは何ですか？', 'answer' => 'int'],
+            ['id' => '6', 'question' => '小数点数のデータタイプは何ですか？', 'answer' => 'float']
+        ];
+        $TimeLimit = 15;
+        return view('user.game_display', [
+            'mode' => $mode,
+            'level' => $level,
+            'question' => $question,
+            'TimeLimit' => $TimeLimit
+        ]);
     }
 }
