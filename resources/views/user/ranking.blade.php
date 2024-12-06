@@ -16,17 +16,17 @@
              
             <th class="lang java" >
                 <input id="javaCheck" type="radio" name="tab_item" checked value="java">
-                <label class="tab_item checkBox" for="javaCheck">JAVA</label>
+                <label class="tab_item checkBox kind" for="javaCheck">JAVA</label>
             </th>
 
             <th class="lang php" >
                 <input id="phpCheck" type="radio" name="tab_item"  value="php"> 
-                <label class="tab_item checkBox" for="phpCheck">PHP</label>
+                <label class="tab_item checkBox kind" for="phpCheck">PHP</label>
             </th>
 
             <th class="lang python">
                 <input id="pythonCheck" type="radio" name="tab_item" value="python"> 
-                <label class="tab_item checkBox" for="pythonCheck">PYTHON</label>
+                <label class="tab_item checkBox kind" for="pythonCheck">PYTHON</label>
             </th>
 
 
@@ -55,17 +55,17 @@
     
         <tbody class="ranking_tab selected" id="java-eazy" >
             <tr class="rank_tr_1">
-                <td class="rank">1位</td>
+                <td class="rank 1">1位</td>
                 <td class="rank-name">Omoto</td>
                 <td class="rank-score">22450</td>
             </tr>
             <tr>
-                <td class="rank2">2位</td>
+                <td class="rank2 2">2位</td>
                 <td class="rank2-name">Kokomi</td>
                 <td class="rank2-score">22000</td>
             </tr>
             <tr >
-                <td class="rank3">3位</td>
+                <td class="rank3 3">3位</td>
                 <td class="rank3-name">Sugiyama</td>
                 <td class="rank3-score">19000</td>
             </tr>
@@ -84,12 +84,12 @@
         
         <tbody class="ranking_tab" id="java-normal">
             <tr class="rank_tr_1">
-                <td class="rank">1位</td>
+                <td class="rank 1">1位</td>
                 <td class="rank-name">takahashi</td>
                 <td class="rank-score">22450</td>
             </tr>
             <tr>
-                <td class="rank2">2位</td>
+                <td class="rank2 2">2位</td>
                 <td class="rank2-name">junchan</td>
                 <td class="rank2-score">22000</td>
             </tr>

@@ -165,3 +165,20 @@ input:checked + .tab_item2 {
 .ranking_tab td:nth-of-type(2){
   word-break: break-all;
 }
+
+.kind{
+  font-size: 24px;
+
+}
+
+.rank{
+  color:#F7FF8A
+}
+
+.rank2{
+  color:#DDDDDD
+}
+
+.rank3{
+  color:#F8D2A1
+}
