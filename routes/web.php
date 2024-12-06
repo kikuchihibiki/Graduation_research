@@ -36,3 +36,4 @@ Route::get('/admin_passreset', [AdminController::class, 'admin_password']);
 Route::post('/game_result', [FillauthController::class, 'game_result'])->name('game_result');
 Route::get('/game_result_show', [BeforeGameController::class, 'game_result_show'])->name('game_result_show');
 Route::get('/commentary', [BeforeGameController::class, 'commentary'])->name('commentary');
+Route::get('/game_restart', [BeforeGameController::class, 'game_restart'])->name('game_restart');
