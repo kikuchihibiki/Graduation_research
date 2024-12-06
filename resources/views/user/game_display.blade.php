@@ -16,6 +16,9 @@
             overflow: hidden;
         }
     </style>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- 他のヘッダ情報 -->
 </head>
 
 <body>
