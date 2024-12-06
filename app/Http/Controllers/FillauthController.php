@@ -40,6 +40,14 @@ class FillauthController extends Controller
         $answerArray = $request->input('answerArray');
         $idArry = $request->input('idArry');
 
+        $idJson = [];
+        for ($i = 0; $i < count($idArry); $i++) {
+            $idJson[] = [
+                'id' => $idArry[$i],
+                'answer' => $answerArray[$i]
+            ];
+        };
+
         $showAnswers = array_map(function ($value) {
             if ($value === true) {
                 return '〇';
@@ -57,6 +65,7 @@ class FillauthController extends Controller
             'resultScore' => $resultScore,
             'answerArray' => $showAnswers,
             'idArry' => $idArry,
+            'idJson' => $idJson,
         ]));
         return response()->json(['success' => true]);
     }

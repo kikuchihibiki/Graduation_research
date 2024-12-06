@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BeforeGameController extends Controller
 {
@@ -64,7 +65,6 @@ class BeforeGameController extends Controller
             ['id' => '6', 'question' => '小数点数のデータタイプは何ですか？', 'answer' => 'float']
         ];
         $TimeLimit = 15;
-
         return view('user.game_display', [
             'mode' => $mode,
             'level' => $level,
@@ -88,11 +88,43 @@ class BeforeGameController extends Controller
 
     public function game_result_show()
     {
-        $correctAnswers = session('correctAnswers');
-        $totalQuestions = session('totalQuestions');
-        $resultScore = session('resultScore');
-        $answerArray = session('answerArray');
-        $idArry = session('idArry');
+        $userDirectory = getenv('APPDATA');
+
+        $appName = 'my_name';
+        $subDirectory = 'user_data';
+        $filename = 'user_data.json';
+
+        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
+        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
+        $idJson = session('idJson');
+
+        $data = [];
+        if (file_exists($filePath)) {
+            $data = json_decode(file_get_contents($filePath), true);
+        }
+
+        foreach ($idJson as $idJsons) {
+            $questionId = $idJsons['id'];
+            $isCorrect = $idJsons['answer'];
+
+            if ($isCorrect === '未回答') {
+                continue;
+            }
+
+            if (!isset($data[$questionId])) {
+                $data[$questionId] = ['正解数' => 0, '誤答数' => 0];
+            }
+
+            if ($isCorrect === true) {
+                $data[$questionId]['正解数']++;
+            } else {
+                $data[$questionId]['誤答数']++;
+            }
+        }
+
+        file_put_contents($filePath, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+
+        var_dump(file_get_contents($filePath));
         return view('user.game_result');
     }
 

@@ -14,6 +14,9 @@
         @foreach(session('idArry') as $id)
         <li>{{ $id }}</li>
         @endforeach
+        @foreach(session('idJson') as $idJson)
+        ID: {{ $idJson['id'] }}, Answer: {{ $idJson['answer'] ? 'true' : 'false' }}
+        @endforeach
         <a href="{{ route('select_mode') }}">トップページへ</a>
         <a href="{{ route('commentary')}}">問題解説</a>
         <a href="{{ route('ranking') }}">ランキング</a>

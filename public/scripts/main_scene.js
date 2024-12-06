@@ -1,4 +1,3 @@
-const fs = Request('fs');
 class StartScene extends Phaser.Scene {
     constructor() {
         super({ key: 'StartScene' });
@@ -416,7 +415,6 @@ class QuizScene extends Phaser.Scene {
             this.characterTween.stop(); // 拡大アニメーションを停止
         }
 
-        const keepAnswer =  this.progress;
 
         }
         // 時間切れの場合
