@@ -34,6 +34,10 @@ class StartScene extends Phaser.Scene {
         this.newScore = 0;
         this.registry.set('lastScore',this.newScore);
         this.registry.set('progressData', Array(6).fill(null));
+        this.registry.set('questionId',questionData.id);
+        const id = questionData.map(obj => obj.id);
+        this.registry.set('questionId',id);
+        console.log(this.registry.get('questionId'))
         this.input.keyboard.on('keydown-ENTER', () => {
             this.scene.start('CharacterScene', { 
                 questionIndex: 0,
@@ -407,10 +411,11 @@ class QuizScene extends Phaser.Scene {
 
             this.stopBlinking = true;  // 正解時に点滅を停止
 
-        // 拡大アニメーションを停止
         if (this.characterTween) {
             this.characterTween.stop(); // 拡大アニメーションを停止
         }
+
+
         }
         // 時間切れの場合
         else if (timeout) {
@@ -506,13 +511,12 @@ class AnswerResultScene extends Phaser.Scene {
         this.answerLabel = this.add.text(D_WIDTH / 2, 400, `正答 \n ${data.correctAnswer}`, {
             fontSize: '60px',
             fill: '#ffffff',
-            align: 'center', // テキストの中央揃え
+            align: 'center', 
             wordWrap: { width: 800, useAdvancedWrap: true }
         }).setOrigin(0.5).setPadding(6);
         this.livesText = this.add.text(1600, 140,`残機✖ ${this.lives}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(6);
         this.scoreText = this.add.text(100, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '45px', fill: '#ffffff' }).setPadding(6);
         this.scoreresultText = this.add.text(100, 150, `+${this.score}`, { fontSize: '45px', fill: '#ff0000' }).setPadding(6);
-
         // 2秒後に次の問題に進むか終了
         this.time.delayedCall(2000, () => {
             if (this.lives != 0 === data.questionIndex + 1 < data.totalQuestions) {
@@ -524,9 +528,41 @@ class AnswerResultScene extends Phaser.Scene {
                     progress: this.progress + 1,
                 });
             } else {
-                this.scene.start('EndScene', { correctAnswers: data.correctAnswers, totalQuestions: data.totalQuestions,lives: this.lives });
+                this.resultScore =  this.registry.get('lastScore') + data.lives * 100;
+                fetch('/game_result', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    },
+                    body: JSON.stringify({
+                        correctAnswers: data.correctAnswers,
+                        totalQuestions: data.totalQuestions,
+                        resultScore: this.resultScore,
+                        answerArray: this.registry.get('progressData'),
+                        idArry : this.registry.get('questionId'),
+                    }),
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then((result) => {
+                        console.log(result);
+                        if(result.success){
+                            console.log("成功");
+                            console.log(result);
+                            window.location.href = "/game_result_show";
+                        }else{
+                            console.log('失敗');
+                        }
+                    })
+                
             }
         });
+        
     }
 }
 
