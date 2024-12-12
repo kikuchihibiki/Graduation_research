@@ -263,7 +263,7 @@ class QuizScene extends Phaser.Scene {
 
     // 背景矩形を追加
     this.add.graphics()
-        .fillStyle(0x000000, 1) // 色: 黒、透明度: 0.5
+        .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
         .fillRect(backgroundRectX - backgroundRectWidth / 2, backgroundRectY, backgroundRectWidth, backgroundRectHeight);
         this.questionLabel = this.add.text(D_WIDTH / 2, this.cameras.main.centerY, `${this.questionText}`, {
             fontSize: '40px',
@@ -277,7 +277,7 @@ class QuizScene extends Phaser.Scene {
     
         // 背景矩形を追加（薄い黒）
         this.add.graphics()
-            .fillStyle(0x000000, 0.7) // 色: 黒、透明度: 0.5
+            .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
             .fillRect(0,answerInputRectHeight,answerInputRectWidth,80);
         // 回答欄の表示
         this.answerInput = this.add.text(D_WIDTH / 2, 520, '', {
@@ -294,11 +294,33 @@ class QuizScene extends Phaser.Scene {
             fill: '#ff0000'
         }).setPadding(6);
 
-        this.livesText = this.add.text(1080, 100, `残機:✖ ${this.lives}`, { fontSize: '30px', fill: '#ffffff' }).setPadding(8);
-        this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '30px', fill: '#ffffff' }).setPadding(6);
+        // コンテナを作成
+        const livesContainer = this.add.container(0, 0);
+
+// 背景を作成
+        const liveBg = this.add.graphics();
+        liveBg.fillStyle(0x000000, 0.8);
+
+        // テキストを作成
+        this.livesText = this.add.text(1080, 100, `残機:✖ ${this.lives}`, { 
+            fontSize: '30px', 
+            fill: '#ffffff' 
+        }).setPadding(8);
+
+        // テキストの幅と高さを取得
+        const textWidth = this.livesText.width;
+        const textHeight = this.livesText.height;
+
+        // 背景をテキストの背面に描画
+        liveBg.fillRect(1080 - 8, 100 - 8, textWidth + 16, textHeight + 16);
+
+        // 背景とテキストをコンテナに追加
+        livesContainer.add([liveBg, this.livesText]);
+
+        this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '30px', fill: '#000000' }).setPadding(6);
 
         // タイマーの設定
-        this.timerText = this.add.text(D_WIDTH/2, 100, `${this.timeLimit} `, {
+        this.timerText = this.add.text(D_WIDTH/2-30, 100, `${this.timeLimit} `, {
             fontSize: '30px',
             fill: '#ff0000'
         }).setPadding(6);
@@ -463,7 +485,7 @@ class QuizScene extends Phaser.Scene {
 
         
         // 正解または時間切れの場合、結果を表示して次へ
-        this.resultLabel = this.add.text(this.cameras.main.centerX,50 , resultText, { fontSize: '24px', fill: color });
+        this.resultLabel = this.add.text(this.cameras.main.centerX-30,50 , resultText, { fontSize: '24px', fill: color });
         this.progressBar.update(progressData);
         this.registry.set('progressData', progressData);
         // 2秒後に次のシーンへ遷移
@@ -527,9 +549,29 @@ class AnswerResultScene extends Phaser.Scene {
             wordWrap: { width: 800, useAdvancedWrap: true }
         }).setOrigin(0.5).setPadding(6);
 
-        this.livesText = this.add.text(1080, 100,`残機✖ ${this.lives}`, { fontSize: '30px', fill: '#ffffff' }).setPadding(6);
-        this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '30px', fill: '#ffffff' }).setPadding(6);
-        this.scoreresultText = this.add.text(80, 150, `+${this.score}`, { fontSize: '30px', fill: '#ff0000' }).setPadding(6);
+        const livesContainer = this.add.container(0, 0);
+
+        const liveBg = this.add.graphics();
+        liveBg.fillStyle(0x000000, 0.8);
+
+        // テキストを作成
+        this.livesText = this.add.text(1080, 100, `残機:✖ ${this.lives}`, { 
+            fontSize: '30px', 
+            fill: '#ffffff' 
+        }).setPadding(8);
+
+        // テキストの幅と高さを取得
+        const textWidth = this.livesText.width;
+        const textHeight = this.livesText.height;
+
+        // 背景をテキストの背面に描画
+        liveBg.fillRect(1080 - 8, 100 - 8, textWidth + 16, textHeight + 16);
+
+        // 背景とテキストをコンテナに追加
+        livesContainer.add([liveBg, this.livesText]);
+
+        this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '30px', fill: '#000000' }).setPadding(6);
+        this.scoreresultText = this.add.text(80, 130., `+${this.score}`, { fontSize: '30px', fill: '#ff0000' }).setPadding(6);
         
         // 2秒後に次の問題に進むか終了
         this.time.delayedCall(2000, () => {
@@ -579,14 +621,14 @@ class EndScene extends Phaser.Scene {
                     this.cameras.main.centerX,
                     this.cameras.main.centerY,
                     'GAME CLEAR',
-                    { fontSize: '240px', color: '#ffffff' }
+                    { fontSize: '120px', color: '#ffffff' }
                 );
 
                 const operatingText = this.add.text(
                     D_WIDTH / 2,
-                    800,
+                    520,
                     '---PLEASE ENTER---',
-                    { fontSize: '100px', color: '#ffffff' }
+                    { fontSize: '80px', color: '#ffffff' }
                 );
         
                 clearText.setOrigin(0.5).setPadding(6);
@@ -627,14 +669,14 @@ class EndScene extends Phaser.Scene {
             this.cameras.main.centerX,
             this.cameras.main.centerY,
             'GAME OVER',
-            { fontSize: '240px', color: '#ffffff', fontStyle: 'bold' }
+            { fontSize: '120px', color: '#ffffff', fontStyle: 'bold' }
         ).setOrigin(0.5).setAlpha(0); // 初期状態では透明
 
         const operatingText = this.add.text(
             D_WIDTH / 2,
-            800,
+            520,
             '---PLEASE ENTER---',
-            { fontSize: '100px', color: '#ffffff' }
+            { fontSize: '80px', color: '#ffffff' }
         ).setOrigin(0.5).setAlpha(0);
 
         operatingText.setOrigin(0.5).setPadding(6).centerX;
@@ -665,7 +707,7 @@ class EndScene extends Phaser.Scene {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 },
                 body: JSON.stringify({
-                    correctAnswer : data.correctAnswers,
+                    correctAnswers : data.correctAnswers,
                     totalQuestions : data.totalQuestions,
                     resultScore : data.score,
                     answerArray : this.registry.get('progressData'),
