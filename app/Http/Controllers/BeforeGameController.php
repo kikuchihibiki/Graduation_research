@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\question;
 
 class BeforeGameController extends Controller
 {
@@ -70,20 +71,59 @@ class BeforeGameController extends Controller
         $mode = $request->session()->get('mode');
         $level = $request->input('level');
         $request->session()->put('level', $level);
-        $question = [
-            ['id' => '1', 'question' => 'HTMLの拡張子は何ですか？', 'answer' => '.html'],
-            ['id' => '2', 'question' => 'Webアプリケーションの開発に広く使用されるPythonの軽量フレームワークは何ですか？', 'answer' => 'flask'],
-            ['id' => '3', 'question' => 'PythonでHTTPリクエストを処理するためのライブラリは何ですか？', 'answer' => 'requests'],
-            ['id' => '4', 'question' => 'PythonでJSONデータを処理するための標準ライブラリは何ですか？', 'answer' => 'json'],
-            ['id' => '5', 'question' => '整数型のデータタイプは何ですか？', 'answer' => 'int'],
-            ['id' => '6', 'question' => '小数点数のデータタイプは何ですか？', 'answer' => 'float']
+
+        $modeNumber = ['java' => 0, 'python' => 1, 'php' => 2][$mode] ?? null;
+        $levelNumber = ['easy' => 0, 'normal' => 1, 'hard' => 2][$level] ?? null;
+
+        $timeLimits = [
+            'java' => [15, 15, 10],
+            'python' => [10, 10, 7],
+            'php' => [12, 12, 8],
         ];
-        $TimeLimit = 15;
+        $timeLimit = $timeLimits[$mode][$levelNumber] ?? null;
+
+        if ($levelNumber !== 2) {
+            $questions = question::where('mode', $modeNumber)
+                ->where('level', $levelNumber)
+                ->inRandomOrder()
+                ->limit(5)
+                ->get();
+
+            $difficultyQuestion = question::where('mode', $modeNumber)
+                ->where('level', $levelNumber)
+                ->where('difficulty_flag', 1)
+                ->inRandomOrder()
+                ->first();
+
+            $questions->push($difficultyQuestion);
+        } else {
+            $questions = question::where('mode', $modeNumber)
+                ->whereIn('level', [1, 2])
+                ->inRandomOrder()
+                ->get()
+                ->groupBy('level');
+
+            $normalQuestions = $questions[1]->take(3);
+            $hardQuestions = $questions[2]->take(2);
+
+            $difficultyQuestion = question::where('mode', $modeNumber)
+                ->where('level', 2)
+                ->where('difficulty_flag', 1)
+                ->inRandomOrder()
+                ->first();
+
+            $questions = $normalQuestions->concat($hardQuestions);
+
+            if ($difficultyQuestion) {
+                $questions->push($difficultyQuestion);
+            }
+        }
+
         return view('user.game_display', [
             'mode' => $mode,
             'level' => $level,
-            'question' => $question,
-            'TimeLimit' => $TimeLimit
+            'question' => $questions,
+            'TimeLimit' => $timeLimit
         ]);
     }
     public function wrong_answer(Request $request)

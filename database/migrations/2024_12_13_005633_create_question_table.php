@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('question');
             $table->string('answer');
-            $table->string('explanation');
+            $table->string('explanation')->nullable(true);
             $table->integer('mode');
             $table->integer('level');
             $table->boolean('difficulty_flag')->default(0);

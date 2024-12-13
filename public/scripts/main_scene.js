@@ -709,7 +709,7 @@ class EndScene extends Phaser.Scene {
                 body: JSON.stringify({
                     correctAnswers : data.correctAnswers,
                     totalQuestions : data.totalQuestions,
-                    resultScore : data.score,
+                    resultScore : data.resultScore,
                     answerArray : this.registry.get('progressData'),
                     idArry : this.registry.get('questionId'),
                 }),
