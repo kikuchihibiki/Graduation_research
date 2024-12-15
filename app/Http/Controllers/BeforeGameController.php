@@ -127,17 +127,79 @@ class BeforeGameController extends Controller
             'TimeLimit' => $timeLimit
         ]);
     }
-    public function wrong_answer(Request $request)
+    public function wrong_answer()
     {
-        $mode = $request->input('mode');
-        $request->session()->put('mode', $mode);
-        $question = [
-            'question' => '問題です',
-            'answer' => '解答です'
-        ];
-        return view('user.game_display', [
-            'mode' => $mode,
-            'question' => $question
+        $userDirectory = getenv('APPDATA');
+        $appName = 'my_name';
+        $subDirectory = 'user_data';
+        $filename = 'user_data.json';
+
+        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
+        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
+
+        // 2. JSONファイルを読み込む
+        if (!file_exists($filePath)) {
+            return response()->json(['error' => 'File not found'], 404);
+        }
+
+        $jsonData = file_get_contents($filePath);
+        $userData = json_decode($jsonData, true);
+
+        // 3. 誤答数が1以上の問題IDを抽出
+        $incorrectQuestions = [];
+        foreach ($userData as $id => $stats) {
+            if ($stats['誤答数'] >= 1) {
+                $correctRate = $stats['正解数'] / ($stats['正解数'] + $stats['誤答数']);
+                $incorrectQuestions[$id] = $correctRate;
+            }
+        }
+
+        // 4. 正答率が低い順にソート
+        asort($incorrectQuestions); // 正答率が低い順にソート
+
+        // 5. 6問未満の場合、ランダムに追加して6問にする
+        if (count($incorrectQuestions) < 6) {
+            $remainingCount = 6 - count($incorrectQuestions);
+            $allQuestionIds = array_keys($userData);
+            $additionalIds = array_diff($allQuestionIds, array_keys($incorrectQuestions));
+
+            if (!empty($additionalIds)) {
+                $randomIds = array_rand($additionalIds, min($remainingCount, count($additionalIds)));
+
+                // array_rand returns a single value if the count is 1
+                if (!is_array($randomIds)) {
+                    $randomIds = [$randomIds];
+                }
+
+                foreach ($randomIds as $id) {
+                    $stats = $userData[$additionalIds[$id]];
+                    $correctRate = $stats['正解数'] / ($stats['正解数'] + $stats['誤答数']);
+                    $incorrectQuestions[$additionalIds[$id]] = $correctRate;
+                }
+            }
+        }
+
+        // 6. 上位6問を選択
+        $incorrectQuestions = array_slice($incorrectQuestions, 0, 6, true);
+
+        // 7. DBから問題情報を取得
+        $questions = Question::whereIn('id', array_keys($incorrectQuestions))->get();
+
+        // 8. 配列の順序を対応させる
+        $questionData = [];
+        $correctRates = [];
+        foreach ($questions as $question) {
+            $stats = $userData[$question->id];
+            $correctRate = $stats['正解数'] / ($stats['正解数'] + $stats['誤答数']);
+
+            $questionData[] = $question;
+            $correctRates[] = $correctRate;
+        }
+
+        return view('user.miss_display', [
+            'question' => $questionData,
+            'correctRates' => $correctRates,
+            'timeLimit' => 15
         ]);
     }
 
