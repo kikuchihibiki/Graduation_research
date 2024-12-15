@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\question;
+use App\Models\ranking;
 
 class BeforeGameController extends Controller
 {
@@ -180,6 +181,51 @@ class BeforeGameController extends Controller
 
         var_dump('jsonfile', file_get_contents($filePath));
         var_dump('結果', $idJson);
+
+        $name = session()->get('name');
+        $mode = session()->get('mode');
+        $level = session()->get('level');
+        $resultScore = session()->get('resultScore');
+        $modeNumber = ['java' => 0, 'python' => 1, 'php' => 2][$mode] ?? null;
+        $levelNumber = ['easy' => 0, 'normal' => 1, 'hard' => 2][$level] ?? null;
+
+
+
+        $rankings = Ranking::where('mode', $modeNumber)
+            ->where('level', $levelNumber)
+            ->orderBy('rank', 'asc')
+            ->get();
+
+        // 新しいスコアを挿入する場合
+        if ($rankings->count() < 5 || $rankings->last()->score < $resultScore) {
+            // データを保存
+            Ranking::create([
+                'name' => $name,
+                'score' => $resultScore,
+                'mode' => $modeNumber,
+                'level' => $levelNumber,
+                'rank' => 6 // 一時的に6位として挿入
+            ]);
+
+            // ランキングをスコア順に再取得し、rankを更新
+            $updatedRankings = Ranking::where('mode', $modeNumber)
+                ->where('level', $levelNumber)
+                ->orderBy('score', 'desc')
+                ->take(5) // 上位5件のみ
+                ->get();
+
+            // 新しい順位に基づいて rank を更新
+            foreach ($updatedRankings as $index => $ranking) {
+                $ranking->rank = $index + 1;
+                $ranking->save();
+            }
+
+            // 6位以下を削除
+            Ranking::where('mode', $modeNumber)
+                ->where('level', $levelNumber)
+                ->where('rank', '>', 5)
+                ->delete();
+        }
         return view('user.game_result');
     }
 
