@@ -38,7 +38,9 @@ Route::get('/redirect_ranking', [AdminController::class, 'redirect_ranking'])->n
 Route::get('/admin_newAdmin', [AdminController::class, 'admin_newAdmin']);
 Route::get('/admin_passreset', [AdminController::class, 'admin_password']);
 Route::post('/game_result', [FillauthController::class, 'game_result'])->name('game_result');
+Route::post('/miss_result', [FillauthController::class, 'miss_result'])->name('miss_result');
 Route::get('/game_result_show', [BeforeGameController::class, 'game_result_show'])->name('game_result_show');
+Route::get('/miss_result_show', [BeforeGameController::class, 'miss_result_show'])->name('miss_result_show');
 Route::get('/commentary', [BeforeGameController::class, 'commentary'])->name('commentary');
 Route::get('/game_restart', [BeforeGameController::class, 'game_restart'])->name('game_restart');
 Route::get('/back_commentary', [BeforeGameController::class, 'back_commentary'])->name('back_commentary');

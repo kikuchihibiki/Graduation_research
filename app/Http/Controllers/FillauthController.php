@@ -137,6 +137,45 @@ class FillauthController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function miss_result(Request $request)
+    {
+        $correctAnswers = $request->input('correctAnswers');
+        $totalQuestions = $request->input('totalQuestions');
+        $answerArray = $request->input('answerArray');
+        $idArry = $request->input('idArry');
+        $questionData = $request->input('questionArray');
+        $resultScore = $request->input('resultScore');
+
+        $idJson = [];
+        for ($i = 0; $i < count($idArry); $i++) {
+            $idJson[] = [
+                'id' => $idArry[$i],
+                'answer' => $answerArray[$i]
+            ];
+        };
+
+        $showAnswers = array_map(function ($value) {
+            if ($value === true) {
+                return '〇';
+            } elseif ($value === false) {
+                return '☓';
+            } else {
+                return '未回答';
+            }
+        }, $answerArray);
+
+
+        session(([
+            'correctAnswers' => $correctAnswers,
+            'totalQuestions' => $totalQuestions,
+            'resultScore' => $resultScore,
+            'answerArray' => $showAnswers,
+            'idArry' => $idArry,
+            'idJson' => $idJson,
+            'questionData' => $questionData,
+        ]));
+        return response()->json(['success' => true]);
+    }
     /**
      * Display the specified resource.
      *

@@ -29,6 +29,7 @@
         var questionData = @json($question);
         var timeLimitData = @json($timeLimit);
         var correctRatesData = @json($correctRates);
+        var flagData = @json($flag);
     </script>
     <!-- ゲームの初期化スクリプト -->
     <script src="{{ asset('scripts/missScripts/miss_scene.js') }}"></script>

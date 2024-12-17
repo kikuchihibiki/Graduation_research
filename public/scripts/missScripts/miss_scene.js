@@ -19,8 +19,13 @@ class StartScene extends Phaser.Scene {
         this.add.graphics()
             .fillStyle(0x000000, 0.7) // 色: 黒、透明度: 0.5
             .fillRect(0,answerInputRectHeight,answerInputRectWidth,80);
+        if (flagData === false) {
+            this.text = '間違ったことのある問題がありません。エンターで戻る';
+        } else {
+            this.text = '回答欄：エンターを押してスタート';
+        }
         // 回答欄の表示
-        this.answerInput = this.add.text(D_WIDTH/2, 520, '回答欄：エンターを押してスタート', {
+        this.answerInput = this.add.text(D_WIDTH/2, 520, `${this.text}`, {
             fontSize: '45px',
             fill: '#ffffff',
             align: 'center'
@@ -30,6 +35,7 @@ class StartScene extends Phaser.Scene {
         this.registry.set('clearFlag',true);
         console.log(this.registry.get('mode'));
         console.log(this.registry.get('level'));
+        this.registry.set('questionData',questionData);
         console.log(correctRatesData)
         
         this.newScore = 0;
@@ -41,14 +47,19 @@ class StartScene extends Phaser.Scene {
         console.log(this.registry.get('questionId'))
         
         this.input.keyboard.on('keydown-ENTER', () => {
-            this.scene.start('CharacterScene', { 
-                questionIndex: 0,
-                totalQuestions: questionData.length,
-                correctAnswers: 0,
-                lives: 3, 
-                progress: 0,
-            });
+            if (flagData === false) {
+                window.location.href = '/select_mode';
+            } else {
+                this.scene.start('CharacterScene', { 
+                    questionIndex: 0,
+                    totalQuestions: questionData.length,
+                    correctAnswers: 0,
+                    lives: 3, 
+                    progress: 0,
+                });
+            }
         });
+        
     }
 }
 
@@ -252,7 +263,8 @@ class QuizScene extends Phaser.Scene {
         // 現在の問題を取得
         this.questionText = questionData[this.questionIndex].question;
         this.correctAnswer = questionData[this.questionIndex].answer;
-        this.rateText = Math.floor(correctRatesData[this.questionIndex])+100;
+        this.rateText = Math.floor(correctRatesData[this.questionIndex] * 100);
+
         // 質問の表示
         const backgroundRectWidth = 650;  // 背景の幅
         const backgroundRectHeight = 300; // 背景の高さ
@@ -277,11 +289,11 @@ class QuizScene extends Phaser.Scene {
         const rectTopY = backgroundRectY;
         
         // rateText を四角の右上に表示
-        this.rateLabel = this.add.text(rectRightX, rectTopY, `${this.rateText}`, {
+        this.rateLabel = this.add.text(rectRightX, rectTopY, `正答率${this.rateText}%`, {
             fontSize: '30px', // サイズは少し小さめに調整
             fill: '#ffffff',
             align: 'right' // 右揃え (必要に応じて調整)
-        }).setOrigin(1, 0); // 原点を右上に設定 (1, 0)
+        }).setOrigin(1, 0).setPadding(16);; // 原点を右上に設定 (1, 0)
 
         
         const answerInputRectWidth = D_WIDTH;  // 幅を調整
@@ -712,7 +724,7 @@ class EndScene extends Phaser.Scene {
         
 
         this.input.keyboard.on('keydown-ENTER', () => {
-            fetch('/game_result', {
+            fetch('/miss_result', {
                 method: 'POST',
                 headers:{
                     'Content-Type' : 'application/json',
@@ -724,6 +736,7 @@ class EndScene extends Phaser.Scene {
                     resultScore : data.resultScore,
                     answerArray : this.registry.get('progressData'),
                     idArry : this.registry.get('questionId'),
+                    questionArray : this.registry.get('questionData'),
                 }),
             })
 
@@ -735,7 +748,7 @@ class EndScene extends Phaser.Scene {
         })
         .then((result) => {
             if(result.success){
-                window.location.href = "/game_result_show";
+                window.location.href = "/miss_result_show";
             }else{
                 console.log('失敗');
             }

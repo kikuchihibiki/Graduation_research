@@ -135,6 +135,7 @@ class BeforeGameController extends Controller
     }
     public function wrong_answer()
     {
+        $flag = true;
         $userDirectory = getenv('APPDATA');
         $appName = 'my_name';
         $subDirectory = 'user_data';
@@ -158,6 +159,11 @@ class BeforeGameController extends Controller
                 $correctRate = $stats['正解数'] / ($stats['正解数'] + $stats['誤答数']);
                 $incorrectQuestions[$id] = $correctRate;
             }
+        }
+
+        // 誤答数が1以上の問題が一つもない場合、$flagをfalseに設定
+        if (empty($incorrectQuestions)) {
+            $flag = false;
         }
 
         // 4. 正答率が低い順にソート
@@ -205,7 +211,8 @@ class BeforeGameController extends Controller
         return view('user.miss_display', [
             'question' => $questionData,
             'correctRates' => $correctRates,
-            'timeLimit' => 15
+            'timeLimit' => 15,
+            'flag' => $flag
         ]);
     }
 
@@ -285,6 +292,11 @@ class BeforeGameController extends Controller
             }
         };
 
+        return view('user.game_result');
+    }
+
+    public function miss_result_show()
+    {
         return view('user.game_result');
     }
 
