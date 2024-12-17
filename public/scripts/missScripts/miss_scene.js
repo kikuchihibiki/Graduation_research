@@ -4,7 +4,7 @@ class StartScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', `assets/${modeData}/background${levelData}.png`);
+        this.load.image('background', `assets/background.png`);
     }
     create() {
         console.log(`Phaser version: ${Phaser.VERSION}`);
@@ -27,12 +27,10 @@ class StartScene extends Phaser.Scene {
         }).setOrigin(0.5).setPadding(6);
 
         this.registry.set('timeLimit',timeLimitData);
-        this.registry.set('mode',modeData);
-        this.registry.set('questionData',questionData);
-        this.registry.set('level',levelData);
         this.registry.set('clearFlag',true);
         console.log(this.registry.get('mode'));
         console.log(this.registry.get('level'));
+        console.log(correctRatesData)
         
         this.newScore = 0;
         this.registry.set('lastScore',this.newScore);
@@ -62,13 +60,12 @@ class CharacterScene extends Phaser.Scene {
     preload(){
         this.textures.remove('character');
 
-        this.load.image('background', `assets/${this.registry.get('mode')}/background${this.registry.get('level')}.png`);
+        this.load.image('background', `assets/background.png`);
 
-        const characterIndex = this.progress <= 1 ? 1 : this.progress <= 3 ? 2 : 3;
-        const characterPath = `assets/${this.registry.get('mode')}/character${this.registry.get('level')}.png`;
+        const characterPath = `assets/character.png`;
         console.log(characterPath);
         this.registry.set('characterPath', characterPath);
-        this.load.image('character', characterPath);
+        this.load.image('character', `assets/character.png`);
 
     }
     create(data){
@@ -211,7 +208,7 @@ class QuizScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', `assets/${this.registry.get('mode')}/background${this.registry.get('level')}.png`);
+        this.load.image('background', `assets/background.png`);
         this.load.image('character', this.registry.get('characterPath'));  
         this.load.image('block', '/assets/block.png');
         this.load.image('attack', '/assets/attack.png');
@@ -255,23 +252,37 @@ class QuizScene extends Phaser.Scene {
         // 現在の問題を取得
         this.questionText = questionData[this.questionIndex].question;
         this.correctAnswer = questionData[this.questionIndex].answer;
+        this.rateText = Math.floor(correctRatesData[this.questionIndex])+100;
         // 質問の表示
-        const backgroundRectWidth = 650;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
+        const backgroundRectWidth = 650;  // 背景の幅
         const backgroundRectHeight = 300; // 背景の高さ
         const backgroundRectX = D_WIDTH / 2;
         const backgroundRectY = 140;
-        
-
-    // 背景矩形を追加
-    this.add.graphics()
-        .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
-        .fillRect(backgroundRectX - backgroundRectWidth / 2, backgroundRectY, backgroundRectWidth, backgroundRectHeight);
+            
+        // 背景の四角を描画
+        this.add.graphics()
+            .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
+            .fillRect(backgroundRectX - backgroundRectWidth / 2, backgroundRectY, backgroundRectWidth, backgroundRectHeight);
+            
+        // テキストラベル (questionText) を中央に配置
         this.questionLabel = this.add.text(D_WIDTH / 2, this.cameras.main.centerY, `${this.questionText}`, {
             fontSize: '40px',
             fill: '#ffffff',
             align: 'center', // テキストの中央揃え
             wordWrap: { width: 600, useAdvancedWrap: true }
-        }).setOrigin(0.5).setPadding(16); // テキスト基準を中央に
+        }).setOrigin(0.5).setPadding(16);
+        
+        // 四角の右上座標を計算
+        const rectRightX = backgroundRectX + backgroundRectWidth / 2;
+        const rectTopY = backgroundRectY;
+        
+        // rateText を四角の右上に表示
+        this.rateLabel = this.add.text(rectRightX, rectTopY, `${this.rateText}`, {
+            fontSize: '30px', // サイズは少し小さめに調整
+            fill: '#ffffff',
+            align: 'right' // 右揃え (必要に応じて調整)
+        }).setOrigin(1, 0); // 原点を右上に設定 (1, 0)
+
         
         const answerInputRectWidth = D_WIDTH;  // 幅を調整
         const answerInputRectHeight = 480; // 高さを調整
@@ -512,7 +523,7 @@ class AnswerResultScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', `assets/${this.registry.get('mode')}/background${this.registry.get('level')}.png`);
+        this.load.image('background', `assets/background.png`);
 
     }
 
@@ -607,7 +618,7 @@ class EndScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', `assets/${this.registry.get('mode')}/background${this.registry.get('level')}.png`);
+        this.load.image('background', `assets/background.png`);
     }
 
     create(data) {
@@ -713,7 +724,6 @@ class EndScene extends Phaser.Scene {
                     resultScore : data.resultScore,
                     answerArray : this.registry.get('progressData'),
                     idArry : this.registry.get('questionId'),
-                    questionArray : this.registry.get('questionData'),
                 }),
             })
 

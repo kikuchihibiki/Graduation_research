@@ -1,0 +1,122 @@
+ /* 全体設定 */
+ body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.quiz-table td {
+  font-size: 50px; /* 変更したいサイズに調整 */
+  line-height: 1.5; /* 行間を少し広げて見やすく */
+}
+span {
+  display: block;
+}
+
+.quiz-table th:first-child,
+.quiz-table td:first-child {
+    width: 10%;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* 問題文の列: 70% */
+.quiz-column {
+    width: 70%;
+    font-size: 40px;
+}
+
+/* 解説ボタンの列: 30% */
+.action-column {
+    width: 30%;
+    text-align: center;
+    font-size: 40px;
+}
+/* クイズテーブル設定 */
+.quiz-container {
+  height: auto;
+  /* 表示エリアの高さ */
+  overflow-y: scroll;
+  /* スクロールバー表示 */
+  margin: 20px auto;
+  width: 90%;
+  max-width: 800px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.quiz-table th,
+.quiz-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  font-size: 1rem;
+}
+
+.quiz-table th {
+  background-color: #555;
+  color: #fff;
+  font-weight: bold;
+}
+
+.quiz-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* .quiz-table .result {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-block;
+} */
+
+.explanation-btn {
+  padding: 8px 12px;
+  border: none;
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.explanation-btn:hover {
+  background-color: #222;
+}
+
+/* 下部メニュー */
+.bottom-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 0;
+  z-index: 1000; 
+}
+.menu-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  background-color: #555;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.menu-btn:hover {
+  background-color: #777;
+}
+
+.explanation-btn:hover {
+  background-color: #222;
+}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ranking;
 
 class FillauthController extends Controller
 {
@@ -39,6 +40,7 @@ class FillauthController extends Controller
         $resultScore = $request->input('resultScore');
         $answerArray = $request->input('answerArray');
         $idArry = $request->input('idArry');
+        $questionData = $request->input('questionArray');
 
         $idJson = [];
         for ($i = 0; $i < count($idArry); $i++) {
@@ -66,6 +68,7 @@ class FillauthController extends Controller
             'answerArray' => $showAnswers,
             'idArry' => $idArry,
             'idJson' => $idJson,
+            'questionData' => $questionData
         ]));
         return response()->json(['success' => true]);
     }
