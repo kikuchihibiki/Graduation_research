@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ranking;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -103,5 +106,31 @@ class AdminController extends Controller
             }
         }
         return view('admin.admin_ranking', compact('rankings'));
+    }
+
+    public function register(Request $request)
+    {
+        // バリデーション
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('admin.register')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // 新規ユーザー作成
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+        ]);
+
+        // 必要なら、追加のカスタムフィールド（例: 管理者フラグなど）を追加することもできます。
+
+        return redirect('/admin_menu');
     }
 }

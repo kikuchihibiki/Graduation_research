@@ -47,7 +47,7 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Auth::routes();
 // routes/web.php
-
+Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register.submit');
 Route::middleware('web')->group(function () {
     Auth::routes();  // この行は必ずwebミドルウェア内で定義
 });
