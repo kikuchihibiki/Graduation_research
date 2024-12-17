@@ -37,3 +37,5 @@ Route::post('/game_result', [FillauthController::class, 'game_result'])->name('g
 Route::get('/game_result_show', [BeforeGameController::class, 'game_result_show'])->name('game_result_show');
 Route::get('/commentary', [BeforeGameController::class, 'commentary'])->name('commentary');
 Route::get('/game_restart', [BeforeGameController::class, 'game_restart'])->name('game_restart');
+Route::get('/back_commentary', [BeforeGameController::class, 'back_commentary'])->name('back_commentary');
+Route::get('/question_commentary/{id}', [BeforeGameController::class, 'question_commentary'])->name('question_commentary');

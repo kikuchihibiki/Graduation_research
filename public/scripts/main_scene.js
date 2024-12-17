@@ -28,6 +28,7 @@ class StartScene extends Phaser.Scene {
 
         this.registry.set('timeLimit',timeLimitData);
         this.registry.set('mode',modeData);
+        this.registry.set('questionData',questionData);
         this.registry.set('level',levelData);
         this.registry.set('clearFlag',true);
         console.log(this.registry.get('mode'));
@@ -712,6 +713,7 @@ class EndScene extends Phaser.Scene {
                     resultScore : data.resultScore,
                     answerArray : this.registry.get('progressData'),
                     idArry : this.registry.get('questionId'),
+                    questionArray : this.registry.get('questionData'),
                 }),
             })
 
