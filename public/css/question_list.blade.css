@@ -2,7 +2,7 @@
   display: none;
 }
 body{
-  padding-top: 800px;
+  padding-top: 650px;
 }
 
 /* テーブル上部のコントロールエリア */
@@ -239,4 +239,21 @@ table, th, td {
   width: 80%;
   text-align: center;
   position: relative;
+}
+.button-container, .table-controls {
+  position: sticky;
+  z-index: 1000;
+  background-color: black; 
+  padding: 10px; 
+  box-shadow: 0 4px 2px -2px gray; 
+}
+
+.button-container {
+  top: 0; 
+  z-index: 1000;
+}
+
+.table-controls {
+  top: 50px;  
+  z-index: 999;
 }

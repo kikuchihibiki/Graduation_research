@@ -43,6 +43,7 @@ class FillauthController extends Controller
         $level = $request->input('level');
         $mode = $request->input('mode');
         $resultScore = $request->input('resultScore');
+        $clearFlag = $request->input('clearFlag');
 
         $userDirectory = getenv('APPDATA');
         $appName = 'my_name';
@@ -98,9 +99,52 @@ class FillauthController extends Controller
         $scoreData[] = $newScore;
 
         // JSONファイルに保存
-        if (file_put_contents($filePath, json_encode($scoreData, JSON_PRETTY_PRINT)) === false) {
-            return response()->json(['message' => 'JSONファイルへの書き込みに失敗しました'], 500);
+        if ($clearFlag) {
+            // スコアデータをJSONにエンコードしてファイルに書き込み
+            if (file_put_contents($filePath, json_encode($scoreData, JSON_PRETTY_PRINT)) === false) {
+                return response()->json(['message' => 'JSONファイルへの書き込みに失敗しました'], 500);
+            }
         }
+        $idJson = [];
+        for ($i = 0; $i < count($idArry); $i++) {
+            $idJson[] = [
+                'id' => $idArry[$i],
+                'answer' => $answerArray[$i]
+            ];
+        };
+
+        $showAnswers = array_map(function ($value) {
+            if ($value === true) {
+                return '〇';
+            } elseif ($value === false) {
+                return '☓';
+            } else {
+                return '未回答';
+            }
+        }, $answerArray);
+
+
+        session(([
+            'correctAnswers' => $correctAnswers,
+            'totalQuestions' => $totalQuestions,
+            'resultScore' => $resultScore,
+            'answerArray' => $showAnswers,
+            'idArry' => $idArry,
+            'idJson' => $idJson,
+            'questionData' => $questionData,
+            'clearFlag' => $clearFlag,
+        ]));
+        return response()->json(['success' => true]);
+    }
+
+    public function miss_result(Request $request)
+    {
+        $correctAnswers = $request->input('correctAnswers');
+        $totalQuestions = $request->input('totalQuestions');
+        $answerArray = $request->input('answerArray');
+        $idArry = $request->input('idArry');
+        $questionData = $request->input('questionArray');
+        $resultScore = $request->input('resultScore');
 
         $idJson = [];
         for ($i = 0; $i < count($idArry); $i++) {
@@ -128,11 +172,10 @@ class FillauthController extends Controller
             'answerArray' => $showAnswers,
             'idArry' => $idArry,
             'idJson' => $idJson,
-            'questionData' => $questionData
+            'questionData' => $questionData,
         ]));
         return response()->json(['success' => true]);
     }
-
     /**
      * Display the specified resource.
      *

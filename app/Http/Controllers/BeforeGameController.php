@@ -64,7 +64,13 @@ class BeforeGameController extends Controller
     {
         $mode = $request->input('mode');
         $request->session()->put('mode', $mode);
-        return view('user.select_level');
+        $timeLimits = [
+            'java' => [15, 15, 10],
+            'python' => [10, 10, 7],
+            'php' => [12, 12, 8],
+        ];
+        $timeLimit = $timeLimits[$mode] ?? null;
+        return view('user.select_level', ['timeLimit' => $timeLimit]);
     }
 
     public function start_game(Request $request)
@@ -86,6 +92,7 @@ class BeforeGameController extends Controller
         if ($levelNumber !== 2) {
             $questions = question::where('mode', $modeNumber)
                 ->where('level', $levelNumber)
+                ->where('difficulty_flag', 0)
                 ->inRandomOrder()
                 ->limit(5)
                 ->get();
@@ -100,6 +107,7 @@ class BeforeGameController extends Controller
         } else {
             $questions = question::where('mode', $modeNumber)
                 ->whereIn('level', [1, 2])
+                ->where('difficulty_flag', 0)
                 ->inRandomOrder()
                 ->get()
                 ->groupBy('level');
@@ -129,6 +137,7 @@ class BeforeGameController extends Controller
     }
     public function wrong_answer()
     {
+        $flag = true;
         $userDirectory = getenv('APPDATA');
         $appName = 'my_name';
         $subDirectory = 'user_data';
@@ -152,6 +161,11 @@ class BeforeGameController extends Controller
                 $correctRate = $stats['正解数'] / ($stats['正解数'] + $stats['誤答数']);
                 $incorrectQuestions[$id] = $correctRate;
             }
+        }
+
+        // 誤答数が1以上の問題が一つもない場合、$flagをfalseに設定
+        if (empty($incorrectQuestions)) {
+            $flag = false;
         }
 
         // 4. 正答率が低い順にソート
@@ -199,7 +213,8 @@ class BeforeGameController extends Controller
         return view('user.miss_display', [
             'question' => $questionData,
             'correctRates' => $correctRates,
-            'timeLimit' => 15
+            'timeLimit' => 15,
+            'flag' => $flag
         ]);
     }
 
@@ -245,37 +260,45 @@ class BeforeGameController extends Controller
         $name = session()->get('name');
         $mode = session()->get('mode');
         $level = session()->get('level');
+        $clearFlag = session()->get('clearFlag');
         $resultScore = session()->get('resultScore');
         $modeNumber = ['java' => 0, 'python' => 1, 'php' => 2][$mode] ?? null;
         $levelNumber = ['easy' => 0, 'normal' => 1, 'hard' => 2][$level] ?? null;
 
 
+        if ($clearFlag) {
+            $rankings = Ranking::where('mode', $modeNumber)
+                ->where('level', $levelNumber)
+                ->orderBy('rank', 'asc')
+                ->get();
 
-        $rankings = Ranking::where('mode', $modeNumber)
-            ->where('level', $levelNumber)
-            ->orderBy('rank', 'asc')
-            ->get();
+            $rankLen = count($rankings);
+            Ranking::create([
+                'name' => $name,
+                'score' => $resultScore,
+                'mode' => $modeNumber,
+                'level' => $levelNumber,
+                'rank' => $rankLen
+            ]);
 
-        $rankLen = count($rankings);
-        Ranking::create([
-            'name' => $name,
-            'score' => $resultScore,
-            'mode' => $modeNumber,
-            'level' => $levelNumber,
-            'rank' => $rankLen
-        ]);
+            //ランキング取得    
+            $updatedRankings = Ranking::where('mode', $modeNumber)
+                ->where('level', $levelNumber)
+                ->orderBy('score', 'desc')
+                ->get();
 
-        //ランキング取得    
-        $updatedRankings = Ranking::where('mode', $modeNumber)
-            ->where('level', $levelNumber)
-            ->orderBy('score', 'desc')
-            ->get();
+            // 新しい順位に基づいて rank を更新
+            foreach ($updatedRankings as $index => $ranking) {
+                $ranking->rank = $index + 1;
+                $ranking->save();
+            }
+        };
 
-        // 新しい順位に基づいて rank を更新
-        foreach ($updatedRankings as $index => $ranking) {
-            $ranking->rank = $index + 1;
-            $ranking->save();
-        }
+        return view('user.game_result');
+    }
+
+    public function miss_result_show()
+    {
         return view('user.game_result');
     }
 

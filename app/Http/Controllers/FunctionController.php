@@ -25,15 +25,10 @@ class FunctionController extends Controller
             $userData = [];
         }
 
-        // 質問をモードごとに取得し、回答状況を追加
         $questionsJava = question::where('mode', 0)->where('delete_flag', 0)->get();
         $questionsPython = question::where('mode', 1)->where('delete_flag', 0)->get();
-        // コントローラー内での確認
         $questionsPHP = Question::where('mode', 2)->where('delete_flag', 0)->get();
-        dd($questionsPHP);
 
-
-        // 各モードの質問に回答状況を追加
         $questionsJava->map(function ($question) use ($userData) {
             $questionId = $question->id;
             $question->answer_status = isset($userData[$questionId]) ? '回答済み' : '未回答';
@@ -72,6 +67,9 @@ class FunctionController extends Controller
                 $rankings["{$mode}{$level}"] = Ranking::where('mode', $modeKey)
                     ->where('level', $levelKey)
                     ->orderBy('rank', 'asc') // 順位で並べる
+                    ->orderBy('score', 'desc') // スコアで並べる
+                    ->orderBy('created_at', 'desc') // スコアが同じなら新しい順
+                    ->take(5) // 上位5件のみ取得
                     ->get();
             }
         }
