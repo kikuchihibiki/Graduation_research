@@ -182,3 +182,9 @@ input:checked + .tab_item2 {
 .rank3{
   color:#F8D2A1
 }
+
+.score { 
+  display: none; 
+ }
+
+ .white { color: white; }
