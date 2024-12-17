@@ -92,6 +92,7 @@ class BeforeGameController extends Controller
         if ($levelNumber !== 2) {
             $questions = question::where('mode', $modeNumber)
                 ->where('level', $levelNumber)
+                ->where('difficulty_flag', 0)
                 ->inRandomOrder()
                 ->limit(5)
                 ->get();
@@ -106,6 +107,7 @@ class BeforeGameController extends Controller
         } else {
             $questions = question::where('mode', $modeNumber)
                 ->whereIn('level', [1, 2])
+                ->where('difficulty_flag', 0)
                 ->inRandomOrder()
                 ->get()
                 ->groupBy('level');

@@ -35,7 +35,7 @@ class CreateQuestionSeeder extends Seeder
 
                     // 6問のテストデータを挿入
                     for ($i = 1; $i <= 6; $i++) {
-                        $difficultyFlag = $i > 4 ? 1 : 0; // 5番目と6番目は難易度フラグを1にする
+                        $difficultyFlag = $i == 6 ? 1 : 0; // 5番目と6番目は難易度フラグを1にする
 
                         DB::table('question')->insert([
                             'question' => 'test' . $i,
