@@ -1,7 +1,9 @@
 .hidden {
   display: none;
 }
-
+body{
+  padding-top: 800px;
+}
 
 /* テーブル上部のコントロールエリア */
 .table-controls{
