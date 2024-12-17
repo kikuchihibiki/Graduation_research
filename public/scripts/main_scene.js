@@ -749,6 +749,7 @@ class EndScene extends Phaser.Scene {
                     questionArray : this.registry.get('questionData'),
                     mode: this.registry.get('mode'),
                     level: this.registry.get('level'),
+                    clearFlag: this.clearFlag,
                 }),
             })
 

@@ -251,37 +251,40 @@ class BeforeGameController extends Controller
         $name = session()->get('name');
         $mode = session()->get('mode');
         $level = session()->get('level');
+        $clearFlag = session()->get('clearFlag');
         $resultScore = session()->get('resultScore');
         $modeNumber = ['java' => 0, 'python' => 1, 'php' => 2][$mode] ?? null;
         $levelNumber = ['easy' => 0, 'normal' => 1, 'hard' => 2][$level] ?? null;
 
 
+        if ($clearFlag) {
+            $rankings = Ranking::where('mode', $modeNumber)
+                ->where('level', $levelNumber)
+                ->orderBy('rank', 'asc')
+                ->get();
 
-        $rankings = Ranking::where('mode', $modeNumber)
-            ->where('level', $levelNumber)
-            ->orderBy('rank', 'asc')
-            ->get();
+            $rankLen = count($rankings);
+            Ranking::create([
+                'name' => $name,
+                'score' => $resultScore,
+                'mode' => $modeNumber,
+                'level' => $levelNumber,
+                'rank' => $rankLen
+            ]);
 
-        $rankLen = count($rankings);
-        Ranking::create([
-            'name' => $name,
-            'score' => $resultScore,
-            'mode' => $modeNumber,
-            'level' => $levelNumber,
-            'rank' => $rankLen
-        ]);
+            //ランキング取得    
+            $updatedRankings = Ranking::where('mode', $modeNumber)
+                ->where('level', $levelNumber)
+                ->orderBy('score', 'desc')
+                ->get();
 
-        //ランキング取得    
-        $updatedRankings = Ranking::where('mode', $modeNumber)
-            ->where('level', $levelNumber)
-            ->orderBy('score', 'desc')
-            ->get();
+            // 新しい順位に基づいて rank を更新
+            foreach ($updatedRankings as $index => $ranking) {
+                $ranking->rank = $index + 1;
+                $ranking->save();
+            }
+        };
 
-        // 新しい順位に基づいて rank を更新
-        foreach ($updatedRankings as $index => $ranking) {
-            $ranking->rank = $index + 1;
-            $ranking->save();
-        }
         return view('user.game_result');
     }
 

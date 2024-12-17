@@ -43,6 +43,7 @@ class FillauthController extends Controller
         $level = $request->input('level');
         $mode = $request->input('mode');
         $resultScore = $request->input('resultScore');
+        $clearFlag = $request->input('clearFlag');
 
         $userDirectory = getenv('APPDATA');
         $appName = 'my_name';
@@ -98,10 +99,12 @@ class FillauthController extends Controller
         $scoreData[] = $newScore;
 
         // JSONファイルに保存
-        if (file_put_contents($filePath, json_encode($scoreData, JSON_PRETTY_PRINT)) === false) {
-            return response()->json(['message' => 'JSONファイルへの書き込みに失敗しました'], 500);
+        if ($clearFlag) {
+            // スコアデータをJSONにエンコードしてファイルに書き込み
+            if (file_put_contents($filePath, json_encode($scoreData, JSON_PRETTY_PRINT)) === false) {
+                return response()->json(['message' => 'JSONファイルへの書き込みに失敗しました'], 500);
+            }
         }
-
         $idJson = [];
         for ($i = 0; $i < count($idArry); $i++) {
             $idJson[] = [
@@ -128,7 +131,8 @@ class FillauthController extends Controller
             'answerArray' => $showAnswers,
             'idArry' => $idArry,
             'idJson' => $idJson,
-            'questionData' => $questionData
+            'questionData' => $questionData,
+            'clearFlag' => $clearFlag,
         ]));
         return response()->json(['success' => true]);
     }
