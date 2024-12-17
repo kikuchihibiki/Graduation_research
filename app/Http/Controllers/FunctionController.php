@@ -67,6 +67,9 @@ class FunctionController extends Controller
                 $rankings["{$mode}{$level}"] = Ranking::where('mode', $modeKey)
                     ->where('level', $levelKey)
                     ->orderBy('rank', 'asc') // 順位で並べる
+                    ->orderBy('score', 'desc') // スコアで並べる
+                    ->orderBy('created_at', 'desc') // スコアが同じなら新しい順
+                    ->take(5) // 上位5件のみ取得
                     ->get();
             }
         }
