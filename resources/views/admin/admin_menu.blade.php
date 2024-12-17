@@ -5,11 +5,9 @@
 <link rel="stylesheet" href="{{ asset('css/admin_menu.css') }}">
 @endsection
 @section('content')
-<form action="/" method="post" id="menu_form">
+<form action="{{ route('admin_select') }}" method="post" id="menu_form">
     @csrf
-    <input type="radio" name="menu" value="question_add" id="question_add" checked>
-    <label for="question_add">問題登録　　　　新しく問題登録します</label>
-    <input type="radio" name="menu" value="list" id="list">
+    <input type="radio" name="menu" value="list" id="list" checked>
     <label for="list">問題一覧　　　　一覧から編集、削除します</label>
     <input type="radio" name="menu" value="ranking" id="ranking">
     <label for="ranking">ランキング修正　　ランキングの編集をします</label>
