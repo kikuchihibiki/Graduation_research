@@ -290,6 +290,7 @@
         @endif
     </div>
 </div>
+<a href="{{ route('select_mode') }}" style="color:white;">≻戻る</a>
 <script src="{{ asset('js/score.js') }}"></script>
 <script src="{{ asset('js/ranking.js') }}">
     /*９つ php-hard*/

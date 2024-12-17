@@ -64,7 +64,13 @@ class BeforeGameController extends Controller
     {
         $mode = $request->input('mode');
         $request->session()->put('mode', $mode);
-        return view('user.select_level');
+        $timeLimits = [
+            'java' => [15, 15, 10],
+            'python' => [10, 10, 7],
+            'php' => [12, 12, 8],
+        ];
+        $timeLimit = $timeLimits[$mode] ?? null;
+        return view('user.select_level', ['timeLimit' => $timeLimit]);
     }
 
     public function start_game(Request $request)

@@ -120,7 +120,7 @@
 </div>
 
 <div class="back-button">
-  <a href="#" style="color:white;">≻戻る</a>
+  <a href="{{ route('select_mode') }}" style="color:white;">≻戻る</a>
 </div>
 
 
