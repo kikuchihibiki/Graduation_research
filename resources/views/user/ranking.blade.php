@@ -216,19 +216,87 @@
         </tbody>
     </table>
     <div class="score">
-        <p class="white">あなたのスコア: <span>11500</span></p>
+        <p id="scoreDisplay" class="white">あなたのスコア: <span>-</span></p>
     </div>
-    <div>
-        <button id="back_button" onclick="history.back()">戻る</button>
+    <div id="javaeazy" class="score">
+        @if (!is_null($results['javaeasy']))
+        <p class="white">あなたのスコア: <span>{{ $results['javaeasy']['s'] }}</span></p>
+        @else
+        <p>スコアはありません。</p>
+        @endif
+    </div>
+
+    <div id="javanormal" class="score">
+        @if (!is_null($results['javanormal']))
+        <p class="white">あなたのスコア: <span>{{ $results['javanormal']['s'] }}</span></p>
+        @else
+        <p>スコアはありません。</p>
+        @endif
+    </div>
+
+    <div id="javahard" class="score">
+        @if (!is_null($results['javahard']))
+        <p class="white">あなたのスコア: <span>{{ $results['javahard']['s'] }}</span></p>
+        @else
+        <p>スコアはありません。</p>
+        @endif
+    </div>
+
+    <div id="phpeazy" class="score">
+        @if (!is_null($results['phpeasy']))
+        <p class="white">あなたのスコア: <span>{{ $results['phpeasy']['s'] }}</span></p>
+        @else
+        <p>スコアはありません。</p>
+        @endif
+    </div>
+
+    <div id="phpnormal" class="score">
+        @if (!is_null($results['phpnormal']))
+        <p class="white">あなたのスコア: <span>{{ $results['phpnormal']['s'] }}</span></p>
+        @else
+        <p>スコアはありません。</p>
+        @endif
+    </div>
+
+    <div id="phphard" class="score">
+        @if (!is_null($results['phphard']))
+        <p class="white">あなたのスコア: <span>{{ $results['phphard']['s'] }}</span></p>
+        @else
+        <p>スコアはありません。</p>
+        @endif
+    </div>
+
+    <div id="pythoneazy" class="score">
+        @if (!is_null($results['pythoneasy']))
+        <p class="white">あなたのスコア: <span>{{ $results['pythoneasy']['s'] }}</span></p>
+        @else
+        <p>スコアはありません。</p>
+        @endif
+    </div>
+
+    <div id="pythonnormal" class="score">
+        @if (!is_null($results['pythonnormal']))
+        <p class="white">あなたのスコア: <span>{{ $results['pythonnormal']['s'] }}</span></p>
+        @else
+        <p>スコアはありません。</p>
+        @endif
+    </div>
+
+    <div id="pythonhard" class="score">
+        @if (!is_null($results['pythonhard']))
+        <p class="white">あなたのスコア: <span>{{ $results['pythonhard']['s'] }}</span></p>
+        @else
+        <p>スコアはありません。</p>
+        @endif
     </div>
 </div>
-
+<script src="{{ asset('js/score.js') }}"></script>
 <script src="{{ asset('js/ranking.js') }}">
     /*９つ php-hard*/
     /*
-        
+
     作ったらまず最初はジャヴァのイージーだけ表示するCSS他は隠す
-        
+
 
     チェックボックスの値が変わったらどこにチェックボックスの内容が変わったかっていうイベント（事象）を取ってきてその値に一致するランキングのテーブルを表示する
     HTMLとJavaScriptのみしか書かない
