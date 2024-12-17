@@ -1,0 +1,225 @@
+/* 画面全体の背景と余白を調整 */
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #222; /* 全体の背景色 */
+}
+
+/* コンテナ要素 */
+.q-body {
+    color: white;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding: 0px;
+    max-width: 1000px; /* 必要に応じて幅を調整 */
+    margin: 0 auto; /* 中央揃え */
+    width: 90%;
+}
+
+/* ボタンのスタイル */
+.mode button {
+    background-color: white; /* ボタン背景色 */
+    color: black;
+    border: none;
+    padding: 10px 0;
+    cursor: pointer;
+    font-size: 1.2em;
+    width: 100%; /* ボタンをthの幅に合わせる */
+}
+
+/* テーブル全体のスタイル */
+.data {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+thead {
+    background-color: #333; /* ヘッダー背景色 */
+}
+
+.level th {
+    font-weight: bold;
+    border-bottom: 2px solid black;
+    text-align: center;
+}
+
+tbody tr {
+    background-color: #444; /* 行の背景色 */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #555; /* 奇数行の背景色 */
+    
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #333; /* セルの枠線 */
+    overflow: hidden; /* 溢れた部分を隠す */
+    text-overflow: ellipsis; /* 超えた部分を省略記号にする */
+}
+
+.rank, .rank2, .rank3, .rank4 {
+    font-weight: bold;
+}
+
+.rank-name, .rank-score, .rank2-name, .rank2-score,
+.rank3-name, .rank3-score, .text-white {
+    color: white;
+}
+
+.score {
+    margin-top: 20px;
+    font-size: 1.5em;
+}
+
+.button_tab a {
+    text-decoration: none;
+    font-size: 1.2em;
+    color: #FFC45D;
+}
+
+.tab_item {
+  width: calc(100%/3);
+  height: 50px;
+  border-bottom: 3px solid #FFC45D;
+  background-color: #d9d9d9;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #565656;
+  display: block;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_item:hover {
+  opacity: 0.75;
+}
+
+/*ラジオボタンを全て消す*/
+input[name="tab_item"] {
+  display: none;
+}
+/*選択されているタブのスタイルを変える*/
+input:checked + .tab_item {
+  background-color: #FFC45D;
+  color: #fff;
+}
+
+.checkBox{
+  width: 100%;
+}
+
+.tab_item2 {
+  width: calc(100%/3);
+  height: 50px;
+  border-bottom: 3px solid #FFC45D;
+  background-color: #d9d9d9;
+  line-height: 50px;
+  font-size: 16px;
+  text-align: center;
+  color: #565656;
+  display: block;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+.tab_item2:hover {
+  opacity: 0.75;
+}
+
+/*ラジオボタンを全て消す*/
+input[name="tab_item2"] {
+  display: none;
+}
+/*選択されているタブのスタイルを変える*/
+input:checked + .tab_item2 {
+  background-color: #FFC45D;
+  color: #fff;
+}
+
+.checkBox2{
+  width: 100%;
+}
+
+
+/* 作ったらまず最初はジャヴァのイージーだけ表示するCSS他は隠す */
+
+.ranking_tab{
+  display: none;
+}
+
+.selected{
+  display: contents;
+}
+
+.lang{
+  width: 33%;
+}
+
+/*クラスの中のtdの2行目にCSSを魔法をかける*/
+.ranking_tab td:nth-of-type(2){
+  word-break: break-all;
+}
+
+.kind{
+  font-size: 24px;
+
+}
+
+.rank{
+  color:#F7FF8A
+}
+
+.rank2{
+  color:#DDDDDD
+}
+
+.rank3{
+  color:#F8D2A1
+}
+.kind{
+  font-size: 24px;
+}
+
+.deleteCheck{
+    
+}
+.choice_reset{
+  text-decoration: none;
+  color: #fff;
+  margin-bottom: 5px;
+}
+.allchoice_reset{
+  text-decoration: none;
+  color: #fff;
+  margin-top: 5px;
+}
+
+.reset_tab{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.head_tab{
+  position: relative;
+}
+
+.title{
+  text-align: center;
+}
+
+.button_tab{
+  display: flex;
+  justify-content: space-between;
+}
