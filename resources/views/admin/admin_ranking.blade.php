@@ -12,6 +12,7 @@
             <a href="#" class="allchoice_reset">すべてリセット</a>
         </div>
     </div>
+
     <table class="data">
         <form id="settingBox">
             <thead>

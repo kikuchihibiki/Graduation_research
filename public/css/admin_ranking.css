@@ -171,12 +171,16 @@ input:checked + .tab_item2 {
 
 }
 
+.rank_tab{
+  position: relative;
+}
+
 .rank{
-  color:#F7FF8A
+  color:#F7FF8A;
 }
 
 .rank2{
-  color:#DDDDDD
+  color:#DDDDDD;
 }
 
 .rank3{
@@ -187,7 +191,9 @@ input:checked + .tab_item2 {
 }
 
 .deleteCheck{
-    
+  align-items: center;
+  position: absolute;
+  left: 0;
 }
 .choice_reset{
   text-decoration: none;
