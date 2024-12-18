@@ -64,6 +64,9 @@ class BeforeGameController extends Controller
     {
         $mode = $request->input('mode');
         $request->session()->put('mode', $mode);
+        if ($mode == 'miss_question') {
+            return redirect('/wrong_answer');
+        }
         $timeLimits = [
             'java' => [15, 15, 10],
             'python' => [10, 10, 7],
