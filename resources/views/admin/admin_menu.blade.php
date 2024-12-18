@@ -20,14 +20,20 @@
 
 <!-- モーダル要素 -->
 <div class="modal-overlay">
-    <div id="logout_modal" class="modal">
+    <div id="logout_modal" class="modal" style="display: none;">
+        <p>本当にログアウトしますか？</p>
         <div class="modal_content">
-            <p>本当にログアウトしますか？</p>
-            <button id="confirm_logout">ログアウト</button>
-            <button id="close_modal">キャンセル</button>
+
+            <form id="logout_form" method="POST" action="/logout">
+                @csrf
+                <button type="submit" id="confirm_logout">ログアウト</button>
+                <button id="close_modal" type="button">キャンセル</button>
+            </form>
+
         </div>
     </div>
 </div>
+
 
 <script src="{{ asset('js/admin_menu.js') }}"></script>
 @endsection
