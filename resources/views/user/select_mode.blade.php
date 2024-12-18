@@ -2,7 +2,7 @@
 @section('title', 'モード選択')
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
-<link rel="stylesheet" href="{{ asset('css/select_mode.css') }}" >
+<link rel="stylesheet" href="{{ asset('css/select_mode.css') }}">
 @endsection
 @section('content')
 <div class="top-right-links">
@@ -19,9 +19,10 @@
     <input type="radio" name="mode" value="php" id="php">
     <label for="php">php</label>
     <input type="radio" name="mode" value="miss_question" id="miss_question">
-    <label for="miss_question">誤答問題</label>
+    <label for="miss_question"><a href="/wrong_answer">誤答問題</a></label>
     <input type="submit" style="display:none;">
 </form>
+
 <button id="title_back_button" onclick="location.href='/'">タイトルに戻る</button>
 <script src="{{ asset('js/select_mode.js') }}"></script>
 @endsection

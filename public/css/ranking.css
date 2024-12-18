@@ -13,6 +13,7 @@ body, html {
     padding: 0px;
     max-width: 1000px; /* 必要に応じて幅を調整 */
     margin: 0 auto; /* 中央揃え */
+    width: 90%;
 }
 
 /* ボタンのスタイル */
@@ -55,6 +56,8 @@ tbody tr:nth-child(odd) {
 td {
     padding: 10px;
     border: 1px solid #333; /* セルの枠線 */
+    overflow: hidden; /* 溢れた部分を隠す */
+    text-overflow: ellipsis; /* 超えた部分を省略記号にする */
 }
 
 .rank, .rank2, .rank3, .rank4 {
@@ -153,3 +156,35 @@ input:checked + .tab_item2 {
 .selected{
   display: contents;
 }
+
+.lang{
+  width: 33%;
+}
+
+/*クラスの中のtdの2行目にCSSを魔法をかける*/
+.ranking_tab td:nth-of-type(2){
+  word-break: break-all;
+}
+
+.kind{
+  font-size: 24px;
+
+}
+
+.rank1{
+  color:#F7FF8A
+}
+
+.rank2{
+  color:#DDDDDD
+}
+
+.rank3{
+  color:#F8D2A1
+}
+
+.score { 
+  display: none; 
+ }
+
+ .white { color: white; }
