@@ -2,6 +2,7 @@
 @section('title', '問題一覧')
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin_questionlist.css') }}">
 @endsection
 @section('content')
 <h1>問題一覧</h1>
@@ -23,7 +24,7 @@ java python php
         <td>{{ $i + 1 }}</td>
         <td>問題 {{ $i + 1 }}</td>
         <td>解答 {{ $i + 1 }}</td>
-        <td><a>問題編集</a> {{ $i + 1 }}</td>
+        <td><span class="dli-create"></span></td>
         <td><a>問題削除</a> {{ $i + 1 }}</td>
         </tr>
         @endfor
