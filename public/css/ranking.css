@@ -8,7 +8,6 @@ body, html {
 /* コンテナ要素 */
 .q-body {
     color: white;
-    font-family: 'Arial', sans-serif;
     text-align: center;
     padding: 0px;
     max-width: 1000px; /* 必要に応じて幅を調整 */
@@ -171,7 +170,7 @@ input:checked + .tab_item2 {
 
 }
 
-.rank{
+.rank1{
   color:#F7FF8A
 }
 
@@ -182,3 +181,9 @@ input:checked + .tab_item2 {
 .rank3{
   color:#F8D2A1
 }
+
+.score { 
+  display: none; 
+ }
+
+ .white { color: white; }

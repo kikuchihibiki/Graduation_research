@@ -28,6 +28,7 @@ class StartScene extends Phaser.Scene {
 
         this.registry.set('timeLimit',timeLimitData);
         this.registry.set('mode',modeData);
+        this.registry.set('questionData',questionData);
         this.registry.set('level',levelData);
         this.registry.set('clearFlag',true);
         console.log(this.registry.get('mode'));
@@ -293,7 +294,6 @@ class QuizScene extends Phaser.Scene {
             fontSize: '35px',
             fill: '#ff0000'
         }).setPadding(6);
-
         // コンテナを作成
         const livesContainer = this.add.container(0, 0);
 
@@ -302,7 +302,7 @@ class QuizScene extends Phaser.Scene {
         liveBg.fillStyle(0x000000, 0.8);
 
         // テキストを作成
-        this.livesText = this.add.text(1080, 100, `残機:✖ ${this.lives}`, { 
+        this.livesText = this.add.text(1080, 100, `残機✖${this.lives}`, { 
             fontSize: '30px', 
             fill: '#ffffff' 
         }).setPadding(8);
@@ -320,11 +320,16 @@ class QuizScene extends Phaser.Scene {
         this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '30px', fill: '#000000' }).setPadding(6);
 
         // タイマーの設定
-        this.timerText = this.add.text(D_WIDTH/2-30, 100, `${this.timeLimit} `, {
+        this.timerText = this.add.text(D_WIDTH/2-30, 100, ``, {
             fontSize: '30px',
             fill: '#ff0000'
         }).setPadding(6);
-        this.time.delayedCall(1000, () => {
+
+        this.countdownText = this.add.text(D_WIDTH/2-30, 100, '', {
+            fontSize: '50px',
+            fill: '#ff0000'
+        }).setOrigin(0.5).setAlpha(0);
+        this.time.delayedCall(500, () => {
             this.startTime = this.time.now; 
             console.log('タイマー開始！');
         });
@@ -387,31 +392,55 @@ class QuizScene extends Phaser.Scene {
 
     updateTimer() {
         this.timeLimit--;
-        this.timerText.setText(`${this.timeLimit}`);
-        this.blinking = false; 
-        // timeLimit が 5 以下になったら背景を赤く滑らかに点滅させる
-        if (this.timeLimit <= 5 && !this.blinking) {
-            this.blinking = true; // 点滅中フラグ
-
-            // 透明度を変更するtweenを設定
-            this.tweens.add({
-                targets: this.blinkingRect,
-                alpha: 0.5, // 最大透明度
-                duration: 500, // 500msごとに
-                yoyo: true,  // 往復させて点滅を作成
-                repeat: -1,  // 無限ループ
-                ease: 'Sine.easeInOut' // なめらかな変化
-            });
+        this.blinking = false;
+        console.log('残り時間: ', this.timeLimit);
+        // timeLimitが5以下の場合はカウントダウンテキストを表示
+        if (this.timeLimit <= 5) {
+            this.timerText.setText(`${this.timeLimit}`);
+            
+            // カウントダウンテキストがまだ表示されていない場合、フェードインする
+            if (this.countdownText.alpha === 0) {
+                this.tweens.add({
+                    targets: this.countdownText,
+                    alpha: 1, // カウントダウンテキストを表示
+                    duration: 500, // 500msかけてフェードイン
+                    ease: 'Sine.easeInOut'
+                });
+            }
+            
+            // timeLimitが5以下になったら背景を赤く滑らかに点滅させる
+            if (!this.blinking) {
+                this.blinking = true; // 点滅中フラグ
+                
+                // 透明度を変更するtweenを設定
+                this.tweens.add({
+                    targets: this.blinkingRect,
+                    alpha: 0.5, // 最大透明度
+                    duration: 500, // 500msごとに
+                    yoyo: true,  // 往復させて点滅を作成
+                    repeat: -1,  // 無限ループ
+                    ease: 'Sine.easeInOut' // なめらかな変化
+                });
+            }
         }
-
-        // timeLimit が 0 以下になったら点滅を完全に止める
+    
+        // 時間が0以下になるとカウントダウンテキストを非表示に
         if (this.timeLimit <= 0) {
+            // カウントダウンテキストをフェードアウト
+            this.tweens.add({
+                targets: this.countdownText,
+                alpha: 0, // フェードアウト
+                duration: 500
+            });
             // 点滅を停止
+            if(this.stopBlinking) {
             this.tweens.killTweensOf(this.blinkingRect); // 点滅用のtweenを停止
             this.blinkingRect.setAlpha(0); // 透明に戻す
+            }
         }
     }
-
+    
+    
     checkAnswer(timeout = false) {
         let resultText = '';
         let color = '#ff0000';
@@ -423,15 +452,20 @@ class QuizScene extends Phaser.Scene {
             this.time.delayedCall(2000, () => {
                 attack.destroy(); // 画像を削除
             });
-            resultText = '正解！';
+            resultText = '';
             color = '#00ff00';
             this.correctAnswers++;
             progressData[this.questionIndex] = true; 
             const elapsedTime = (this.time.now - this.startTime) / 1000;
             console.log('経過時間: ' + elapsedTime + '秒');
             if (this.timerEvent) this.timerEvent.remove();
+            const timePenalty = (elapsedTime / this.registry.get('timeLimit')) * 100;
+            console.log(this.registry.get('timeLimit'));
+            console.log('時間ペナルティ: ' + timePenalty);
+            const missPenalty = this.missCount * 10;
             // スコア計算
-            this.score = Math.floor(200 - ((elapsedTime / this.timeLimit) * 100 + this.missCount * 10));
+            this.score = Math.floor(200 - (timePenalty - missPenalty));
+            console.log('スコア: ' + this.score);
             this.score = this.score < 0 ? 0 : this.score;
             this.input.keyboard.removeListener('keydown');
 
@@ -445,7 +479,7 @@ class QuizScene extends Phaser.Scene {
         }
         // 時間切れの場合
         else if (timeout) {
-            resultText = '時間切れ！不正解';
+            resultText = '';
             this.lives--;
             progressData[this.questionIndex] = false;
 
@@ -481,7 +515,7 @@ class QuizScene extends Phaser.Scene {
             this.lastAnswer.setText(`前回の解答: ${this.answerresult}`);
             return; // 不正解の場合、ここで処理終了
         }
-        this.livesText.setText(`残機: ${this.lives}`).setPadding(6);
+        this.livesText.setText(`残機✖${this.lives}`).setPadding(6);
 
         
         // 正解または時間切れの場合、結果を表示して次へ
@@ -489,7 +523,7 @@ class QuizScene extends Phaser.Scene {
         this.progressBar.update(progressData);
         this.registry.set('progressData', progressData);
         // 2秒後に次のシーンへ遷移
-        this.time.delayedCall(2000, () => {
+        this.time.delayedCall(1500, () => {
             this.scene.start('AnswerResultScene', {
                 correctAnswer: this.correctAnswer,
                 questionIndex: this.questionIndex,
@@ -555,7 +589,7 @@ class AnswerResultScene extends Phaser.Scene {
         liveBg.fillStyle(0x000000, 0.8);
 
         // テキストを作成
-        this.livesText = this.add.text(1080, 100, `残機:✖ ${this.lives}`, { 
+        this.livesText = this.add.text(1080, 100, `残機✖${this.lives}`, { 
             fontSize: '30px', 
             fill: '#ffffff' 
         }).setPadding(8);
@@ -709,9 +743,13 @@ class EndScene extends Phaser.Scene {
                 body: JSON.stringify({
                     correctAnswers : data.correctAnswers,
                     totalQuestions : data.totalQuestions,
-                    resultScore : data.score,
+                    resultScore : data.resultScore,
                     answerArray : this.registry.get('progressData'),
                     idArry : this.registry.get('questionId'),
+                    questionArray : this.registry.get('questionData'),
+                    mode: this.registry.get('mode'),
+                    level: this.registry.get('level'),
+                    clearFlag: this.clearFlag,
                 }),
             })
 
