@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="pass-log">
-            <a href="#">パスワードを忘れた方はこちら</a>
+            <a href="{{ route('password.request') }}">パスワードを忘れた方はこちら</a>
             <div class="pass-log2">
                 <p>></p>
                 <button type="submit" class="btn btn-primary">

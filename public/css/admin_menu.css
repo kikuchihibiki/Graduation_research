@@ -122,3 +122,8 @@ p{
 button {
     font-size: 35px;
 }
+.modal_content {
+    display: flex;
+    justify-content: space-between; /* ボタンを横並びにしてスペースを均等に配置 */
+    gap: 10px; /* ボタン間の間隔 */
+}
