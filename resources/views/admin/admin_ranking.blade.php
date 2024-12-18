@@ -59,27 +59,27 @@
     
         <tbody class="ranking_tab selected" id="java-eazy" >
             <tr class="rank_tr_1">
-                <td class="rank"><input type="checkbox" value="deleteCheck" class="deleteCheck" id="deleteCheck"> 1位</td>
+                <td class="rank rank_tab"><input type="checkbox" value="deleteCheck" class="deleteCheck" id="deleteCheck"> 1位</td>
                 <td class="rank-name">Omoto</td>
                 <td class="rank-score">22450</td>
             </tr>
             <tr>
-                <td class="rank2"><input type="checkbox" value="" class="deleteCheck" id="deleteCheck" > 2位</td>
-                <td class="rank2-name">Kokomi</td>
+                <td class="rank2 rank_tab"><input type="checkbox" value="" class="deleteCheck" id="deleteCheck" > 2位</td>
+                <td class="rank2-name ">Kokomi</td>
                 <td class="rank2-score">22000</td>
             </tr>
             <tr >
-                <td class="rank3"><input type="checkbox" value="" class="deleteCheck" id="deleteCheck"> 3位</td>
+                <td class="rank3 rank_tab"><input type="checkbox" value="" class="deleteCheck" id="deleteCheck"> 3位</td>
                 <td class="rank3-name">Sugiyama</td>
                 <td class="rank3-score">19000</td>
             </tr>
             <tr>
-                <td class="rank4"><input type="checkbox" value="" class="deleteCheck" id="deleteCheck"> 4位</td>
+                <td class="rank4 rank_tab"><input type="checkbox" value="" class="deleteCheck" id="deleteCheck"> 4位</td>
                 <td class="text-white">Mikuru</td>
                 <td class="text-white">17800</td>
             </tr>
             <tr>
-                <td class="rank4"><input type="checkbox" value="" class="deleteCheck" id="deleteCheck">5位</td>
+                <td class="rank4 rank_tab"><input type="checkbox" value="" class="deleteCheck" id="deleteCheck">5位</td>
                 <td class="text-white">あおい</td>
                 <td class="text-white">15000</td>
             </tr>
