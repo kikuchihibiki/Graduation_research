@@ -49,10 +49,13 @@ input[type="radio"]:checked + label {
 input[type="radio"]:checked + label::before {
     content: '>';
     color: #fff;
-    font-size: 1.5em;
+    font-size: 2em;
     position: absolute;
-    left: 10px;
+    left: -30px; /* Move the arrow outside the label */
+    top: 50%; /* Position it vertically centered */
+    transform: translateY(-50%); /* Adjust for perfect centering */
 }
+
 
 /* Sidebar links */
 a {
@@ -86,6 +89,12 @@ a:hover {
     content: "変数の型を意識しなくていい「配列の定義が自由」など制約が少ないのが特徴";
 }
 
+#miss_question:checked ~ label[for="miss_question"]::after {
+    content: "今まで間違えた問題のみが出題されます。";
+}
+
+
+
 /* Bottom link to the incorrect questions section */
 #mode_form + a {
     display: block;
@@ -98,3 +107,4 @@ a:hover {
 #mode_form + a:hover {
     color: #fff;
 }
+
