@@ -80,6 +80,9 @@ class BeforeGameController extends Controller
     {
         $mode = $request->session()->get('mode');
         $level = $request->input('level');
+        if ($level == 'back') {
+            return redirect('/select_mode');
+        }
         $request->session()->put('level', $level);
 
         $modeNumber = ['java' => 0, 'python' => 1, 'php' => 2][$mode] ?? null;

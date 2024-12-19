@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
@@ -25,5 +26,16 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/admin';
+    public function redirectPath()
+    {
+        return '/admin';
+    }
+
+    protected function sendResetResponse(Request $request, $response)
+    {
+        // セッションにメッセージを追加
+        return redirect($this->redirectTo)
+            ->with('status', trans($response)); // パスワードリセット成功のメッセージ
+    }
 }
