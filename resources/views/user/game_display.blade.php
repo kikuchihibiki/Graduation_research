@@ -15,6 +15,18 @@
             margin: 0;
             overflow: hidden;
         }
+
+        @font-face {
+            font-family: 'k8x12L';
+            src: url('/font/k8x12L.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* フォントを適用 */
+        body {
+            font-family: 'k8x12L', sans-serif;
+        }
     </style>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
