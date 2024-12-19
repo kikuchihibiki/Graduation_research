@@ -1,12 +1,43 @@
- /* 全体設定 */
+@font-face {
+  font-family: 'k8x12L';
+  src: url('/font/k8x12L.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
  body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'k8x12L', sans-serif;
   background-color: #f4f4f4;
   color: #333;
+  background-image: url('/assets/background.png');
+         
+  /* 画像を常に天地左右の中央に配置 */
+  background-position: center center;
+   
+  /* 画像をタイル状に繰り返し表示しない */
+  background-repeat: no-repeat;
+   
+  /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+  background-attachment: fixed;
+   
+  /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+  background-size: cover;
+   
+  /* 背景画像が読み込まれる前に表示される背景のカラー */
+  background-color: #464646;
 }
 
+
+.quiz-table th {
+width: 70%;
+}
+
+.quiz-table td {
+width: 30%;
+}
 .quiz-table td {
   font-size: 50px; /* 変更したいサイズに調整 */
   line-height: 1.5; /* 行間を少し広げて見やすく */
@@ -17,12 +48,10 @@ span {
 
 .quiz-table th:first-child,
 .quiz-table td:first-child {
-    width: 10%;
-    text-align: center;
     font-weight: bold;
 }
 
-/* 問題文の列: 70% */
+
 .quiz-column {
     width: 70%;
     font-size: 40px;
@@ -52,17 +81,20 @@ span {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+  background-color: rgba(255, 255, 255, 0.8); /* 背景を白色で80%透明に設定 */
 }
+
 
 .quiz-table th,
 .quiz-table td {
   border: 1px solid #ddd;
   padding: 12px;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .quiz-table th {
-  background-color: #555;
+  background-color: rgba(125, 125, 125, 0.8); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   color: #fff;
   font-weight: bold;
 }
