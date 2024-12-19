@@ -62,14 +62,14 @@
             <tbody class="ranking_tab selected" id="java-eazy">
                 @foreach ($rankings['javaeasy'] as $index => $rank)
                 <tr class="rank{{ $index + 1 }}">
-                    <td class="rank{{ $index + 1 }}"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
+                    <td class="rank{{ $index + 1 }} rank_tab"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
                     <td class="rank-name">{{ $rank->name }}</td>
                     <td class="rank-score">{{ $rank->score }}</td>
                 </tr>
                 @endforeach
                 @for ($i = count($rankings['javaeasy']); $i < 5; $i++)
                     <tr>
-                    <td class="rank{{ $i + 1 }}">{{ $i + 1 }}位</td>
+                    <td class="rank{{ $i + 1 }} rank_tab">{{ $i + 1 }}位</td>
                     <td class="text-white">-</td>
                     <td class="text-white">-</td>
                     </tr>
@@ -80,14 +80,14 @@
             <tbody class="ranking_tab" id="java-normal">
                 @foreach ($rankings['javanormal'] as $index => $rank)
                 <tr class="rank_tr_{{ $index + 1 }}">
-                    <td class="rank{{ $index + 1 }}"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
+                    <td class="rank{{ $index + 1 }} rank_tab"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
                     <td class="rank-name">{{ $rank->name }}</td>
                     <td class="rank-score">{{ $rank->score }}</td>
                 </tr>
                 @endforeach
                 @for ($i = count($rankings['javanormal']); $i < 5; $i++)
                     <tr>
-                    <td class="rank{{ $i + 1 }}">{{ $i + 1 }}位</td>
+                    <td class="rank{{ $i + 1 }} rank_tab">{{ $i + 1 }}位</td>
                     <td class="text-white">-</td>
                     <td class="text-white">-</td>
                     </tr>
@@ -98,14 +98,14 @@
             <tbody class="ranking_tab" id="java-hard">
                 @foreach ($rankings['javahard'] as $index => $rank)
                 <tr class="rank_tr_{{ $index + 1 }}">
-                    <td class="rank{{ $index + 1 }}"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
+                    <td class="rank{{ $index + 1 }} rank_tab"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
                     <td class="rank-name">{{ $rank->name }}</td>
                     <td class="rank-score">{{ $rank->score }}</td>
                 </tr>
                 @endforeach
                 @for ($i = count($rankings['javahard']); $i < 5; $i++)
                     <tr>
-                    <td class="rank{{ $i + 1 }}">{{ $i + 1 }}位</td>
+                    <td class="rank{{ $i + 1 }} rank_tab">{{ $i + 1 }}位</td>
                     <td class="text-white">-</td>
                     <td class="text-white">-</td>
                     </tr>
@@ -116,14 +116,14 @@
             <tbody class="ranking_tab" id="python-eazy">
                 @foreach ($rankings['pythoneasy'] as $index => $rank)
                 <tr class="rank_tr_{{ $index + 1 }}">
-                    <td class="rank{{ $index + 1 }}"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
+                    <td class="rank{{ $index + 1 }} rank_tab"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
                     <td class="rank-name">{{ $rank->name }}</td>
                     <td class="rank-score">{{ $rank->score }}</td>
                 </tr>
                 @endforeach
                 @for ($i = count($rankings['pythoneasy']); $i < 5; $i++)
                     <tr>
-                    <td class="rank{{ $i + 1 }}">{{ $i + 1 }}位</td>
+                    <td class="rank{{ $i + 1 }} rank_tab">{{ $i + 1 }}位</td>
                     <td class="text-white">-</td>
                     <td class="text-white">-</td>
                     </tr>
@@ -134,14 +134,14 @@
             <tbody class="ranking_tab" id="python-normal">
                 @foreach ($rankings['pythonnormal'] as $index => $rank)
                 <tr class="rank_tr_{{ $index + 1 }}">
-                    <td class="rank{{ $index + 1 }}"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
+                    <td class="rank{{ $index + 1 }} rank_tab" ><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
                     <td class="rank-name">{{ $rank->name }}</td>
                     <td class="rank-score">{{ $rank->score }}</td>
                 </tr>
                 @endforeach
                 @for ($i = count($rankings['pythonnormal']); $i < 5; $i++)
                     <tr>
-                    <td class="rank{{ $i + 1 }}">{{ $i + 1 }}位</td>
+                    <td class="rank{{ $i + 1 }} rank_tab">{{ $i + 1 }}位</td>
                     <td class="text-white">-</td>
                     <td class="text-white">-</td>
                     </tr>
@@ -152,14 +152,14 @@
             <tbody class="ranking_tab" id="python-hard">
                 @foreach ($rankings['pythonhard'] as $index => $rank)
                 <tr class="rank_tr_{{ $index + 1 }}">
-                    <td class="rank{{ $index + 1 }}"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
+                    <td class="rank{{ $index + 1 }} rank_tab"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
                     <td class="rank-name">{{ $rank->name }}</td>
                     <td class="rank-score">{{ $rank->score }}</td>
                 </tr>
                 @endforeach
                 @for ($i = count($rankings['pythonhard']); $i < 5; $i++)
                     <tr>
-                    <td class="rank{{ $i + 1 }}">{{ $i + 1 }}位</td>
+                    <td class="rank{{ $i + 1 }} rank_tab">{{ $i + 1 }}位</td>
                     <td class="text-white">-</td>
                     <td class="text-white">-</td>
                     </tr>
@@ -170,14 +170,14 @@
             <tbody class="ranking_tab" id="php-eazy">
                 @foreach ($rankings['phpeasy'] as $index => $rank)
                 <tr class="rank_tr_{{ $index + 1 }}">
-                    <td class="rank{{ $index + 1 }}"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
+                    <td class="rank{{ $index + 1 }} rank_tab"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
                     <td class="rank-name">{{ $rank->name }}</td>
                     <td class="rank-score">{{ $rank->score }}</td>
                 </tr>
                 @endforeach
                 @for ($i = count($rankings['phpeasy']); $i < 5; $i++)
                     <tr>
-                    <td class="rank{{ $i + 1 }}">{{ $i + 1 }}位</td>
+                    <td class="rank{{ $i + 1 }} rank_tab">{{ $i + 1 }}位</td>
                     <td class="text-white">-</td>
                     <td class="text-white">-</td>
                     </tr>
@@ -188,14 +188,14 @@
             <tbody class="ranking_tab" id="php-normal">
                 @foreach ($rankings['phpnormal'] as $index => $rank)
                 <tr class="rank_tr_{{ $index + 1 }}">
-                    <td class="rank{{ $index + 1 }}"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
+                    <td class="rank{{ $index + 1 }} rank_tab"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
                     <td class="rank-name">{{ $rank->name }}</td>
                     <td class="rank-score">{{ $rank->score }}</td>
                 </tr>
                 @endforeach
                 @for ($i = count($rankings['phpnormal']); $i < 5; $i++)
                     <tr>
-                    <td class="rank{{ $i + 1 }}">{{ $i + 1 }}位</td>
+                    <td class="rank{{ $i + 1 }} rank_tab">{{ $i + 1 }}位</td>
                     <td class="text-white">-</td>
                     <td class="text-white">-</td>
                     </tr>
@@ -206,14 +206,14 @@
             <tbody class="ranking_tab" id="php-hard">
                 @foreach ($rankings['phphard'] as $index => $rank)
                 <tr class="rank_tr_{{ $index + 1 }}">
-                    <td class="rank{{ $index + 1 }}"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
+                    <td class="rank{{ $index + 1 }} rank_tab"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
                     <td class="rank-name">{{ $rank->name }}</td>
                     <td class="rank-score">{{ $rank->score }}</td>
                 </tr>
                 @endforeach
                 @for ($i = count($rankings['phphard']); $i < 5; $i++)
                     <tr>
-                    <td class="rank{{ $i + 1 }}">{{ $i + 1 }}位</td>
+                    <td class="rank{{ $i + 1 }} rank_tab">{{ $i + 1 }}位</td>
                     <td class="text-white">-</td>
                     <td class="text-white">-</td>
                     </tr>
