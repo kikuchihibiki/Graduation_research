@@ -9,16 +9,15 @@
         <h1 class="title">ランキング修正</h1>
         <div class="reset_tab">
             <a href="#" class="choice_reset">選択してリセット</a>
-            <a href="#" class="allchoice_reset">すべてリセット</a>
+            <a href="{{ route('all_reset') }}" class="allchoice_reset">すべてリセット</a>
         </div>
     </div>
 
     <table class="data">
-        <form id="settingBox">
+        <form id="settingBox" action="{{ route('ranking_reset') }}" method="post">
+            @csrf
             <thead>
                 <tr class="mode">
-
-
                     <th class="lang java">
                         <input id="javaCheck" type="radio" name="tab_item" checked value="java">
                         <label class="tab_item checkBox kind" for="javaCheck">JAVA</label>
@@ -56,6 +55,7 @@
                     </th>
                 </tr>
             </thead>
+            <input id="submitBtn" type="submit" style="display: none;">
         </form>
         <form action="{{ route('delete_ranking') }}" method="post" id="menu_form">
             @csrf
@@ -134,7 +134,7 @@
             <tbody class="ranking_tab" id="python-normal">
                 @foreach ($rankings['pythonnormal'] as $index => $rank)
                 <tr class="rank_tr_{{ $index + 1 }}">
-                    <td class="rank{{ $index + 1 }} rank_tab" ><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
+                    <td class="rank{{ $index + 1 }} rank_tab"><input type="checkbox" name="id" value="{{ $rank->id }}" class="deleteCheck" id="deleteCheck">{{ $index + 1 }}位</td>
                     <td class="rank-name">{{ $rank->name }}</td>
                     <td class="rank-score">{{ $rank->score }}</td>
                 </tr>
@@ -221,9 +221,6 @@
             </tbody>
 
     </table>
-    <div class="score">
-        <p class="white">あなたのスコア: <span>11500</span></p>
-    </div>
     <div class="button_tab">
         <input type="submit" style="display:none;">
         </from>

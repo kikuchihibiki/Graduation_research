@@ -4,6 +4,8 @@
     box-sizing: border-box;
 }
 
+a{ text-decoration: none;}
+
 @font-face {
     font-family: 'k8x12L';
     src: url('/font/k8x12L.ttf') format('truetype');

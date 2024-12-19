@@ -14,7 +14,7 @@
         <h1 class="title">リザルト</h1>
         <div class="result-box">
             <p class="score-info">{{ session ('correctAnswers') }}/{{ session ('totalQuestions') }}問　正解</p>
-            <p class="hint-count">お手付き回数3回</p>
+            <p class="hint-count">お手付き回数{{session('missCount')}}回</p>
             <p class="score">Score <span>{{ session ('resultScore') }}</span></p>
         </div>
         <div class="button-container">
