@@ -36,7 +36,9 @@ class StartScene extends Phaser.Scene {
         console.log(this.registry.get('level'));
         
         this.newScore = 0;
+        this.newmissCount = 0;
         this.registry.set('lastScore',this.newScore);
+        this.registry.set('newmissCount',this.newmissCount);
         this.registry.set('progressData', Array(6).fill(null));
         this.registry.set('questionId',questionData.id);
         const id = questionData.map(obj => obj.id);
@@ -218,6 +220,7 @@ class QuizScene extends Phaser.Scene {
         this.load.image('character', this.registry.get('characterPath'));  
         this.load.image('block', '/assets/block.png');
         this.load.image('attack', '/assets/attack.png');
+        this.load.image('kogeki', '/assets/kogeki.png');
     }
 
     create(data) {
@@ -457,9 +460,9 @@ class QuizScene extends Phaser.Scene {
         // this.progressBar.updateProgress(this.progress);
         // 正解の場合
         if (this.userAnswer === this.correctAnswer) {
-            const attack = this.add.image(this.cameras.main.centerX, 350, 'attack');
+            const kogeki = this.add.image(D_WIDTH/2-100, 350, 'kogeki');
             this.time.delayedCall(2000, () => {
-                attack.destroy(); // 画像を削除
+                kogeki.destroy(); // 画像を削除
             });
             resultText = '';
             color = '#00ff00';
@@ -519,6 +522,7 @@ class QuizScene extends Phaser.Scene {
             this.userAnswer = '';
             this.updateAnswerDisplay();
             this.missCount++;
+            this.registry.set('newmissCount', this.registry.get('newmissCount') +1);
 
             // 前回の解答を更新
             this.lastAnswer.setText(`前回の解答: ${this.answerresult}`,{fontFamily: 'k8x12L',});
@@ -761,6 +765,7 @@ class EndScene extends Phaser.Scene {
                     mode: this.registry.get('mode'),
                     level: this.registry.get('level'),
                     clearFlag: this.clearFlag,
+                    missCount: this.registry.get('newmissCount'),
                 }),
             })
 
