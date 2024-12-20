@@ -1,7 +1,7 @@
 /* ヘッダーの背景色 */
 th {
     background-color: #dcdcdc !important; /* グリーン */
-    color: white; /* 白文字 */
+    color: rgb(0, 0, 0); /* 白文字 */
   }
 
 /* 偶数行の背景色と文字色 */
@@ -75,3 +75,45 @@ table, th, td {
     border-left: 0.05em solid #fff;
     box-sizing: content-box;
   }
+
+  /* 本体 */
+.trash {
+	font-size: 13px;
+	position: relative;
+	width: 0.9em;
+	height: 1.2em;
+	border-left: 0.1em solid #39a9d6;
+	border-right: 0.1em solid #39a9d6;
+	border-bottom: 0.1em solid #39a9d6;
+	border-radius: 0 0 0.1em 0.1em;
+	background:
+		linear-gradient(to bottom, #39a9d6 0%, #39a9d6 100%) 0.2em 0.2em,
+		linear-gradient(to bottom, #39a9d6 0%, #39a9d6 100%) 0.4em 0.2em,
+		linear-gradient(to bottom, #39a9d6 0%, #39a9d6 100%) 0.6em 0.2em
+	;
+	background-size: 0.1em 0.8em;
+	background-repeat: no-repeat;
+}
+/* 蓋 */
+.trash::before {
+	content: "";
+	position: absolute;
+	top: -0.1em;
+	left: -0.2em;
+	width: 1.3em;
+	height: 0.1em;
+	background-color: #39a9d6;
+}
+/* 取っ手 */
+.trash::after {
+	content: "";
+	position: absolute;
+	top: -0.3em;
+	left: 0.1em;
+	width: 0.5em;
+	height: 0.2em;
+	border-top: 0.1em solid #39a9d6;
+	border-left: 0.1em solid #39a9d6;
+	border-right: 0.1em solid #39a9d6;
+	border-radius: 0.1em 0.1em 0 0;
+}

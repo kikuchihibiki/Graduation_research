@@ -33,8 +33,8 @@ Route::post('/admin_select', [AdminController::class, 'admin_select'])->name('ad
 Route::post('/delete_ranking', [AdminController::class, 'delete_ranking'])->name('delete_ranking');
 Route::get('/admin_menu', [AdminController::class, 'admin_menu']);
 Route::get('/redirect_ranking', [AdminController::class, 'redirect_ranking'])->name('redirect_ranking');
-// Route::post('/admin_questionlist', [AdminController::class, 'admin_questionlist']);
-// Route::post('/admin_ranking', [AdminController::class, 'admin_ranking']);
+Route::post('/admin_questionlist', [AdminController::class, 'admin_questionlist']);
+Route::post('/admin_ranking', [AdminController::class, 'admin_ranking']);
 Route::get('/admin_newAdmin', [AdminController::class, 'admin_newAdmin']);
 Route::get('/admin_passreset', [AdminController::class, 'admin_password']);
 Route::post('/game_result', [FillauthController::class, 'game_result'])->name('game_result');
@@ -53,5 +53,9 @@ Route::post('/admin/register', [AdminController::class, 'register'])->name('admi
 Route::middleware('web')->group(function () {
     Auth::routes();  // この行は必ずwebミドルウェア内で定義
 });
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

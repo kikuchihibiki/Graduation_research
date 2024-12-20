@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Ranking;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\question;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
@@ -37,7 +38,14 @@ class AdminController extends Controller
 
         switch ($selectedMenu) {
             case 'list':
-                return view('admin.admin_questionlist');
+                $questionsJava = question::where('mode', 0)->where('delete_flag', 0)->get();
+                $questionsPython = question::where('mode', 1)->where('delete_flag', 0)->get();
+                $questionsPHP = Question::where('mode', 2)->where('delete_flag', 0)->get();
+
+                return view('admin.admin_questionlist',['questionsJava' => $questionsJava,
+            'questionsPython' => $questionsPython,
+            'questionsPHP' => $questionsPHP,
+            ]);
             case 'ranking':
                 $modes = [0 => 'java', 1 => 'python', 2 => 'php'];
                 $levels = [0 => 'easy', 1 => 'normal', 2 => 'hard'];
