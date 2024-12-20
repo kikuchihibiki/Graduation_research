@@ -38,9 +38,8 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-
     public function redirectPath()
     {
-        return 'admin_menu';
+        return '/admin_menu';
     }
 }

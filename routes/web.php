@@ -27,14 +27,16 @@ Route::post('/start_game', [BeforeGameController::class, 'start_game'])->name('s
 Route::get('/wrong_answer', [BeforeGameController::class, 'wrong_answer'])->name('wrong_answer');
 Route::get('/question_list', [FunctionController::class, 'question_list']);
 Route::get('/ranking', [FunctionController::class, 'ranking'])->name('ranking');
+Route::get('/progress_reset', [FunctionController::class, 'progress_reset'])->name('progress_reset');
+Route::get('/score_reset', [FunctionController::class, 'score_reset'])->name('score_reset');
 Route::get('/miss_question', [FunctionController::class, 'miss_question']);
 Route::get('/admin', [AdminController::class, 'admin']);
 Route::post('/admin_select', [AdminController::class, 'admin_select'])->name('admin_select');
 Route::post('/delete_ranking', [AdminController::class, 'delete_ranking'])->name('delete_ranking');
 Route::get('/admin_menu', [AdminController::class, 'admin_menu']);
 Route::get('/redirect_ranking', [AdminController::class, 'redirect_ranking'])->name('redirect_ranking');
-Route::post('/admin_questionlist', [AdminController::class, 'admin_questionlist']);
-Route::post('/admin_ranking', [AdminController::class, 'admin_ranking']);
+Route::post('/ranking_reset', [AdminController::class, 'ranking_reset'])->name('ranking_reset');
+Route::get('/all_reset', [AdminController::class, 'all_reset'])->name('all_reset');
 Route::get('/admin_newAdmin', [AdminController::class, 'admin_newAdmin']);
 Route::get('/admin_passreset', [AdminController::class, 'admin_password']);
 Route::post('/game_result', [FillauthController::class, 'game_result'])->name('game_result');
@@ -56,6 +58,5 @@ Route::middleware('web')->group(function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+Auth::routes(['reset' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -15,9 +15,9 @@
             <tbody>
                 <!-- 問題1 -->
                 <tr>
-                    <td class="quiz-column">
+                    <th class="quiz-column">
                         問題1 <span>{{ session('questionData')[0]['question'] }}</span>
-                    </td>
+                    </th>
                     <td class="action-column">
                         {{ session('answerArray')[0] }}
                         <span>
@@ -27,9 +27,9 @@
                 </tr>
                 <!-- 問題2 -->
                 <tr>
-                    <td class="quiz-column">
+                    <th class="quiz-column">
                         問題2 <span>{{ session('questionData')[1]['question'] }}</span>
-                    </td>
+                    </th>
                     <td class="action-column">
                         {{ session('answerArray')[1] }}
                         <span>
@@ -39,10 +39,10 @@
                 </tr>
                 <!-- 問題3 -->
                 <tr>
-                    <td class="quiz-column">
+                    <th class="quiz-column">
 
                         問題3 <span>{{ session('questionData')[2]['question'] }}</span>
-                    </td>
+                    </th>
                     <td class="action-column">
 
                         {{ session('answerArray')[2] }}
@@ -53,10 +53,10 @@
                 </tr>
                 <!-- 問題4 -->
                 <tr>
-                    <td class="quiz-column">
+                    <th class="quiz-column">
 
                         問題4 <span>{{ session('questionData')[3]['question'] }}</span>
-                    </td>
+                    </th>
                     <td class="action-column">
 
                         {{ session('answerArray')[3] }}
@@ -67,10 +67,10 @@
                 </tr>
                 <!-- 問題5 -->
                 <tr>
-                    <td class="quiz-column">
+                    <th class="quiz-column">
 
                         問題5 <span>{{ session('questionData')[4]['question'] }}</span>
-                    </td>
+                    </th>
                     <td class="action-column">
 
                         {{ session('answerArray')[4] }}
@@ -81,10 +81,10 @@
                 </tr>
                 <!-- 問題6 -->
                 <tr>
-                    <td class="quiz-column">
+                    <th class="quiz-column">
 
                         問題6 <span>{{ session('questionData')[5]['question'] }}</span>
-                    </td>
+                    </th>
                     <td class="action-column">
 
                         {{ session('answerArray')[5] }}

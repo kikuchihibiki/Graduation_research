@@ -1,0 +1,97 @@
+@font-face {
+    font-family: 'k8x12L';
+    src: url('/font/k8x12L.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  a{ text-decoration: none;}
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'k8x12L', sans-serif;
+    /* 画像ファイルの指定 */
+    background-image: url('/assets/background.png');
+         
+    /* 画像を常に天地左右の中央に配置 */
+    background-position: center center;
+     
+    /* 画像をタイル状に繰り返し表示しない */
+    background-repeat: no-repeat;
+     
+    /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+    background-attachment: fixed;
+     
+    /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+    background-size: cover;
+     
+    /* 背景画像が読み込まれる前に表示される背景のカラー */
+    background-color: #464646;
+      
+}
+
+.result-container {
+    text-align: center;
+    background-color: rgba(125, 125, 125, 0.8); /* 背景色を半透明に設定 */
+    border: 4px;
+    border-radius: 10px;
+    padding: 20px;
+    width: 80%; /* 画面の80%幅にする */
+    max-width: 600px; /* 最大幅を設定（広すぎる場合の制限） */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 影 */
+}
+
+
+.title {
+    margin-top: 0;
+    font-size: 2.5rem;
+}
+
+.result-box {
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.score-info,
+.hint-count,
+.score {
+    margin: 10px 0;
+    font-size: 1.8rem;
+}
+
+.score span {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-container a {
+    display: inline-block;
+    /* aタグをボタンのように表示 */
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    /* デフォルトの下線を削除 */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-container a:hover {
+    background-color: #444;
+}

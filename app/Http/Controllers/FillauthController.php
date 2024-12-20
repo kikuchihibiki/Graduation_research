@@ -44,6 +44,7 @@ class FillauthController extends Controller
         $mode = $request->input('mode');
         $resultScore = $request->input('resultScore');
         $clearFlag = $request->input('clearFlag');
+        $missCount = $request->input('missCount');
 
         $userDirectory = getenv('APPDATA');
         $appName = 'my_name';
@@ -133,6 +134,7 @@ class FillauthController extends Controller
             'idJson' => $idJson,
             'questionData' => $questionData,
             'clearFlag' => $clearFlag,
+            'missCount' => $missCount,
         ]));
         return response()->json(['success' => true]);
     }

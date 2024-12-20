@@ -26,9 +26,10 @@ class StartScene extends Phaser.Scene {
         }
         // 回答欄の表示
         this.answerInput = this.add.text(D_WIDTH/2, 520, `${this.text}`, {
-            fontSize: '45px',
+            fontSize: '48px',
             fill: '#ffffff',
-            align: 'center'
+            align: 'center',
+            fontFamily: 'k8x12L',
         }).setOrigin(0.5).setPadding(6);
 
         this.registry.set('timeLimit',timeLimitData);
@@ -39,7 +40,9 @@ class StartScene extends Phaser.Scene {
         console.log(correctRatesData)
         
         this.newScore = 0;
+        this.newmissCount = 0;
         this.registry.set('lastScore',this.newScore);
+        this.registry.set('newmissCount',this.newmissCount);
         this.registry.set('progressData', Array(6).fill(null));
         this.registry.set('questionId',questionData.id);
         const id = questionData.map(obj => obj.id);
@@ -108,9 +111,10 @@ class CharacterScene extends Phaser.Scene {
         .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
         .fillRect(backgroundRectX - backgroundRectWidth / 2, backgroundRectY, backgroundRectWidth, backgroundRectHeight);
         this.questionText = this.add.text(-400, this.cameras.main.centerY+50, '', {
-            fontSize: '40px',
+            fontSize: '43px',
             fill: '#ffffff',
             align: 'center', // テキストの中央揃え
+            fontFamily: 'k8x12L',
             wordWrap: { width: 600, useAdvancedWrap: true }
         }).setOrigin(0.5).setPadding(16);
 
@@ -186,6 +190,7 @@ class ProgressBar {
             const stepText = this.scene.add.text(x, y, `${i + 1}`, {
                 fontSize: '24px',
                 fill: '#ffffff',
+                fontFamily: 'k8x12L',
             }).setOrigin(0.5);
 
             this.steps.push({ text: stepText, active: false });
@@ -223,6 +228,7 @@ class QuizScene extends Phaser.Scene {
         this.load.image('character', this.registry.get('characterPath'));  
         this.load.image('block', '/assets/block.png');
         this.load.image('attack', '/assets/attack.png');
+        this.load.image('kogeki', '/assets/kogeki.png');
     }
 
     create(data) {
@@ -278,10 +284,11 @@ class QuizScene extends Phaser.Scene {
             
         // テキストラベル (questionText) を中央に配置
         this.questionLabel = this.add.text(D_WIDTH / 2, this.cameras.main.centerY, `${this.questionText}`, {
-            fontSize: '40px',
+            fontSize: '43px',
             fill: '#ffffff',
             align: 'center', // テキストの中央揃え
-            wordWrap: { width: 600, useAdvancedWrap: true }
+            wordWrap: { width: 600, useAdvancedWrap: true },
+            fontFamily: 'k8x12L',
         }).setOrigin(0.5).setPadding(16);
         
         // 四角の右上座標を計算
@@ -292,6 +299,7 @@ class QuizScene extends Phaser.Scene {
         this.rateLabel = this.add.text(rectRightX, rectTopY, `正答率${this.rateText}%`, {
             fontSize: '30px', // サイズは少し小さめに調整
             fill: '#ffffff',
+            fontFamily: 'k8x12L',
             align: 'right' // 右揃え (必要に応じて調整)
         }).setOrigin(1, 0).setPadding(16);; // 原点を右上に設定 (1, 0)
 
@@ -307,7 +315,8 @@ class QuizScene extends Phaser.Scene {
         this.answerInput = this.add.text(D_WIDTH / 2, 520, '', {
             fontSize: '45px',
             fill: '#ffcc00',
-            align: 'center'
+            align: 'center',
+            fontFamily: 'k8x12L',
         }).setOrigin(0.5).setPadding(6);
 
         this.userAnswer = '';
@@ -315,7 +324,8 @@ class QuizScene extends Phaser.Scene {
         // 最後の回答表示の初期化
         this.lastAnswer = this.add.text(this.cameras.main.centerX-130,this.cameras.main.centerY+140, '', {
             fontSize: '35px',
-            fill: '#ff0000'
+            fill: '#ff0000',
+            fontFamily: 'k8x12L',
         }).setPadding(6);
 
         // コンテナを作成
@@ -328,7 +338,8 @@ class QuizScene extends Phaser.Scene {
         // テキストを作成
         this.livesText = this.add.text(1080, 100, `残機:✖ ${this.lives}`, { 
             fontSize: '30px', 
-            fill: '#ffffff' 
+            fill: '#ffffff' ,
+            fontFamily: 'k8x12L',
         }).setPadding(8);
 
         // テキストの幅と高さを取得
@@ -341,12 +352,13 @@ class QuizScene extends Phaser.Scene {
         // 背景とテキストをコンテナに追加
         livesContainer.add([liveBg, this.livesText]);
 
-        this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '30px', fill: '#000000' }).setPadding(6);
+        this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '30px', fill: '#000000',fontFamily: 'k8x12L', }).setPadding(6);
 
         // タイマーの設定
         this.timerText = this.add.text(D_WIDTH/2-30, 100, `${this.timeLimit} `, {
             fontSize: '30px',
-            fill: '#ff0000'
+            fill: '#ff0000',
+            fontFamily: 'k8x12L',
         }).setPadding(6);
         this.time.delayedCall(1000, () => {
             this.startTime = this.time.now; 
@@ -387,7 +399,8 @@ class QuizScene extends Phaser.Scene {
         this.cursor = this.add.text(D_WIDTH / 2, 520, '|', {
             fontSize: '50px',
             fill: '#ffcc00', // カーソルの色
-            align: 'center'
+            align: 'center',
+            fontFamily: 'k8x12L',
         }).setOrigin(0.5);
 
         this.cursorBlinkTimer = this.time.addEvent({
@@ -443,7 +456,7 @@ class QuizScene extends Phaser.Scene {
         // this.progressBar.updateProgress(this.progress);
         // 正解の場合
         if (this.userAnswer === this.correctAnswer) {
-            const attack = this.add.image(this.cameras.main.centerX, 350, 'attack');
+            const attack = this.add.image(this.cameras.main.centerX, 350, 'kougeki');
             this.time.delayedCall(2000, () => {
                 attack.destroy(); // 画像を削除
             });
@@ -500,16 +513,17 @@ class QuizScene extends Phaser.Scene {
             this.userAnswer = '';
             this.updateAnswerDisplay();
             this.missCount++;
+            this.registry.set('newmissCount', this.registry.get('newmissCount') +1);
 
             // 前回の解答を更新
-            this.lastAnswer.setText(`前回の解答: ${this.answerresult}`);
+            this.lastAnswer.setText(`前回の解答: ${this.answerresult}`,{fontFamily: 'k8x12L',});
             return; // 不正解の場合、ここで処理終了
         }
-        this.livesText.setText(`残機: ${this.lives}`).setPadding(6);
+        this.livesText.setText(`残機: ${this.lives}`,{fontFamily: 'k8x12L',}).setPadding(6);
 
         
         // 正解または時間切れの場合、結果を表示して次へ
-        this.resultLabel = this.add.text(this.cameras.main.centerX-30,50 , resultText, { fontSize: '24px', fill: color });
+        this.resultLabel = this.add.text(this.cameras.main.centerX-30,50 , resultText, { fontSize: '24px', fill: color,fontFamily: 'k8x12L', });
         this.progressBar.update(progressData);
         this.registry.set('progressData', progressData);
         // 2秒後に次のシーンへ遷移
@@ -570,6 +584,7 @@ class AnswerResultScene extends Phaser.Scene {
             fontSize: '45px',
             fill: '#ffffff',
             align: 'center', 
+            fontFamily: 'k8x12L',
             wordWrap: { width: 800, useAdvancedWrap: true }
         }).setOrigin(0.5).setPadding(6);
 
@@ -581,7 +596,8 @@ class AnswerResultScene extends Phaser.Scene {
         // テキストを作成
         this.livesText = this.add.text(1080, 100, `残機:✖ ${this.lives}`, { 
             fontSize: '30px', 
-            fill: '#ffffff' 
+            fill: '#ffffff' ,
+            fontFamily: 'k8x12L',
         }).setPadding(8);
 
         // テキストの幅と高さを取得
@@ -594,8 +610,8 @@ class AnswerResultScene extends Phaser.Scene {
         // 背景とテキストをコンテナに追加
         livesContainer.add([liveBg, this.livesText]);
 
-        this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '30px', fill: '#000000' }).setPadding(6);
-        this.scoreresultText = this.add.text(80, 130., `+${this.score}`, { fontSize: '30px', fill: '#ff0000' }).setPadding(6);
+        this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '30px', fill: '#000000',fontFamily: 'k8x12L', }).setPadding(6);
+        this.scoreresultText = this.add.text(80, 130., `+${this.score}`, { fontSize: '30px', fill: '#ff0000' ,fontFamily: 'k8x12L',}).setPadding(6);
         
         // 2秒後に次の問題に進むか終了
         this.time.delayedCall(2000, () => {
@@ -645,14 +661,14 @@ class EndScene extends Phaser.Scene {
                     this.cameras.main.centerX,
                     this.cameras.main.centerY,
                     'GAME CLEAR',
-                    { fontSize: '120px', color: '#ffffff' }
+                    { fontSize: '120px', color: '#ffffff' ,fontFamily: 'k8x12L',}
                 );
 
                 const operatingText = this.add.text(
                     D_WIDTH / 2,
                     520,
                     '---PLEASE ENTER---',
-                    { fontSize: '80px', color: '#ffffff' }
+                    { fontSize: '80px', color: '#ffffff' ,fontFamily: 'k8x12L',}
                 );
         
                 clearText.setOrigin(0.5).setPadding(6);
@@ -693,14 +709,14 @@ class EndScene extends Phaser.Scene {
             this.cameras.main.centerX,
             this.cameras.main.centerY,
             'GAME OVER',
-            { fontSize: '120px', color: '#ffffff', fontStyle: 'bold' }
+            { fontSize: '120px', color: '#ffffff', fontStyle: 'bold' ,fontFamily: 'k8x12L',}
         ).setOrigin(0.5).setAlpha(0); // 初期状態では透明
 
         const operatingText = this.add.text(
             D_WIDTH / 2,
             520,
             '---PLEASE ENTER---',
-            { fontSize: '80px', color: '#ffffff' }
+            { fontSize: '80px', color: '#ffffff' ,fontFamily: 'k8x12L',}
         ).setOrigin(0.5).setAlpha(0);
 
         operatingText.setOrigin(0.5).setPadding(6).centerX;
