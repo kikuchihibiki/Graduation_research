@@ -55,5 +55,6 @@ p,img{
     font-size: 1.2em; /* 文字サイズを大きく */
     border: 1px solid #cccccc;
     border-radius: 4px;
+    font-family: 'k8x12L', sans-serif;
     box-sizing: border-box;
 }

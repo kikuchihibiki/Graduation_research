@@ -15,11 +15,8 @@ return new class extends Migration
     {
         Schema::create('ranking_result', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('score');
             $table->integer('mode');
             $table->integer('level');
-            $table->integer('rank');
             $table->boolean('delete_flag')->default(0);
             $table->timestamps();
         });

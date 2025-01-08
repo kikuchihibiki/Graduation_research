@@ -91,6 +91,7 @@ class FunctionController extends Controller
         }
 
         // モードとレベルの組み合わせ
+        // モードとレベルの組み合わせ
         $modes = ['python', 'php', 'java'];
         $levels = ['easy', 'normal', 'hard'];
 
@@ -124,26 +125,73 @@ class FunctionController extends Controller
                 return $item->mode == $mode && $item->level == $level;
             });
 
-            // リセット日時以降のスコアのみ対象
-            if ($reset && $date <= $reset->last_reset) {
-                continue; // 無効スコアはスキップ
-            }
-
-            // モードとレベルごとの最高スコアを更新
-            $key = "{$mode}{$level}";
-            if (!isset($result[$key]) || $result[$key]['s'] < $scoreValue) {
-                $result[$key] = [
-                    'mode' => $mode,
-                    'level' => $level,
-                    's' => $scoreValue,
-                    'd' => $date,
-                ];
+            // ranking_resultにデータがない場合はすべてのスコアを有効とみなす
+            if (!$reset || $date > $reset->last_reset) {
+                // モードとレベルごとの最高スコアを更新
+                $key = "{$mode}{$level}";
+                if (!isset($result[$key]) || $result[$key]['s'] < $scoreValue) {
+                    $result[$key] = [
+                        'mode' => $mode,
+                        'level' => $level,
+                        's' => $scoreValue,
+                        'd' => $date,
+                    ];
+                }
             }
         }
+
         return view('user.ranking', ['rankings' => $rankings, 'results' => $result]);
     }
     public function miss_question()
     {
         return view('user.miss_question');
+    }
+
+    public function progress_reset()
+    {
+        $userDirectory = getenv('APPDATA');
+        $appName = 'my_name';
+        $subDirectory = 'user_data';
+        $filename = 'user_data.json';
+
+        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
+        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
+
+        if (file_exists($filePath)) {
+            $userData = json_decode(file_get_contents($filePath), true);
+        } else {
+            $userData = [];
+        }
+
+        // 配列をリセット（中身を空にする）
+        $userData = [];
+
+        // 必要であれば、リセット後にその内容をファイルに保存することもできます
+        file_put_contents($filePath, json_encode($userData, JSON_PRETTY_PRINT));
+        return redirect('/question_list');
+    }
+
+    public function score_reset()
+    {
+        $userDirectory = getenv('APPDATA');
+        $appName = 'my_name';
+        $subDirectory = 'user_data';
+        $filename = 'score_data.json';
+
+        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
+        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
+
+        if (file_exists($filePath)) {
+            $userData = json_decode(file_get_contents($filePath), true);
+        } else {
+            $userData = [];
+        }
+
+        // 配列をリセット（中身を空にする）
+        $userData = [];
+
+        // 必要であれば、リセット後にその内容をファイルに保存することもできます
+        file_put_contents($filePath, json_encode($userData, JSON_PRETTY_PRINT));
+        return redirect('/ranking');
     }
 }

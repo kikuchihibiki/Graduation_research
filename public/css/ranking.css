@@ -105,7 +105,7 @@ input[name="tab_item"] {
 /*選択されているタブのスタイルを変える*/
 input:checked + .tab_item {
   background-color: #FFC45D;
-  color: #fff;
+  color: #0033cc;
 }
 
 .checkBox{
@@ -138,7 +138,7 @@ input[name="tab_item2"] {
 /*選択されているタブのスタイルを変える*/
 input:checked + .tab_item2 {
   background-color: #FFC45D;
-  color: #fff;
+  color: #0033cc;
 }
 
 .checkBox2{
@@ -166,20 +166,30 @@ input:checked + .tab_item2 {
 }
 
 .kind{
-  font-size: 24px;
-
+  font-size: 30px;
 }
 
 .rank1{
-  color:#F7FF8A
+  color:#F7FF8A;
+  font-size: 30px;
 }
 
 .rank2{
-  color:#DDDDDD
+  color:#DDDDDD;
+  font-size: 26px;
 }
 
 .rank3{
-  color:#F8D2A1
+  color:#F8D2A1;
+  font-size: 22px;
+
+}
+.rank4{
+  font-size: 18px;
+}
+
+.rank5{
+  font-size: 18px;
 }
 
 .score { 
@@ -187,3 +197,29 @@ input:checked + .tab_item2 {
  }
 
  .white { color: white; }
+
+ 
+.reset {
+  display: inline-block;
+  background-color: black; /* ボタンの背景色 */
+  color: white; /* ボタンの文字色 */
+  padding: 10px 20px; /* ボタンの内側の余白 */
+   /* 文字を中央揃え */
+  text-decoration: none; /* 下線を消す */
+  border-radius: 5px; /* ボタンの角を丸くする */
+  font-size: 16px; /* フォントサイズ */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 軽い影をつける */
+}
+
+.reset:hover {
+  background-color: gray; /* ホバー時の背景色 */
+}
+
+.reset:active {
+  background-color: gray; /* クリック時の背景色 */
+}
+
+.ta{
+  display: flex;
+  flex-direction: row-reverse;
+}

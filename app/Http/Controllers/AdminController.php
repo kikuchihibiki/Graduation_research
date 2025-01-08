@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\question;
 use Illuminate\Support\Facades\Validator;
+use App\Models\ranking_result;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -124,5 +126,52 @@ class AdminController extends Controller
         ]);
 
         return redirect('/admin_menu');
+    }
+
+    public function ranking_reset(Request $request)
+    {
+        // リクエストの中身を確認
+        $validated = $request->validate([
+            'tab_item' => ['required', 'in:java,php,python'], // 必須、指定された値のみ許可
+            'tab_item2' => ['required', 'in:eazy,normal,hard'], // 必須、指定された値のみ許可
+        ]);
+
+        // バリデーション通過後、リクエスト値を取得
+        $mode = $validated['tab_item'];
+        $level = $validated['tab_item2'];
+        $modeNumber = ['java' => 0, 'python' => 1, 'php' => 2][$mode] ?? null;
+        $levelNumber = ['eazy' => 0, 'normal' => 1, 'hard' => 2][$level] ?? null;
+        // 削除処理
+        Ranking::where('mode', $modeNumber)->where('level', $levelNumber)->delete();
+
+        // 履歴データを保存
+        ranking_result::create([
+            'mode' => $modeNumber,
+            'level' => $levelNumber,
+            'created_at' => now(),
+        ]);
+
+        // リダイレクト
+        return redirect('/redirect_ranking')->with('status', 'ランキングがリセットされました。');
+    }
+
+    public function all_reset()
+    {
+        Ranking::truncate();
+
+        $modes = [0 => 'java', 1 => 'python', 2 => 'php'];
+        $levels = [0 => 'easy', 1 => 'normal', 2 => 'hard'];
+        foreach ($modes as $modeKey => $mode) {
+            foreach ($levels as $levelKey => $level) {
+                // ranking_result にレコードを挿入
+                ranking_result::create([
+                    'mode' => $modeKey,  // モードの整数（例：0, 1, 2）
+                    'level' => $levelKey,  // レベルの整数（例：0, 1, 2）
+                    'created_at' => Carbon::now(),  // 現在時刻を設定
+                    'updated_at' => Carbon::now(),  // 現在時刻を設定
+                ]);
+            }
+        }
+        return redirect('/redirect_ranking');
     }
 }

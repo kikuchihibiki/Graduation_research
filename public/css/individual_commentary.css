@@ -1,0 +1,138 @@
+@font-face {
+    font-family: 'k8x12L';
+    src: url('/font/k8x12L.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  a{ text-decoration: none;}
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'k8x12L', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('/assets/background.png');
+         
+    /* 画像を常に天地左右の中央に配置 */
+    background-position: center center;
+     
+    /* 画像をタイル状に繰り返し表示しない */
+    background-repeat: no-repeat;
+     
+    /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+    background-attachment: fixed;
+     
+    /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+    background-size: cover;
+     
+    /* 背景画像が読み込まれる前に表示される背景のカラー */
+    background-color: #464646;
+}
+
+.container {
+    width: 80vw;
+    max-width: 900px;
+    background-color: rgba(125, 125, 125, 0.8); /* 白色を80%の不透明度に設定 */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+/* 上部: 問題と解答を横並びに */
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    padding: 1.5em;
+}
+
+.question-section,
+.answer-section {
+    flex: 1;
+    padding: 1em;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.question-number {
+    color: #ffcc00;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.question-text {
+    margin-top: 0.5em;
+    font-size: 1.1em;
+    color: #fff;
+}
+
+.answer-label {
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    color: #666;
+}
+
+.answer-text {
+    display: block;
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+}
+
+/* 下部: 解説を全幅で表示 */
+.explanation-section {
+    padding: 1.5em;
+    border-top: 2px solid #ddd;
+}
+
+.explanation-label {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #ffcc00;
+    margin-bottom: 0.5em;
+}
+
+.explanation-text {
+    font-size: 0.95em;
+    line-height: 1.5;
+    color: #333;
+}
+
+.bottom-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0;
+    z-index: 1000;
+}
+
+.menu-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    background-color: #555;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.menu-btn:hover {
+    background-color: #777;
+}
+
+.explanation-btn:hover {
+    background-color: #222;
+}
