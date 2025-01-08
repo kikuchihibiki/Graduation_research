@@ -105,7 +105,7 @@ input[name="tab_item"] {
 /*選択されているタブのスタイルを変える*/
 input:checked + .tab_item {
   background-color: #FFC45D;
-  color: #fff;
+  color:#0033cc;
 }
 
 .checkBox{
@@ -138,7 +138,7 @@ input[name="tab_item2"] {
 /*選択されているタブのスタイルを変える*/
 input:checked + .tab_item2 {
   background-color: #FFC45D;
-  color: #fff;
+  color: #0033cc;
 }
 
 .checkBox2{

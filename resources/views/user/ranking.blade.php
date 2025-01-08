@@ -288,9 +288,16 @@
         <p>スコアはありません。</p>
         @endif
     </div>
+
 </div>
+<div class="ta">
+<div class="re">
 <a class="reset position-reset" href="{{ route('score_reset') }}">スコアリセット</a>
+</div>
+<div class="back">
 <a class="reset position-reset" href="{{ route('select_mode') }}" style="color:white;">≻戻る</a>
+</div>
+</div>
 <script src="{{ asset('js/score.js') }}"></script>
 <script src="{{ asset('js/ranking.js') }}">
     /*９つ php-hard*/
