@@ -310,7 +310,7 @@ class QuizScene extends Phaser.Scene {
         liveBg.fillStyle(0x000000, 0.8);
 
         // テキストを作成
-        this.livesText = this.add.text(1080, 100, `残機✖${this.lives}`, { 
+        this.livesText = this.add.text(1080, 100, `残機x${this.lives}`, { 
             fontSize: '33px', 
             fill: '#ffffff' ,
             fontFamily: 'k8x12L',
@@ -528,7 +528,7 @@ class QuizScene extends Phaser.Scene {
             this.lastAnswer.setText(`前回の解答: ${this.answerresult}`,{fontFamily: 'k8x12L',});
             return; // 不正解の場合、ここで処理終了
         }
-        this.livesText.setText(`残機✖${this.lives}`,{fontFamily: 'k8x12L',}).setPadding(6);
+        this.livesText.setText(`残機x${this.lives}`,{fontFamily: 'k8x12L',}).setPadding(6);
 
         
         // 正解または時間切れの場合、結果を表示して次へ
@@ -536,7 +536,7 @@ class QuizScene extends Phaser.Scene {
         this.progressBar.update(progressData);
         this.registry.set('progressData', progressData);
         // 2秒後に次のシーンへ遷移
-        this.time.delayedCall(1500, () => {
+        this.time.delayedCall(1000, () => {
             this.scene.start('AnswerResultScene', {
                 correctAnswer: this.correctAnswer,
                 questionIndex: this.questionIndex,
@@ -603,7 +603,7 @@ class AnswerResultScene extends Phaser.Scene {
         liveBg.fillStyle(0x000000, 0.8);
 
         // テキストを作成
-        this.livesText = this.add.text(1080, 100, `残機✖${this.lives}`, { 
+        this.livesText = this.add.text(1080, 100, `残機x${this.lives}`, { 
             fontSize: '33px', 
             fill: '#ffffff',
             fontFamily: 'k8x12L',
@@ -623,7 +623,7 @@ class AnswerResultScene extends Phaser.Scene {
         this.scoreresultText = this.add.text(80, 130., `+${this.score}`, { fontSize: '33px', fill: '#ff0000' ,fontFamily: 'k8x12L',}).setPadding(6);
         
         // 2秒後に次の問題に進むか終了
-        this.time.delayedCall(2000, () => {
+        this.time.delayedCall(3000, () => {
             if (this.lives != 0 === data.questionIndex + 1 < data.totalQuestions) {
                 this.scene.start('CharacterScene', {
                     questionIndex: data.questionIndex + 1,

@@ -336,7 +336,7 @@ class QuizScene extends Phaser.Scene {
         liveBg.fillStyle(0x000000, 0.8);
 
         // テキストを作成
-        this.livesText = this.add.text(1080, 100, `残機:✖ ${this.lives}`, { 
+        this.livesText = this.add.text(1080, 100, `残機:x ${this.lives}`, { 
             fontSize: '30px', 
             fill: '#ffffff' ,
             fontFamily: 'k8x12L',
@@ -519,7 +519,7 @@ class QuizScene extends Phaser.Scene {
             this.lastAnswer.setText(`前回の解答: ${this.answerresult}`,{fontFamily: 'k8x12L',});
             return; // 不正解の場合、ここで処理終了
         }
-        this.livesText.setText(`残機: ${this.lives}`,{fontFamily: 'k8x12L',}).setPadding(6);
+        this.livesText.setText(`残機x${this.lives}`,{fontFamily: 'k8x12L',}).setPadding(6);
 
         
         // 正解または時間切れの場合、結果を表示して次へ
@@ -594,7 +594,7 @@ class AnswerResultScene extends Phaser.Scene {
         liveBg.fillStyle(0x000000, 0.8);
 
         // テキストを作成
-        this.livesText = this.add.text(1080, 100, `残機:✖ ${this.lives}`, { 
+        this.livesText = this.add.text(1080, 100, `残機x${this.lives}`, { 
             fontSize: '30px', 
             fill: '#ffffff' ,
             fontFamily: 'k8x12L',

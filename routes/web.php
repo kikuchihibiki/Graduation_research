@@ -33,7 +33,7 @@ Route::get('/miss_question', [FunctionController::class, 'miss_question']);
 Route::get('/admin', [AdminController::class, 'admin']);
 Route::post('/admin_select', [AdminController::class, 'admin_select'])->name('admin_select');
 Route::post('/delete_ranking', [AdminController::class, 'delete_ranking'])->name('delete_ranking');
-Route::get('/admin_menu', [AdminController::class, 'admin_menu']);
+Route::get('/admin_menu', [AdminController::class, 'admin_menu'])->name('admin_menu');
 Route::get('/redirect_ranking', [AdminController::class, 'redirect_ranking'])->name('redirect_ranking');
 Route::post('/ranking_reset', [AdminController::class, 'ranking_reset'])->name('ranking_reset');
 Route::get('/all_reset', [AdminController::class, 'all_reset'])->name('all_reset');
@@ -59,4 +59,3 @@ Route::middleware('web')->group(function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes(['reset' => true]);
-

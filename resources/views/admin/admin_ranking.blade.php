@@ -223,8 +223,8 @@
     </table>
     <div class="button_tab">
         <input type="submit" style="display:none;">
-        </from>
-        <a href="#" style="color:white; font-size: 24px;">≻戻る</a>
+        </form>
+        <a href="{{ route('admin_menu') }}" style="color:white; font-size: 24px;">≻戻る</a>
         <a href="javascript:void(0);" onclick="document.getElementById('menu_form').submit();" style="font-size: 24px;">≻確認</a>
     </div>
 
