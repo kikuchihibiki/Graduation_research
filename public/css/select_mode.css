@@ -109,3 +109,6 @@ a:hover {
     color: #fff;
 }
 
+label span {
+    font-size: 50px;
+}
