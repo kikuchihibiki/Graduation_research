@@ -31,6 +31,7 @@ Route::get('/progress_reset', [FunctionController::class, 'progress_reset'])->na
 Route::get('/score_reset', [FunctionController::class, 'score_reset'])->name('score_reset');
 Route::get('/miss_question', [FunctionController::class, 'miss_question']);
 Route::get('/admin', [AdminController::class, 'admin']);
+Route::get('/admin_select', [AdminController::class, 'admin_select'])->name('admin_select');
 Route::post('/admin_select', [AdminController::class, 'admin_select'])->name('admin_select');
 Route::post('/delete_ranking', [AdminController::class, 'delete_ranking'])->name('delete_ranking');
 Route::get('/admin_menu', [AdminController::class, 'admin_menu'])->name('admin_menu');
@@ -49,6 +50,10 @@ Route::get('/back_commentary', [BeforeGameController::class, 'back_commentary'])
 Route::get('/question_commentary/{id}', [BeforeGameController::class, 'question_commentary'])->name('question_commentary');
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
+Route::get('/admin_questionlist', [AdminController::class, 'admin_questionlist'])->name('admin.admin_questionlist');
+Route::post('/admin_questionlist', [AdminController::class, 'admin_questionlist'])->name('admin.admin_questionlist');
+Route::get('/admin_edit/{id}', [AdminController::class, 'admin_edit'])->name('admin.admin_edit');
+Route::post('/admin_update/{id}', [AdminController::class, 'admin_update'])->name('admin.admin_update');
 Auth::routes();
 // routes/web.php
 Route::post('/admin/register', [AdminController::class, 'register'])->name('admin.register.submit');

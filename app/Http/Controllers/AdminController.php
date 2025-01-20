@@ -174,4 +174,43 @@ class AdminController extends Controller
         }
         return redirect('/redirect_ranking');
     }
+
+    // 編集画面を表示する
+    public function admin_edit($id)
+    {
+        // 該当IDの問題を取得
+        $question = Question::findOrFail($id);
+    
+        // ビューを返す（adminフォルダ内のadmin_edit.blade.phpを指定）
+        return view('admin.admin_edit', compact('question'));
+    }
+    // 更新処理
+    public function admin_update(Request $request, $id)
+    {
+        // 入力値のバリデーション
+        $request->validate([
+            'question' => 'required|string|max:255',
+            'answer' => 'required|string|max:255',
+        ]);
+
+        // 該当の問題を更新
+        $question = Question::findOrFail($id);
+        $question->question = $request->input('question');
+        $question->answer = $request->input('answer');
+        $question->save();
+
+        // 問題一覧にリダイレクト
+        return redirect()->route('admin.admin_questionlist')->with('success', '問題を更新しました！');
+    }
+
+    // 問題一覧を表示するメソッド
+    public function admin_questionlist()
+    {
+        // データベースから全ての問題を取得
+        $questionsJava = Question::all();
+
+        // 問題一覧ビューにデータを渡して表示
+        return view('admin.admin_questionlist', compact('questionsJava'));
+    }
+
 }
