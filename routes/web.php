@@ -62,5 +62,5 @@ Route::middleware('web')->group(function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Auth::routes(['reset' => true]);
+
