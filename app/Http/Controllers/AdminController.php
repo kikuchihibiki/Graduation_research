@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Ranking;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\question;
 use Illuminate\Support\Facades\Validator;
+use App\Models\ranking_result;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -37,7 +40,14 @@ class AdminController extends Controller
 
         switch ($selectedMenu) {
             case 'list':
-                return view('admin.admin_questionlist');
+                $questionsJava = question::where('mode', 0)->where('delete_flag', 0)->get();
+                $questionsPython = question::where('mode', 1)->where('delete_flag', 0)->get();
+                $questionsPHP = Question::where('mode', 2)->where('delete_flag', 0)->get();
+
+                return view('admin.admin_questionlist',['questionsJava' => $questionsJava,
+            'questionsPython' => $questionsPython,
+            'questionsPHP' => $questionsPHP,
+            ]);
             case 'ranking':
                 $modes = [0 => 'java', 1 => 'python', 2 => 'php'];
                 $levels = [0 => 'easy', 1 => 'normal', 2 => 'hard'];
@@ -117,4 +127,90 @@ class AdminController extends Controller
 
         return redirect('/admin_menu');
     }
+
+    public function ranking_reset(Request $request)
+    {
+        // リクエストの中身を確認
+        $validated = $request->validate([
+            'tab_item' => ['required', 'in:java,php,python'], // 必須、指定された値のみ許可
+            'tab_item2' => ['required', 'in:eazy,normal,hard'], // 必須、指定された値のみ許可
+        ]);
+
+        // バリデーション通過後、リクエスト値を取得
+        $mode = $validated['tab_item'];
+        $level = $validated['tab_item2'];
+        $modeNumber = ['java' => 0, 'python' => 1, 'php' => 2][$mode] ?? null;
+        $levelNumber = ['eazy' => 0, 'normal' => 1, 'hard' => 2][$level] ?? null;
+        // 削除処理
+        Ranking::where('mode', $modeNumber)->where('level', $levelNumber)->delete();
+
+        // 履歴データを保存
+        ranking_result::create([
+            'mode' => $modeNumber,
+            'level' => $levelNumber,
+            'created_at' => now(),
+        ]);
+
+        // リダイレクト
+        return redirect('/redirect_ranking')->with('status', 'ランキングがリセットされました。');
+    }
+
+    public function all_reset()
+    {
+        Ranking::truncate();
+
+        $modes = [0 => 'java', 1 => 'python', 2 => 'php'];
+        $levels = [0 => 'easy', 1 => 'normal', 2 => 'hard'];
+        foreach ($modes as $modeKey => $mode) {
+            foreach ($levels as $levelKey => $level) {
+                // ranking_result にレコードを挿入
+                ranking_result::create([
+                    'mode' => $modeKey,  // モードの整数（例：0, 1, 2）
+                    'level' => $levelKey,  // レベルの整数（例：0, 1, 2）
+                    'created_at' => Carbon::now(),  // 現在時刻を設定
+                    'updated_at' => Carbon::now(),  // 現在時刻を設定
+                ]);
+            }
+        }
+        return redirect('/redirect_ranking');
+    }
+
+    // 編集画面を表示する
+    public function admin_edit($id)
+    {
+        // 該当IDの問題を取得
+        $question = Question::findOrFail($id);
+    
+        // ビューを返す（adminフォルダ内のadmin_edit.blade.phpを指定）
+        return view('admin.admin_edit', compact('question'));
+    }
+    // 更新処理
+    public function admin_update(Request $request, $id)
+    {
+        // 入力値のバリデーション
+        $request->validate([
+            'question' => 'required|string|max:255',
+            'answer' => 'required|string|max:255',
+        ]);
+
+        // 該当の問題を更新
+        $question = Question::findOrFail($id);
+        $question->question = $request->input('question');
+        $question->answer = $request->input('answer');
+        $question->save();
+
+        // 問題一覧にリダイレクト
+        return redirect()->route('admin.admin_questionlist')->with('success', '問題を更新しました！');
+    }
+
+    // 問題一覧を表示するメソッド
+    public function admin_questionlist()
+    {
+        // データベースから全ての問題を取得
+        $questionsJava = Question::all();
+
+        // 問題一覧ビューにデータを渡して表示
+        return view('admin.admin_questionlist', compact('questionsJava'));
+    }
+
 }

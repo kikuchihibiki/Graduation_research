@@ -8,7 +8,6 @@ body, html {
 /* コンテナ要素 */
 .q-body {
     color: white;
-    font-family: 'Arial', sans-serif;
     text-align: center;
     padding: 0px;
     max-width: 1000px; /* 必要に応じて幅を調整 */
@@ -106,7 +105,7 @@ input[name="tab_item"] {
 /*選択されているタブのスタイルを変える*/
 input:checked + .tab_item {
   background-color: #FFC45D;
-  color: #fff;
+  color:#0033cc;
 }
 
 .checkBox{
@@ -139,7 +138,7 @@ input[name="tab_item2"] {
 /*選択されているタブのスタイルを変える*/
 input:checked + .tab_item2 {
   background-color: #FFC45D;
-  color: #fff;
+  color: #0033cc;
 }
 
 .checkBox2{
@@ -171,12 +170,16 @@ input:checked + .tab_item2 {
 
 }
 
-.rank{
-  color:#F7FF8A
+.rank_tab{
+  position: relative;
+}
+
+.rank1{
+  color:#F7FF8A;
 }
 
 .rank2{
-  color:#DDDDDD
+  color:#DDDDDD;
 }
 
 .rank3{
@@ -187,7 +190,9 @@ input:checked + .tab_item2 {
 }
 
 .deleteCheck{
-    
+  align-items: center;
+  position: absolute;
+  left: 0;
 }
 .choice_reset{
   text-decoration: none;

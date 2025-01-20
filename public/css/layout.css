@@ -4,6 +4,28 @@
     box-sizing: border-box;
 }
 
+a{ text-decoration: none;}
+
+@font-face {
+    font-family: 'k8x12L';
+    src: url('/font/k8x12L.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+button {
+    font-family: 'k8x12L', sans-serif;
+}
+
+/* 入力フォームのテキストにフォントを適用 */
+input[type="text"], input[type="email"], input[type="password"], textarea {
+    font-family: 'k8x12L', sans-serif;
+    font-size: 20px; 
+}
+/* フォントを適用 */
+body {
+    font-family: 'k8x12L', sans-serif;
+}
 
 
 html, body {
@@ -57,7 +79,7 @@ main {
     padding: 10px 20px;
     background-color: #000000;
     color: #fff;
-    font-size: 1em;
+    font-size: 1.6em;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -89,7 +111,7 @@ main {
 .top-right-links a {
     color: #fff; /* リンク色 */
     text-decoration: none; /* 下線をなくす */
-    font-size: 1.2em; /* フォントサイズ調整 */
+    font-size: 1.6em; /* フォントサイズ調整 */
 }
 
 .top-right-links a:hover {

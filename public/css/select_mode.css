@@ -1,7 +1,6 @@
 body {
     background-color: black !important;;
     color: #fff;
-    font-family: Arial, sans-serif;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -10,7 +9,7 @@ body {
 }
 
 h1 {
-    font-size: 2em;
+    font-size: 2.2em;
     color: #fff;
     margin-bottom: 20px;
 }
@@ -28,7 +27,7 @@ input[type="radio"] {
 }
 
 label {
-    font-size: 2em;
+    font-size: 2.4em;
     margin: 10px 0;
     padding: 10px 20px;
     color: #888;
@@ -50,7 +49,7 @@ input[type="radio"]:checked + label {
 input[type="radio"]:checked + label::before {
     content: '>';
     color: #fff;
-    font-size: 2em;
+    font-size: 2.0em;
     position: absolute;
     left: -30px; /* Move the arrow outside the label */
     top: 50%; /* Position it vertically centered */
@@ -62,7 +61,7 @@ input[type="radio"]:checked + label::before {
 a {
     color: #fff;
     text-decoration: none;
-    font-size: 1.5em;
+    font-size: 1.8em;
     margin: 10px;
 }
 
@@ -101,7 +100,7 @@ a:hover {
     display: block;
     margin: 20px 0 0;
     color: #aaa;
-    font-size: 1.2em;
+    font-size: 1.4em;
 }
 
 /* Adjust link styles on hover */

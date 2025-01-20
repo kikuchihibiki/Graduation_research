@@ -19,7 +19,7 @@
     <input type="radio" name="mode" value="php" id="php">
     <label for="php"><span>php</span></label>
     <input type="radio" name="mode" value="miss_question" id="miss_question">
-    <label for="miss_question"><a href="/wrong_answer">誤答問題</a></label>
+    <label for="miss_question">誤答問題</label>
     <input type="submit" style="display:none;">
 </form>
 

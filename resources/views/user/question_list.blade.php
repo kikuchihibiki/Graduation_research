@@ -7,6 +7,8 @@
 
 @section('content')
 <h1>問題一覧</h1>
+<a class="reset position-reset" href="{{ route('progress_reset') }}">進捗リセット</a>
+
 <div class="button-container">
   <button class="language-button" onclick="filterTable('java',this)">Java</button>
   <button class="language-button" onclick="filterTable('php',this)">PHP</button>

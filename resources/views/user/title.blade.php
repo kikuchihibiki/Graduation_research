@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
 @endsection
 @section('content')
-<h1>コマンドクイズアプリ</h1>
+<h1>プログラムクイズアプリ</h1>
 <p class="p1">ランキングに表示される名前を入力してください</p>
 <p class="p2">入力しない場合は名無しになります</p>
 <form action="{{ route('save_name') }}" method="post" id="nameForm">

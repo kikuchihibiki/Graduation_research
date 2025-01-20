@@ -2,7 +2,6 @@
 body {
     background-color: black; 
     color: #fff; /* 白い文字色 */
-    font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
     height: 100vh;
@@ -13,7 +12,7 @@ body {
 
 /* タイトルのスタイル */
 h1 {
-    font-size: 36px; /* タイトルを大きく */
+    font-size: 38px; /* タイトルを大きく */
     margin-bottom: 20px; /* タイトルとフォームの間のスペース */
     color: #fff;
 }
@@ -35,7 +34,7 @@ h1 {
 /* 各難易度のラベルスタイル */
 #level_form label {
     display: block;
-    font-size: 24px; /* ラベルを大きく */
+    font-size: 30px; /* ラベルを大きく */
     color: #888; /* 未選択状態は薄いグレー */
     margin: 10px 0; /* 各ラベル間のスペース */
     padding: 15px 20px; /* クリックしやすくするため余白を広げる */

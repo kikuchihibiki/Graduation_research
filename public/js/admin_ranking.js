@@ -130,3 +130,8 @@ function formSwitch() {
         */
 }
 window.addEventListener('load', formSwitch());
+
+document.querySelector('.choice_reset').addEventListener('click', function (e) {
+    e.preventDefault();  // リンクのデフォルト動作をキャンセル
+    document.getElementById('submitBtn').click();  // フォームを送信
+});
