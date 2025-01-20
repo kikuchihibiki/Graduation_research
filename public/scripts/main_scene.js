@@ -221,6 +221,7 @@ class QuizScene extends Phaser.Scene {
         this.load.image('block', '/assets/block.png');
         this.load.image('attack', '/assets/attack.png');
         this.load.image('kogeki', '/assets/kogeki.png');
+        this.load.image('live', '/assets/live.png');
     }
 
     create(data) {
@@ -308,9 +309,9 @@ class QuizScene extends Phaser.Scene {
 // 背景を作成
         const liveBg = this.add.graphics();
         liveBg.fillStyle(0x000000, 0.8);
-
+        this.liveLabel = this.add.image(1100, 125, 'live').setScale(0.2);
         // テキストを作成
-        this.livesText = this.add.text(1080, 100, `残機x${this.lives}`, { 
+        this.livesText = this.add.text(1120, 100, `x${this.lives}`, { 
             fontSize: '33px', 
             fill: '#ffffff' ,
             fontFamily: 'k8x12L',
@@ -319,23 +320,24 @@ class QuizScene extends Phaser.Scene {
         // テキストの幅と高さを取得
         const textWidth = this.livesText.width;
         const textHeight = this.livesText.height;
+        
 
         // 背景をテキストの背面に描画
-        liveBg.fillRect(1080 - 8, 100 - 8, textWidth + 16, textHeight + 16);
+        liveBg.fillRect(1080 - 8, 100 - 8, textWidth + 48, textHeight + 16);
 
         // 背景とテキストをコンテナに追加
-        livesContainer.add([liveBg, this.livesText]);
+        // livesContainer.add([liveBg, this.livesText,this.liveLabel]);
 
         this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '33px', fill: '#000000',fontFamily: 'k8x12L', }).setPadding(6);
 
         // タイマーの設定
-        this.timerText = this.add.text(D_WIDTH/2-30, 100, ``, {
-            fontSize: '33px',
+        this.timerText = this.add.text(D_WIDTH/2-20, 40, ``, {
+            fontSize: '53px',
             fill: '#ff0000',
             fontFamily: 'k8x12L',
         }).setPadding(6);
 
-        this.countdownText = this.add.text(D_WIDTH/2-30, 100, '', {
+        this.countdownText = this.add.text(D_WIDTH/2-20, 40, '', {
             fontSize: '53px',
             fill: '#ff0000',
             fontFamily: 'k8x12L',
@@ -419,7 +421,14 @@ class QuizScene extends Phaser.Scene {
                     ease: 'Sine.easeInOut'
                 });
             }
-            
+            this.tweens.add({
+                targets: this.timerText,
+                scaleX: 2, // 横方向に1.5倍
+                scaleY: 2, // 縦方向に1.5倍
+                duration: 300, // 拡大する時間 (200ms)
+                yoyo: true,    // 元に戻す (縮小)
+                ease: 'Sine.easeInOut' // なめらかな変化
+            });
             // timeLimitが5以下になったら背景を赤く滑らかに点滅させる
             if (!this.blinking) {
                 this.blinking = true; // 点滅中フラグ
@@ -528,7 +537,7 @@ class QuizScene extends Phaser.Scene {
             this.lastAnswer.setText(`前回の解答: ${this.answerresult}`,{fontFamily: 'k8x12L',});
             return; // 不正解の場合、ここで処理終了
         }
-        this.livesText.setText(`残機x${this.lives}`,{fontFamily: 'k8x12L',}).setPadding(6);
+        this.livesText.setText(`x${this.lives}`,{fontFamily: 'k8x12L',}).setPadding(6);
 
         
         // 正解または時間切れの場合、結果を表示して次へ
@@ -597,27 +606,23 @@ class AnswerResultScene extends Phaser.Scene {
             wordWrap: { width: 800, useAdvancedWrap: true }
         }).setOrigin(0.5).setPadding(6);
 
-        const livesContainer = this.add.container(0, 0);
-
         const liveBg = this.add.graphics();
         liveBg.fillStyle(0x000000, 0.8);
-
+        this.liveLabel = this.add.image(1100, 125, 'live').setScale(0.2);
         // テキストを作成
-        this.livesText = this.add.text(1080, 100, `残機x${this.lives}`, { 
+        this.livesText = this.add.text(1120, 100, `x${this.lives}`, { 
             fontSize: '33px', 
-            fill: '#ffffff',
+            fill: '#ffffff' ,
             fontFamily: 'k8x12L',
         }).setPadding(8);
 
         // テキストの幅と高さを取得
         const textWidth = this.livesText.width;
         const textHeight = this.livesText.height;
+        
 
         // 背景をテキストの背面に描画
-        liveBg.fillRect(1080 - 8, 100 - 8, textWidth + 16, textHeight + 16);
-
-        // 背景とテキストをコンテナに追加
-        livesContainer.add([liveBg, this.livesText]);
+        liveBg.fillRect(1080 - 8, 100 - 8, textWidth + 48, textHeight + 16);
 
         this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '33px', fill: '#000000' ,fontFamily: 'k8x12L',}).setPadding(6);
         this.scoreresultText = this.add.text(80, 130., `+${this.score}`, { fontSize: '33px', fill: '#ff0000' ,fontFamily: 'k8x12L',}).setPadding(6);
