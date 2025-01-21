@@ -40,14 +40,6 @@
                 <label for="email">メールアドレス</label>
                 <input type="email" id="email" name="email" class="form-control" required>
             </div>
-            <div class="form-group">
-                <label for="password">パスワード</label>
-                <input type="password" id="password" name="password" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="password_confirmation">パスワード確認</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required>
-            </div>
         </div>
         <div class="registar-from">
             <p>></p>

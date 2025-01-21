@@ -10,6 +10,9 @@ use App\Models\question;
 use Illuminate\Support\Facades\Validator;
 use App\Models\ranking_result;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserRegistered;
 
 class AdminController extends Controller
 {
@@ -119,7 +122,7 @@ class AdminController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:8',
+            'name' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -128,14 +131,29 @@ class AdminController extends Controller
                 ->withInput();
         }
 
+        // ランダムなパスワードを生成
+        $randPassword = Str::random(8);
+
+        // ユーザーを作成
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
+            'password' => Hash::make($randPassword),
         ]);
 
-        return redirect('/admin_menu');
+        // メール送信
+        $emailData = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => $randPassword,
+            'url' => url('/admin/login'), // ログインURLを指定
+        ];
+
+        Mail::to($user->email)->send(new UserRegistered($emailData));
+
+        return redirect('/admin_menu')->with('success', '登録が完了し、メールを送信しました。');
     }
+
 
     public function ranking_reset(Request $request)
     {
