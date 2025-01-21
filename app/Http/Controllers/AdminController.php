@@ -44,10 +44,11 @@ class AdminController extends Controller
                 $questionsPython = question::where('mode', 1)->where('delete_flag', 0)->get();
                 $questionsPHP = Question::where('mode', 2)->where('delete_flag', 0)->get();
 
-                return view('admin.admin_questionlist',['questionsJava' => $questionsJava,
-            'questionsPython' => $questionsPython,
-            'questionsPHP' => $questionsPHP,
-            ]);
+                return view('admin.admin_questionlist', [
+                    'questionsJava' => $questionsJava,
+                    'questionsPython' => $questionsPython,
+                    'questionsPHP' => $questionsPHP,
+                ]);
             case 'ranking':
                 $modes = [0 => 'java', 1 => 'python', 2 => 'php'];
                 $levels = [0 => 'easy', 1 => 'normal', 2 => 'hard'];
@@ -62,7 +63,15 @@ class AdminController extends Controller
                             ->get();
                     }
                 }
-                return view('admin.admin_ranking', compact('rankings'));
+                foreach ($modes as $modeKey => $mode) {
+                    foreach ($levels as $levelKey => $level) {
+                        $ranking_reset["{$mode}{$level}"] = ranking_result::where('mode', $modeKey)
+                            ->where('level', $levelKey)
+                            ->orderBy('created_at', 'desc')
+                            ->first();
+                    }
+                }
+                return view('admin.admin_ranking', compact('rankings'), compact('ranking_reset'));
             case 'admin_add':
                 return view('admin.admin_newAdmin');
                 // case 'logout':
@@ -180,7 +189,7 @@ class AdminController extends Controller
     {
         // 該当IDの問題を取得
         $question = Question::findOrFail($id);
-    
+
         // ビューを返す（adminフォルダ内のadmin_edit.blade.phpを指定）
         return view('admin.admin_edit', compact('question'));
     }
@@ -212,5 +221,4 @@ class AdminController extends Controller
         // 問題一覧ビューにデータを渡して表示
         return view('admin.admin_questionlist', compact('questionsJava'));
     }
-
 }
