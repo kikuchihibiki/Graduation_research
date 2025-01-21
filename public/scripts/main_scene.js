@@ -327,9 +327,23 @@ class QuizScene extends Phaser.Scene {
 
         // 背景とテキストをコンテナに追加
         // livesContainer.add([liveBg, this.livesText,this.liveLabel]);
-
-        this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '33px', fill: '#000000',fontFamily: 'k8x12L', }).setPadding(6);
-
+        const scoreBg = this.add.graphics();
+        scoreBg.fillStyle(0x000000, 0.8);
+        
+        // スコアのテキストを作成
+        this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { 
+            fontSize: '33px', 
+            fill: '#ffffff', 
+            fontFamily: 'k8x12L' 
+        }).setPadding(6);
+        
+        // スコアテキストの幅と高さを取得
+        const scoretextWidth = this.scoreText.width;
+        const scoretextHeight = this.scoreText.height; // 修正したプロパティ名
+        
+        // スコアテキストに合わせて背景を作成（パディングあり）
+        scoreBg.fillRect(80 - 8, 100 - 8, scoretextWidth + 30, scoretextHeight + 16);
+        
         // タイマーの設定
         this.timerText = this.add.text(D_WIDTH/2-20, 40, ``, {
             fontSize: '53px',
@@ -623,8 +637,23 @@ class AnswerResultScene extends Phaser.Scene {
 
         // 背景をテキストの背面に描画
         liveBg.fillRect(1080 - 8, 100 - 8, textWidth + 48, textHeight + 16);
-
-        this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { fontSize: '33px', fill: '#000000' ,fontFamily: 'k8x12L',}).setPadding(6);
+        const scoreBg = this.add.graphics();
+        scoreBg.fillStyle(0x000000, 0.8);
+        
+        // スコアのテキストを作成
+        this.scoreText = this.add.text(80, 100, `スコア: ${this.registry.get('lastScore')}`, { 
+            fontSize: '33px', 
+            fill: '#ffffff', 
+            fontFamily: 'k8x12L' 
+        }).setPadding(6);
+        
+        // スコアテキストの幅と高さを取得
+        const scoretextWidth = this.scoreText.width;
+        const scoretextHeight = this.scoreText.height; // 修正したプロパティ名
+        
+        // スコアテキストに合わせて背景を作成（パディングあり）
+        scoreBg.fillRect(80 - 8, 100 - 8, scoretextWidth + 30, scoretextHeight + 16);
+        
         this.scoreresultText = this.add.text(80, 130., `+${this.score}`, { fontSize: '33px', fill: '#ff0000' ,fontFamily: 'k8x12L',}).setPadding(6);
         
         // 2秒後に次の問題に進むか終了
