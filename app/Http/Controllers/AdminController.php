@@ -10,6 +10,9 @@ use App\Models\question;
 use Illuminate\Support\Facades\Validator;
 use App\Models\ranking_result;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserRegistered;
 
 class AdminController extends Controller
 {
@@ -44,10 +47,11 @@ class AdminController extends Controller
                 $questionsPython = question::where('mode', 1)->where('delete_flag', 0)->get();
                 $questionsPHP = Question::where('mode', 2)->where('delete_flag', 0)->get();
 
-                return view('admin.admin_questionlist',['questionsJava' => $questionsJava,
-            'questionsPython' => $questionsPython,
-            'questionsPHP' => $questionsPHP,
-            ]);
+                return view('admin.admin_questionlist', [
+                    'questionsJava' => $questionsJava,
+                    'questionsPython' => $questionsPython,
+                    'questionsPHP' => $questionsPHP,
+                ]);
             case 'ranking':
                 $modes = [0 => 'java', 1 => 'python', 2 => 'php'];
                 $levels = [0 => 'easy', 1 => 'normal', 2 => 'hard'];
@@ -62,7 +66,15 @@ class AdminController extends Controller
                             ->get();
                     }
                 }
-                return view('admin.admin_ranking', compact('rankings'));
+                foreach ($modes as $modeKey => $mode) {
+                    foreach ($levels as $levelKey => $level) {
+                        $ranking_reset["{$mode}{$level}"] = ranking_result::where('mode', $modeKey)
+                            ->where('level', $levelKey)
+                            ->orderBy('created_at', 'desc')
+                            ->first();
+                    }
+                }
+                return view('admin.admin_ranking', compact('rankings'), compact('ranking_reset'));
             case 'admin_add':
                 return view('admin.admin_newAdmin');
                 // case 'logout':
@@ -110,7 +122,7 @@ class AdminController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:8',
+            'name' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -119,14 +131,29 @@ class AdminController extends Controller
                 ->withInput();
         }
 
+        // ランダムなパスワードを生成
+        $randPassword = Str::random(8);
+
+        // ユーザーを作成
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
+            'password' => Hash::make($randPassword),
         ]);
 
-        return redirect('/admin_menu');
+        // メール送信
+        $emailData = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => $randPassword,
+            'url' => url('/admin/login'), // ログインURLを指定
+        ];
+
+        Mail::to($user->email)->send(new UserRegistered($emailData));
+
+        return redirect('/admin_menu')->with('success', '登録が完了し、メールを送信しました。');
     }
+
 
     public function ranking_reset(Request $request)
     {
@@ -180,7 +207,7 @@ class AdminController extends Controller
     {
         // 該当IDの問題を取得
         $question = Question::findOrFail($id);
-    
+
         // ビューを返す（adminフォルダ内のadmin_edit.blade.phpを指定）
         return view('admin.admin_edit', compact('question'));
     }
@@ -212,5 +239,4 @@ class AdminController extends Controller
         // 問題一覧ビューにデータを渡して表示
         return view('admin.admin_questionlist', compact('questionsJava'));
     }
-
 }

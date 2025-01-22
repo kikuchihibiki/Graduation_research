@@ -74,6 +74,10 @@
                     <td class="text-white">-</td>
                     </tr>
                     @endfor
+                    @if ($ranking_reset['javaeasy'])
+                    <td> ランキングリセット日{{ $ranking_reset['javaeasy']->created_at }}</td>
+                    @else
+                    @endif
             </tbody>
 
             <!-- Java Normal -->
@@ -92,6 +96,10 @@
                     <td class="text-white">-</td>
                     </tr>
                     @endfor
+                    @if ($ranking_reset['javanormal'])
+                    <td> ランキングリセット日{{ $ranking_reset['javanormal']->created_at }}</td>
+                    @else
+                    @endif
             </tbody>
 
             <!-- Java Hard -->
@@ -110,6 +118,10 @@
                     <td class="text-white">-</td>
                     </tr>
                     @endfor
+                    @if ($ranking_reset['javahard'])
+                    <td> ランキングリセット日{{ $ranking_reset['javahard']->created_at }}</td>
+                    @else
+                    @endif
             </tbody>
 
             <!-- Python Easy -->
@@ -128,6 +140,10 @@
                     <td class="text-white">-</td>
                     </tr>
                     @endfor
+                    @if ($ranking_reset['pythoneasy'])
+                    <td> ランキングリセット日{{ $ranking_reset['pythoneasy']->created_at }}</td>
+                    @else
+                    @endif
             </tbody>
 
             <!-- Python Normal -->
@@ -146,6 +162,10 @@
                     <td class="text-white">-</td>
                     </tr>
                     @endfor
+                    @if ($ranking_reset['pythonnormal'])
+                    <td> ランキングリセット日{{ $ranking_reset['pythonnormal']->created_at }}</td>
+                    @else
+                    @endif
             </tbody>
 
             <!-- Python Hard -->
@@ -164,6 +184,10 @@
                     <td class="text-white">-</td>
                     </tr>
                     @endfor
+                    @if ($ranking_reset['pythonhard'])
+                    <td> ランキングリセット日{{ $ranking_reset['pythonhard']->created_at }}</td>
+                    @else
+                    @endif
             </tbody>
 
             <!-- PHP Easy -->
@@ -182,6 +206,10 @@
                     <td class="text-white">-</td>
                     </tr>
                     @endfor
+                    @if ($ranking_reset['phpeasy'])
+                    <td> ランキングリセット日{{ $ranking_reset['phpeasy']->created_at }}</td>
+                    @else
+                    @endif
             </tbody>
 
             <!-- PHP Normal -->
@@ -200,6 +228,10 @@
                     <td class="text-white">-</td>
                     </tr>
                     @endfor
+                    @if ($ranking_reset['phpnormal'])
+                    <td> ランキングリセット日{{ $ranking_reset['phpnormal']->created_at }}</td>
+                    @else
+                    @endif
             </tbody>
 
             <!-- PHP Hard -->
@@ -218,6 +250,10 @@
                     <td class="text-white">-</td>
                     </tr>
                     @endfor
+                    @if ($ranking_reset['phphard'])
+                    <td> ランキングリセット日{{ $ranking_reset['phphard']->created_at }}</td>
+                    @else
+                    @endif
             </tbody>
 
     </table>

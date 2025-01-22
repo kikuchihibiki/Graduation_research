@@ -7,6 +7,7 @@ use App\Http\Controllers\FunctionController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FillauthController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AdminAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,7 @@ Route::get('/ranking', [FunctionController::class, 'ranking'])->name('ranking');
 Route::get('/progress_reset', [FunctionController::class, 'progress_reset'])->name('progress_reset');
 Route::get('/score_reset', [FunctionController::class, 'score_reset'])->name('score_reset');
 Route::get('/miss_question', [FunctionController::class, 'miss_question']);
-Route::get('/admin', [AdminController::class, 'admin']);
+Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
 Route::get('/admin_select', [AdminController::class, 'admin_select'])->name('admin_select');
 Route::post('/admin_select', [AdminController::class, 'admin_select'])->name('admin_select');
 Route::post('/delete_ranking', [AdminController::class, 'delete_ranking'])->name('delete_ranking');
@@ -64,3 +65,8 @@ Route::middleware('web')->group(function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes(['reset' => true]);
 
+Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [AdminAuthController::class, 'login']);
+Route::get('/admin/password/change', [AdminAuthController::class, 'showPasswordChangeForm'])->name('admin.password.change');
+Route::post('/admin/password/change', [AdminAuthController::class, 'changePassword']);
+Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');

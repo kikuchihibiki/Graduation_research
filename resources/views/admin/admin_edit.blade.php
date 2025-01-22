@@ -4,20 +4,20 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
-<link rel="stylesheet" href="{{ asset('css/edit.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin_edit.css') }}">
 @endsection
 
 @section('content')
 <h1>問題編集</h1>
 
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
 @endif
 
 <form action="{{ route('admin.admin_update', ['id' => $question->id]) }}" method="POST">
