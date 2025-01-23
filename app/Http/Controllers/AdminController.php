@@ -115,7 +115,15 @@ class AdminController extends Controller
                     ->get();
             }
         }
-        return view('admin.admin_ranking', compact('rankings'));
+        foreach ($modes as $modeKey => $mode) {
+            foreach ($levels as $levelKey => $level) {
+                $ranking_reset["{$mode}{$level}"] = ranking_result::where('mode', $modeKey)
+                    ->where('level', $levelKey)
+                    ->orderBy('created_at', 'desc')
+                    ->first();
+            }
+        }
+        return view('admin.admin_ranking', compact('rankings'), compact('ranking_reset'));
     }
 
     public function register(Request $request)
