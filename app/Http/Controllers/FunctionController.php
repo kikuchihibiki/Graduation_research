@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Ranking;
 use App\Models\question;
 use Illuminate\Support\Facades\DB;
+use App\Models\ranking_result;
 
 class FunctionController extends Controller
 {
@@ -90,57 +91,54 @@ class FunctionController extends Controller
             $scores = [];
         }
 
-        // モードとレベルの組み合わせ
-        // モードとレベルの組み合わせ
-        $modes = ['python', 'php', 'java'];
-        $levels = ['easy', 'normal', 'hard'];
+        $scoreMode = ['java', 'python', 'php'];
+        $scoreLevel = ['easy', 'normal', 'hard'];
 
-        // ranking_resultテーブルから最新のリセット日時を取得
-        $resetResults = DB::table('ranking_result')
-            ->select('mode', 'level', DB::raw('MAX(created_at) as last_reset'))
-            ->where('delete_flag', 0)
-            ->groupBy('mode', 'level')
-            ->get();
-
-        // 配列を初期化
-        $result = [];
-
-        // 組み合わせごとに初期値を設定
-        foreach ($modes as $mode) {
-            foreach ($levels as $level) {
-                $key = "{$mode}{$level}"; // わかりやすい配列名
-                $result[$key] = null; // デフォルト値をnullに設定
+        foreach ($modes as $modeKey => $mode) {
+            foreach ($levels as $levelKey => $level) {
+                $ranking_reset["{$mode}{$level}"] = ranking_result::where('mode', $modeKey)
+                    ->where('level', $levelKey)
+                    ->orderBy('created_at', 'desc')
+                    ->first();
+            }
+        }
+        // jsonファイルのスコアからモードと難易度の組み合わせごとに配列に格納する
+        // モードと難易度ごとにスコアを配列に格納する
+        foreach ($scoreMode as $mode) {
+            foreach ($scoreLevel as $level) {
+                // 条件に一致するスコアをフィルタリングして格納
+                $fileScore["{$mode}{$level}"] = array_filter($scores, function ($score) use ($mode, $level) {
+                    return $score['m'] === $mode && $score['l'] === $level;
+                });
             }
         }
 
-        // JSONデータから有効な最高スコアを取得
-        foreach ($scores as $score) {
-            $mode = $score['m'];
-            $level = $score['l'];
-            $scoreValue = $score['s'];
-            $date = $score['d'];
-
-            // 対象のリセット日時を取得
-            $reset = $resetResults->first(function ($item) use ($mode, $level) {
-                return $item->mode == $mode && $item->level == $level;
-            });
-
-            // ranking_resultにデータがない場合はすべてのスコアを有効とみなす
-            if (!$reset || $date > $reset->last_reset) {
-                // モードとレベルごとの最高スコアを更新
+        foreach ($scoreMode as $mode) {
+            foreach ($scoreLevel as $level) {
                 $key = "{$mode}{$level}";
-                if (!isset($result[$key]) || $result[$key]['s'] < $scoreValue) {
-                    $result[$key] = [
-                        'mode' => $mode,
-                        'level' => $level,
-                        's' => $scoreValue,
-                        'd' => $date,
-                    ];
+                if (isset($ranking_reset[$key]) && isset($ranking_reset[$key]->created_at)) {
+                    // $ranking_reset[$key] が存在し、created_at がある場合のみフィルタリング
+                    $validScores[$key] = array_filter($fileScore[$key], function ($score) use ($ranking_reset, $key) {
+                        return $score['d'] > $ranking_reset[$key]->created_at;
+                    });
+                } else {
+                    // $ranking_reset[$key] が存在しない場合は元のデータをそのまま使用
+                    $validScores[$key] = $fileScore[$key];
+                }
+
+                // 各配列から "s" が最も高いスコアを選別
+                if (!empty($validScores[$key])) {
+                    $highestScores[$key] = array_reduce($validScores[$key], function ($carry, $item) {
+                        return ($carry === null || $item['s'] > $carry['s']) ? $item : $carry;
+                    });
+                } else {
+                    // スコアが存在しない場合は null を設定
+                    $highestScores[$key] = null;
                 }
             }
         }
 
-        return view('user.ranking', ['rankings' => $rankings, 'results' => $result]);
+        return view('user.ranking', ['rankings' => $rankings, 'validScores' => $validScores]);
     }
     public function miss_question()
     {
