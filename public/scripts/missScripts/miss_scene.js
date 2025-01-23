@@ -5,6 +5,8 @@ class StartScene extends Phaser.Scene {
 
     preload() {
         this.load.image('background', `assets/background.png`);
+        this.load.audio('bgm','/assets/audio/game.mp3')
+        this.load.audio('enter','/assets/audio/enter.mp3')
     }
     create() {
         console.log(`Phaser version: ${Phaser.VERSION}`);
@@ -13,6 +15,11 @@ class StartScene extends Phaser.Scene {
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
         const answerInputRectWidth = D_WIDTH;  // 幅を調整
         const answerInputRectHeight = 480; // 高さを調整
+
+        if (!this.sound.get('bgm')) {
+            const music = this.sound.add('bgm', { loop: true });
+            music.play();
+        }
 
         console.log(questionData)
         // 背景矩形を追加（薄い黒）
@@ -50,6 +57,10 @@ class StartScene extends Phaser.Scene {
         console.log(this.registry.get('questionId'))
         
         this.input.keyboard.on('keydown-ENTER', () => {
+            const enterSound = this.sound.add('enter'); // 効果音のオーディオをロード済みと仮定
+            enterSound.play({
+                volume: 1.5,
+            });
             if (flagData === false) {
                 window.location.href = '/select_mode';
             } else {
@@ -220,7 +231,7 @@ class ProgressBar {
 class QuizScene extends Phaser.Scene {
     constructor() {
         super({ key: 'QuizScene' });
-        
+        this.limitSound = null;
     }
 
     preload() {
@@ -230,6 +241,12 @@ class QuizScene extends Phaser.Scene {
         this.load.image('attack', '/assets/attack.png');
         this.load.image('kogeki', '/assets/kogeki.png');
         this.load.image('live', '/assets/live.png');
+        this.load.audio('type','/assets/audio/type.mp3')
+        this.load.audio('limit','/assets/audio/limit.mp3')
+        this.load.audio('attackSE','/assets/audio/attack.mp3')
+        this.load.audio('missSE','/assets/audio/miss0.mp3')
+        this.load.audio('hakaiSE','/assets/audio/hakai.mp3')
+        this.load.audio('bsSE','/assets/audio/bs.mp3')
     }
 
     create(data) {
@@ -398,14 +415,23 @@ class QuizScene extends Phaser.Scene {
 
         // ユーザー入力の処理
         this.input.keyboard.on('keydown', (event) => {
+            const typeSound = this.sound.add('type'); // 効果音のオーディオをロード済みと仮定
+            const bsSound = this.sound.add('bsSE'); // 効果音のオーディオをロード済みと仮定
             if (event.key === 'Enter') {
                 this.checkAnswer();
             } else if (event.key === 'Backspace') {
                 this.userAnswer = this.userAnswer.slice(0, -1);
-                this.updateAnswerDisplay();
+                this.updateAnswerDisplay(); // バックスペース処理
+                // バックスペース効果音を再生
+                bsSound.play({
+                    volume: 2,
+                });
             } else if (event.key.length === 1) {
                 this.userAnswer += event.key;
                 this.updateAnswerDisplay();
+                typeSound.play({
+                    volume: 1.5,
+                });
             }
         });
 
@@ -448,7 +474,14 @@ class QuizScene extends Phaser.Scene {
         // timeLimitが5以下の場合はカウントダウンテキストを表示
         if (this.timeLimit <= 5) {
             this.timerText.setText(`${this.timeLimit}`);
-            
+            if (!this.limitSound) {
+                this.limitSound = this.sound.add('limit'); // 効果音をロード
+            }
+            if (!this.limitSound.isPlaying) {
+                this.limitSound.play({
+                    volume: 0.8,
+                }); // 効果音を再生
+            }
             // カウントダウンテキストがまだ表示されていない場合、フェードインする
             if (this.countdownText.alpha === 0) {
                 this.tweens.add({
@@ -509,6 +542,15 @@ class QuizScene extends Phaser.Scene {
             this.time.delayedCall(2000, () => {
                 attack.destroy(); // 画像を削除
             });
+            const attackSE = this.sound.add('attackSE');
+            attackSE.play({
+                volume: 4.0,
+            });
+            if (this.limitSound) {
+                this.limitSound.stop(); // 効果音を停止
+                this.limitSound.destroy(); // インスタンスを破棄
+                this.limitSound = null; // 再利用のためにリセット
+            }
             resultText = '正解！';
             color = '#00ff00';
             this.correctAnswers++;
@@ -531,7 +573,16 @@ class QuizScene extends Phaser.Scene {
         }
         // 時間切れの場合
         else if (timeout) {
-            resultText = '時間切れ！不正解';
+            if (this.limitSound) {
+                this.limitSound.stop(); // 効果音を停止
+                this.limitSound.destroy(); // インスタンスを破棄
+                this.limitSound = null; // 再利用のためにリセット
+            }
+            const hakaiSE = this.sound.add('hakaiSE');
+            hakaiSE.play({
+                volume: 2.0,
+            });
+            resultText = '';
             this.lives--;
             progressData[this.questionIndex] = false;
 
@@ -553,6 +604,10 @@ class QuizScene extends Phaser.Scene {
         }
         // 不正解の場合
         else {
+            const missSE = this.sound.add('missSE');
+            missSE.play({
+                volume: 4.0,
+            });
             // 前回の解答を保持して表示
             const block = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, 'block').setScale(0.3);
             this.time.delayedCall(1000, () => {
@@ -709,13 +764,22 @@ class EndScene extends Phaser.Scene {
 
     preload() {
         this.load.image('background', `assets/background.png`);
+        this.load.audio('game_clear','/assets/audio/game_clear.mp3')
+        this.load.audio('game_over','/assets/audio/game_over.mp3')
     }
 
     create(data) {
+        if (this.sound.get('bgm')) {
+            this.sound.stopByKey('bgm');
+            console.log("BGM stopped successfully.");
+        }
         const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
         this.clearFlag = this.registry.get('clearFlag');
+        const game_clear = this.sound.add('game_clear', { loop: true });
+        const game_over = this.sound.add('game_over', { loop: true });
         if (this.clearFlag) {
+            game_clear.play();
             this.cameras.main.fadeIn(1000, 0, 0, 0, () => {
                 this.cameras.main.setBackgroundColor('#000000');
         
@@ -764,6 +828,7 @@ class EndScene extends Phaser.Scene {
             });
 
         } else {
+            game_over.play();
             this.cameras.main.fadeIn(1000, 255, 255, 255);
 
         // ゲームオーバーテキストを追加

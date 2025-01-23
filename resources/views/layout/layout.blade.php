@@ -10,9 +10,19 @@
 </head>
 
 <body>
-<main>
-    @yield('content')
-</main>
+    <main>
+        @yield('content')
+    </main>
+    <audio id="sound">
+        <source src="{{ asset('assets/audio/se_select8.mp3') }}" type="audio/mp3">
+        お使いのブラウザは音楽を再生できません。
+    </audio>
+    <audio id="start">
+        <source src="{{ asset('assets/audio/start1.mp3') }}" type="audio/mp3">
+        お使いのブラウザは音楽を再生できません。
+    </audio>
+    <script src="{{ asset('js/sound.js') }}"></script>
+
 </body>
 
 </html>

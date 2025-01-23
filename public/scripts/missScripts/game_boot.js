@@ -27,4 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     new Phaser.Game(config);
+    game.scene.events.on('start', function() {
+        this.sound.add('bgm');  // 'background_music' はロードした音楽のキー
+    });
 });

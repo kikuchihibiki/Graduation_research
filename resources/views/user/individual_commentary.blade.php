@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>クイズ結果画面</title>
     <link rel="stylesheet" href="{{ asset('css/individual_commentary.css') }}">
-
 </head>
 
 <body>

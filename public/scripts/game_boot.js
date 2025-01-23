@@ -23,8 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 debug: false
             }
         },
-        scene: [StartScene, QuizScene,AnswerResultScene,EndScene,CharacterScene]  // スタート画面とクイズ画面のシーン
+        scene: [StartScene, QuizScene,AnswerResultScene,EndScene,CharacterScene]
     };
 
     new Phaser.Game(config);
+    game.scene.events.on('start', function() {
+        this.sound.add('bgm');  // 'background_music' はロードした音楽のキー
+    });
 });
