@@ -26,5 +26,21 @@
 
     </div>
 </body>
+<audio id="bgm" loop>
+    <source src="{{ asset('assets/audio/result.mp3') }}" type="audio/mpeg">
+    お使いのブラウザはオーディオ再生に対応していません。
+</audio>
+
+<!-- JavaScriptでBGM再生を開始 -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bgm = document.getElementById('bgm');
+        if (bgm) {
+            bgm.play().catch(error => {
+                console.error('BGMの再生に失敗しました:', error);
+            });
+        }
+    });
+</script>
 
 </html>

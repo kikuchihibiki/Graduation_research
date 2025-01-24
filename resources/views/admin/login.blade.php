@@ -26,7 +26,11 @@
         </div>
 </div>
 </form>
-
+@if ($errors->has('email'))
+<ul>
+    <li>{{ $errors->first('email') }}</li>
+</ul>
+@endif
 @if ($errors->any())
 <ul>
     @foreach ($errors->all() as $error)

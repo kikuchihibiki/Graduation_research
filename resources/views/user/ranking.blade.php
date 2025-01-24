@@ -218,85 +218,87 @@
         <p id="scoreDisplay" class="white">あなたのスコア: <span>-</span></p>
     </div>
     <div id="javaeazy" class="score">
-        @if (!is_null($results['javaeasy']))
-        <p class="white">あなたのスコア: <span>{{ $results['javaeasy']['s'] }}</span></p>
+        @if (isset($validScores['javaeasy'][0]['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['javaeasy'][0]['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="javanormal" class="score">
-        @if (!is_null($results['javanormal']))
-        <p class="white">あなたのスコア: <span>{{ $results['javanormal']['s'] }}</span></p>
+        @if (isset($validScores['javanormal'][0]['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['javanormal'][0]['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="javahard" class="score">
-        @if (!is_null($results['javahard']))
-        <p class="white">あなたのスコア: <span>{{ $results['javahard']['s'] }}</span></p>
+        @if (isset($validScores['javahard'][0]['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['javahard'][0]['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="phpeazy" class="score">
-        @if (!is_null($results['phpeasy']))
-        <p class="white">あなたのスコア: <span>{{ $results['phpeasy']['s'] }}</span></p>
+        @if (isset($validScores['phpeasy'][0]['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['phpeasy'][0]['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="phpnormal" class="score">
-        @if (!is_null($results['phpnormal']))
-        <p class="white">あなたのスコア: <span>{{ $results['phpnormal']['s'] }}</span></p>
+        @if (isset($validScores['phpnormal'][0]['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['phpnormal'][0]['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="phphard" class="score">
-        @if (!is_null($results['phphard']))
-        <p class="white">あなたのスコア: <span>{{ $results['phphard']['s'] }}</span></p>
+        @if (isset($validScores['phphard'][0]['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['phphard'][0]['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="pythoneazy" class="score">
-        @if (!is_null($results['pythoneasy']))
-        <p class="white">あなたのスコア: <span>{{ $results['pythoneasy']['s'] }}</span></p>
+        @if (isset($validScores['pythoneasy'][0]['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['pythoneasy'][0]['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="pythonnormal" class="score">
-        @if (!is_null($results['pythonnormal']))
-        <p class="white">あなたのスコア: <span>{{ $results['pythonnormal']['s'] }}</span></p>
+        @if (isset($validScores['pythonnormal'][0]['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['pythonnormal'][0]['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="pythonhard" class="score">
-        @if (!is_null($results['pythonhard']))
-        <p class="white">あなたのスコア: <span>{{ $results['pythonhard']['s'] }}</span></p>
+        @if (isset($validScores['pythonhard'][0]['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['pythonhard'][0]['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
+
+
 </div>
 <div class="ta">
-<div class="re">
-<a class="reset position-reset" href="{{ route('score_reset') }}">スコアリセット</a>
-</div>
-<div class="back">
-<a class="reset position-reset" href="{{ route('select_mode') }}" style="color:white;">≻戻る</a>
-</div>
+    <div class="re">
+        <a class="reset position-reset" href="{{ route('score_reset') }}">スコアリセット</a>
+    </div>
+    <div class="back">
+        <a class="reset position-reset" href="{{ route('select_mode') }}" style="color:white;">≻戻る</a>
+    </div>
 </div>
 <script src="{{ asset('js/score.js') }}"></script>
 <script src="{{ asset('js/ranking.js') }}">
