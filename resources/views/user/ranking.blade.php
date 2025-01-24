@@ -73,7 +73,7 @@
         <!-- Java Normal -->
         <tbody class="ranking_tab" id="java-normal">
             @foreach ($rankings['javanormal'] as $index => $rank)
-            <tr class="rank_tr_{{ $index + 1 }}">
+            <tr class="rank{{ $index + 1 }}">
                 <td class="rank{{ $index + 1 }}">{{ $index + 1 }}位</td>
                 <td class="rank-name">{{ $rank->name }}</td>
                 <td class="rank-score">{{ $rank->score }}</td>
@@ -91,7 +91,7 @@
         <!-- Java Hard -->
         <tbody class="ranking_tab" id="java-hard">
             @foreach ($rankings['javahard'] as $index => $rank)
-            <tr class="rank_tr_{{ $index + 1 }}">
+            <tr class="rank{{ $index + 1 }}">
                 <td class="rank{{ $index + 1 }}">{{ $index + 1 }}位</td>
                 <td class="rank-name">{{ $rank->name }}</td>
                 <td class="rank-score">{{ $rank->score }}</td>
@@ -109,7 +109,7 @@
         <!-- Python Easy -->
         <tbody class="ranking_tab" id="python-eazy">
             @foreach ($rankings['pythoneasy'] as $index => $rank)
-            <tr class="rank_tr_{{ $index + 1 }}">
+            <tr class="rank{{ $index + 1 }}">
                 <td class="rank{{ $index + 1 }}">{{ $index + 1 }}位</td>
                 <td class="rank-name">{{ $rank->name }}</td>
                 <td class="rank-score">{{ $rank->score }}</td>
@@ -127,7 +127,7 @@
         <!-- Python Normal -->
         <tbody class="ranking_tab" id="python-normal">
             @foreach ($rankings['pythonnormal'] as $index => $rank)
-            <tr class="rank_tr_{{ $index + 1 }}">
+            <tr class="rank{{ $index + 1 }}">
                 <td class="rank{{ $index + 1 }}">{{ $index + 1 }}位</td>
                 <td class="rank-name">{{ $rank->name }}</td>
                 <td class="rank-score">{{ $rank->score }}</td>
@@ -145,7 +145,7 @@
         <!-- Python Hard -->
         <tbody class="ranking_tab" id="python-hard">
             @foreach ($rankings['pythonhard'] as $index => $rank)
-            <tr class="rank_tr_{{ $index + 1 }}">
+            <tr class="rank{{ $index + 1 }}">
                 <td class="rank{{ $index + 1 }}">{{ $index + 1 }}位</td>
                 <td class="rank-name">{{ $rank->name }}</td>
                 <td class="rank-score">{{ $rank->score }}</td>
@@ -163,7 +163,7 @@
         <!-- PHP Easy -->
         <tbody class="ranking_tab" id="php-eazy">
             @foreach ($rankings['phpeasy'] as $index => $rank)
-            <tr class="rank_tr_{{ $index + 1 }}">
+            <tr class="rank{{ $index + 1 }}">
                 <td class="rank{{ $index + 1 }}">{{ $index + 1 }}位</td>
                 <td class="rank-name">{{ $rank->name }}</td>
                 <td class="rank-score">{{ $rank->score }}</td>
@@ -181,7 +181,7 @@
         <!-- PHP Normal -->
         <tbody class="ranking_tab" id="php-normal">
             @foreach ($rankings['phpnormal'] as $index => $rank)
-            <tr class="rank_tr_{{ $index + 1 }}">
+            <tr class="rank{{ $index + 1 }}">
                 <td class="rank{{ $index + 1 }}">{{ $index + 1 }}位</td>
                 <td class="rank-name">{{ $rank->name }}</td>
                 <td class="rank-score">{{ $rank->score }}</td>
@@ -199,7 +199,7 @@
         <!-- PHP Hard -->
         <tbody class="ranking_tab" id="php-hard">
             @foreach ($rankings['phphard'] as $index => $rank)
-            <tr class="rank_tr_{{ $index + 1 }}">
+            <tr class="rank{{ $index + 1 }}">
                 <td class="rank{{ $index + 1 }}">{{ $index + 1 }}位</td>
                 <td class="rank-name">{{ $rank->name }}</td>
                 <td class="rank-score">{{ $rank->score }}</td>
