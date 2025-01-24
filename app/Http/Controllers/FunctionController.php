@@ -137,8 +137,7 @@ class FunctionController extends Controller
                 }
             }
         }
-
-        return view('user.ranking', ['rankings' => $rankings, 'validScores' => $validScores]);
+        return view('user.ranking', ['rankings' => $rankings, 'validScores' => $highestScores]);
     }
     public function miss_question()
     {

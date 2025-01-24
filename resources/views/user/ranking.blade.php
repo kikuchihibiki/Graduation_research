@@ -218,72 +218,72 @@
         <p id="scoreDisplay" class="white">あなたのスコア: <span>-</span></p>
     </div>
     <div id="javaeazy" class="score">
-        @if (isset($validScores['javaeasy'][0]['s']))
-        <p class="white">あなたのスコア: <span>{{ $validScores['javaeasy'][0]['s'] }}</span></p>
+        @if (isset($validScores['javaeasy']['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['javaeasy']['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="javanormal" class="score">
-        @if (isset($validScores['javanormal'][0]['s']))
-        <p class="white">あなたのスコア: <span>{{ $validScores['javanormal'][0]['s'] }}</span></p>
+        @if (isset($validScores['javanormal']['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['javanormal']['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="javahard" class="score">
-        @if (isset($validScores['javahard'][0]['s']))
-        <p class="white">あなたのスコア: <span>{{ $validScores['javahard'][0]['s'] }}</span></p>
+        @if (isset($validScores['javahard']['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['javahard']['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="phpeazy" class="score">
-        @if (isset($validScores['phpeasy'][0]['s']))
-        <p class="white">あなたのスコア: <span>{{ $validScores['phpeasy'][0]['s'] }}</span></p>
+        @if (isset($validScores['phpeasy']['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['phpeasy']['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="phpnormal" class="score">
-        @if (isset($validScores['phpnormal'][0]['s']))
-        <p class="white">あなたのスコア: <span>{{ $validScores['phpnormal'][0]['s'] }}</span></p>
+        @if (isset($validScores['phpnormal']['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['phpnormal']['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="phphard" class="score">
-        @if (isset($validScores['phphard'][0]['s']))
-        <p class="white">あなたのスコア: <span>{{ $validScores['phphard'][0]['s'] }}</span></p>
+        @if (isset($validScores['phphard']['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['phphard']['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="pythoneazy" class="score">
-        @if (isset($validScores['pythoneasy'][0]['s']))
-        <p class="white">あなたのスコア: <span>{{ $validScores['pythoneasy'][0]['s'] }}</span></p>
+        @if (isset($validScores['pythoneasy']['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['pythoneasy']['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="pythonnormal" class="score">
-        @if (isset($validScores['pythonnormal'][0]['s']))
-        <p class="white">あなたのスコア: <span>{{ $validScores['pythonnormal'][0]['s'] }}</span></p>
+        @if (isset($validScores['pythonnormal']['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['pythonnormal']['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
     </div>
 
     <div id="pythonhard" class="score">
-        @if (isset($validScores['pythonhard'][0]['s']))
-        <p class="white">あなたのスコア: <span>{{ $validScores['pythonhard'][0]['s'] }}</span></p>
+        @if (isset($validScores['pythonhard']['s']))
+        <p class="white">あなたのスコア: <span>{{ $validScores['pythonhard']['s'] }}</span></p>
         @else
         <p>スコアはありません。</p>
         @endif
