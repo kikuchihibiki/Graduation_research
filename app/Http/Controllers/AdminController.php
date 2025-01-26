@@ -162,7 +162,10 @@ class AdminController extends Controller
         return redirect('/admin_menu')->with('success', '登録が完了し、メールを送信しました。');
     }
 
-
+    public function admin_register()
+    {
+        return view('admin.admin_newAdmin');
+    }
     public function ranking_reset(Request $request)
     {
         // リクエストの中身を確認
