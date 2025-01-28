@@ -1,15 +1,28 @@
+@font-face {
+  font-family: 'k8x12L';
+  src: url('/font/k8x12L.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 .hidden {
   display: none;
 }
-body{
-  padding-top: 650px;
+body {
+  font-family: 'k8x12L', sans-serif;
+  text-align: center;
 }
 
+input[type="text"], input[type="email"], input[type="password"], textarea {
+  font-family: 'k8x12L', sans-serif;
+  font-size: 20px; 
+}
 /* テーブル上部のコントロールエリア */
 .table-controls{
   display: flex;             /* 横並びに配置 */
   align-items: center;       /* 縦方向の中央揃え */
-  justify-content: flex-start; /* 左寄せ */
+  justify-content: center; /* 左寄せ */
   margin-bottom: 20px;       /* テーブルとの間隔 */
   gap: 20px;                 /* 検索窓とトグルボタンの間隔 */
 }
@@ -46,7 +59,6 @@ button {
   align-items: center;       /* 垂直方向で中央揃え */
   gap: 10px;                 /* ボタンとテキストの間隔 */
 }
-
 .toggle-status {
   font-size: 16px;           /* テキストサイズ */
   color: #ffffff;               /* 必要に応じて色を変更 */
@@ -98,10 +110,12 @@ button {
  
  /* ヘッダーの背景色 */
  th {
-    background-color: #dcdcdc !important; /* グリーン */
+    background-color: #555555;/*灰色 */
     color: white; /* 白文字 */
   }
-
+table td.highlight-row{
+  width: 40%;
+}
 /* 偶数行の背景色と文字色 */
 table tr:nth-child(even) {    
     background-color: #dcdcdc; /* ライトグレー */
@@ -278,3 +292,6 @@ table, th, td {
 .reset:active {
   background-color: gray; /* クリック時の背景色 */
 }
+
+     
+     

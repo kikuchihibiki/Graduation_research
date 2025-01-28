@@ -25,33 +25,21 @@ class FunctionController extends Controller
         } else {
             $userData = [];
         }
+        $questionModes = [0 => 'java', 1 => 'python', 2 => 'php']; // 言語の名前
+        $questionLevels = [0 => 'easy', 1 => 'normal', 2 => 'hard']; // 難易度の名前
 
-        $questionsJava = question::where('mode', 0)->where('delete_flag', 0)->get();
-        $questionsPython = question::where('mode', 1)->where('delete_flag', 0)->get();
-        $questionsPHP = Question::where('mode', 2)->where('delete_flag', 0)->get();
+        $questions = [];
 
-        $questionsJava->map(function ($question) use ($userData) {
-            $questionId = $question->id;
-            $question->answer_status = isset($userData[$questionId]) ? '回答済み' : '未回答';
-            return $question;
-        });
-
-        $questionsPython->map(function ($question) use ($userData) {
-            $questionId = $question->id;
-            $question->answer_status = isset($userData[$questionId]) ? '回答済み' : '未回答';
-            return $question;
-        });
-
-        $questionsPHP->map(function ($question) use ($userData) {
-            $questionId = $question->id;
-            $question->answer_status = isset($userData[$questionId]) ? '回答済み' : '未回答';
-            return $question;
-        });
-
+        foreach ($questionModes as $mode => $modeName) {
+            foreach ($questionLevels as $level => $levelName) {
+                $questions[$modeName][$levelName] = question::where('mode', $mode)
+                    ->where('level', $level)
+                    ->where('delete_flag', 0)
+                    ->get();
+            }
+        }
         return view('user.question_list', [
-            'questionsJava' => $questionsJava,
-            'questionsPython' => $questionsPython,
-            'questionsPHP' => $questionsPHP,
+            'questions' => $questions,
             'userData' => $userData,
         ]);
     }
