@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class phpquestionseeder extends Seeder
 {
@@ -381,7 +382,7 @@ class phpquestionseeder extends Seeder
             'question' => '例外をスローするために使用するキーワードは？ 〇〇〇〇〇',
             'answer' => 'throw',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
         ];
@@ -391,7 +392,7 @@ class phpquestionseeder extends Seeder
             'question' => 'base64方式で指定された文字列を暗号化してハッシュ値を生成する関数は？ 〇〇〇〇〇〇_〇〇〇〇〇〇',
             'answer' => 'base64_encode',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
         ];
@@ -401,7 +402,7 @@ class phpquestionseeder extends Seeder
             'question' => '文字列を検索し、最後に見つかった位置を返す関数は？ 〇〇〇〇〇〇〇',
             'answer' => 'strrpos',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
         ];
@@ -411,7 +412,7 @@ class phpquestionseeder extends Seeder
             'question' => '指定されたファイルを読み取り専用で開くための関数は？ 〇〇〇〇〇',
             'answer' => 'fopen',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
         ];
@@ -421,7 +422,7 @@ class phpquestionseeder extends Seeder
             'question' => 'ファイルを閉じるための関数は？ 〇〇〇〇〇〇',
             'answer' => 'fclose',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
         ];
@@ -431,7 +432,7 @@ class phpquestionseeder extends Seeder
             'question' => '標準入力から1行読み取るための関数は？ 〇〇〇〇〇',
             'answer' => 'fgets',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
         ];
@@ -441,7 +442,7 @@ class phpquestionseeder extends Seeder
             'question' => '文字列を部分的に比較する関数は？（ケースを区別しない） 〇〇〇〇〇〇〇',
             'answer' => 'stristr',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
         ];
@@ -451,7 +452,7 @@ class phpquestionseeder extends Seeder
             'question' => 'マルチバイト対応で文字列の一部を指定した長さで抽出するための関数は？ 〇〇_ 〇〇〇〇〇〇',
             'answer' => 'mb_substr',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
         ];
@@ -461,7 +462,7 @@ class phpquestionseeder extends Seeder
             'question' => '文字列の最初の文字を大文字に変換する関数は？  〇〇〇〇〇〇〇',
             'answer' => 'ucfirst',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
         ];
@@ -471,7 +472,7 @@ class phpquestionseeder extends Seeder
             'question' => '配列をランダムに並べ替える関数は？  〇〇〇〇〇〇〇',
             'answer' => 'shuffle',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
         ];
@@ -845,7 +846,7 @@ class phpquestionseeder extends Seeder
             'question' => '例外をスローするために使用するキーワードは？',
             'answer' => 'throw',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',
         ];
@@ -855,7 +856,7 @@ class phpquestionseeder extends Seeder
             'question' => 'base64方式で指定された文字列を暗号化してハッシュ値を生成する関数は？',
             'answer' => 'base64_encode',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',
         ];
@@ -865,7 +866,7 @@ class phpquestionseeder extends Seeder
             'question' => '文字列を検索し、最後に見つかった位置を返す関数は？',
             'answer' => 'strrpos',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',
         ];
@@ -875,7 +876,7 @@ class phpquestionseeder extends Seeder
             'question' => '指定されたファイルを読み取り専用で開くための関数は？',
             'answer' => 'fopen',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',
         ];
@@ -885,7 +886,7 @@ class phpquestionseeder extends Seeder
             'question' => 'ファイルを閉じるための関数は？',
             'answer' => 'fclose',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',
         ];
@@ -895,7 +896,7 @@ class phpquestionseeder extends Seeder
             'question' => '標準入力から1行読み取るための関数は？',
             'answer' => 'fgets',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',
         ];
@@ -905,7 +906,7 @@ class phpquestionseeder extends Seeder
             'question' => '文字列を部分的に比較する関数は？（ケースを区別しない）',
             'answer' => 'stristr',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',
         ];
@@ -915,7 +916,7 @@ class phpquestionseeder extends Seeder
             'question' => 'マルチバイト対応で文字列の一部を指定した長さで抽出するための関数は？',
             'answer' => 'mb_substr',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',
         ];
@@ -925,7 +926,7 @@ class phpquestionseeder extends Seeder
             'question' => '文字列の最初の文字を大文字に変換する関数は？',
             'answer' => 'ucfirst',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',
         ];
@@ -935,7 +936,7 @@ class phpquestionseeder extends Seeder
             'question' => '配列をランダムに並べ替える関数は？',
             'answer' => 'shuffle',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',
         ];
@@ -1130,7 +1131,7 @@ class phpquestionseeder extends Seeder
             'question' => 'HTMLに用いられるメタ文字をエスケープする関数は？',
             'answer' => 'htmlspecialchars',
             'explanation' => '文字の中には HTML において特殊な意味を持つものがあり、 それらの本来の値を表示したければ HTML の表現形式に変換してやらなければなりません。 この関数は、これらの変換を行った結果の文字列を返します。',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '2',
         ];
@@ -1140,7 +1141,7 @@ class phpquestionseeder extends Seeder
             'question' => 'ひらがなをカタカナに変換するために使用する関数は？',
             'answer' => 'mb_convert_kana',
             'explanation' => '文字列 string に関して「半角」-「全角」変換を行います。 この関数は、日本語のみで使用可能です。',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '2',
         ];
@@ -1150,7 +1151,7 @@ class phpquestionseeder extends Seeder
             'question' => 'セッションIDを再生成するために使用する関数は？',
             'answer' => 'session_regenerate_id',
             'explanation' => '現在のセッションIDを 新しいものと置き換えます。その際、現在のセッション情報は維持されます',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '2',
         ];
@@ -1160,7 +1161,7 @@ class phpquestionseeder extends Seeder
             'question' => 'JSONを配列やオブジェクトに変換する関数は？',
             'answer' => 'json_decode',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '2',
         ];
@@ -1170,7 +1171,7 @@ class phpquestionseeder extends Seeder
             'question' => '配列やオブジェクトをJSONに変換する関数は？',
             'answer' => 'json_encode',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '2',
         ];
@@ -1180,7 +1181,7 @@ class phpquestionseeder extends Seeder
             'question' => '2つの配列を比較し、共通する値のみを取得する関数は？',
             'answer' => 'array_intersect',
             'explanation' => 'array_intersect() は、他の全ての引数に存在する array の値を全て有する配列を返します。 キーと値の関係は維持されることに注意してください。',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '2',
         ];
@@ -1190,7 +1191,7 @@ class phpquestionseeder extends Seeder
             'question' => 'フォームデータやクエリ文字列をurlエンコードするために使用する関数は？',
             'answer' => 'urlencode',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '2',
         ];
@@ -1200,7 +1201,7 @@ class phpquestionseeder extends Seeder
             'question' => '外部ファイルに内容を書き込む関数は？',
             'answer' => 'file_put_contents',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '2',
         ];
@@ -1212,7 +1213,7 @@ class phpquestionseeder extends Seeder
             'explanation' => '厳密に言うと、この関数は次の二つの条件を満たすすべての (数値エンティティを含む) エンティティをデコードします。それ以外のエンティティは、何も変換しません。
             1) 選択したドキュメントタイプで必然的に有効になるもの。つまり XML の場合には、DTD で定義されている名前付きエンティティはデコードしません。
             2) 選択したエンコーディングに関連づけられている符号化文字集合に含まれる文字で、 選択したドキュメントタイプで許可されているもの。',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '2',
         ];
@@ -1222,7 +1223,7 @@ class phpquestionseeder extends Seeder
             'question' => '文字列の一部を置換するための関数は？',
             'answer' => 'str_replace',
             'explanation' => '検索文字列に一致したすべての文字列を置換します',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '2',
         ];
