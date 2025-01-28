@@ -25,7 +25,7 @@ Route::post('/input_setup', [BeforeGameController::class, 'save_name'])->name('s
 Route::get('/select_mode', [BeforeGameController::class, 'select_mode'])->name('select_mode');
 Route::post('/select_level', [BeforeGameController::class, 'save_mode'])->name('save_mode');
 Route::post('/start_game', [BeforeGameController::class, 'start_game'])->name('start_game');
-Route::get('/wrong_answer', [BeforeGameController::class, 'wrong_answer'])->name('wrong_answer');
+Route::post('/wrong_answer', [BeforeGameController::class, 'wrong_answer'])->name('wrong_answer');
 Route::get('/question_list', [FunctionController::class, 'question_list']);
 Route::get('/ranking', [FunctionController::class, 'ranking'])->name('ranking');
 Route::get('/progress_reset', [FunctionController::class, 'progress_reset'])->name('progress_reset');
@@ -53,6 +53,7 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::get('/admin_questionlist', [AdminController::class, 'admin_questionlist'])->name('admin.admin_questionlist');
 Route::post('/admin_questionlist', [AdminController::class, 'admin_questionlist'])->name('admin.admin_questionlist');
+Route::get('/select_reset', [AdminController::class, 'select_reset'])->name('select_reset');
 Route::get('/admin_edit/{id}', [AdminController::class, 'admin_edit'])->name('admin.admin_edit');
 Route::get('/admin_register', [AdminController::class, 'admin_register'])->name('admin.register');
 Route::post('/admin_update/{id}', [AdminController::class, 'admin_update'])->name('admin.admin_update');

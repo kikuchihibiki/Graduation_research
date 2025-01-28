@@ -14,7 +14,7 @@ class StartScene extends Phaser.Scene {
         const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
         const answerInputRectWidth = D_WIDTH;  // 幅を調整
-        const answerInputRectHeight = 480; // 高さを調整
+        const answerInputRectHeight = D_HEIGHT/1.25; // 高さを調整
 
         if (!this.sound.get('bgm')) {
             const music = this.sound.add('bgm', { loop: true });
@@ -25,14 +25,14 @@ class StartScene extends Phaser.Scene {
         // 背景矩形を追加（薄い黒）
         this.add.graphics()
             .fillStyle(0x000000, 0.7) // 色: 黒、透明度: 0.5
-            .fillRect(0,answerInputRectHeight,answerInputRectWidth,80);
+            .fillRect(0,answerInputRectHeight,answerInputRectWidth,95);
         if (flagData === false) {
             this.text = '間違ったことのある問題がありません。エンターで戻る';
         } else {
             this.text = '回答欄：エンターを押してスタート';
         }
         // 回答欄の表示
-        this.answerInput = this.add.text(D_WIDTH/2, 520, `${this.text}`, {
+        this.answerInput = this.add.text(D_WIDTH/2, D_HEIGHT/1.15, `${this.text}`, {
             fontSize: '48px',
             fill: '#ffffff',
             align: 'center',
@@ -113,10 +113,10 @@ class CharacterScene extends Phaser.Scene {
             const scale = Math.max(scaleX, scaleY); // 幅または高さに合わせて拡大
             character.setScale(scale);
         }
-        const backgroundRectWidth = 650;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
-        const backgroundRectHeight = 300; // 背景の高さ
+        const backgroundRectWidth = D_WIDTH / 2;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
+        const backgroundRectHeight = D_HEIGHT /2; 
         const backgroundRectX = D_WIDTH / 2;
-        const backgroundRectY = 140;
+        const backgroundRectY = D_HEIGHT / 4;
 
         this.add.graphics()
         .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
@@ -129,7 +129,10 @@ class CharacterScene extends Phaser.Scene {
             wordWrap: { width: 600, useAdvancedWrap: true }
         }).setOrigin(0.5).setPadding(16);
 
-        this.questionText.setText(questionData[this.questionIndex].question);
+        const formattedQuestionText = questionData[this.questionIndex].question.includes('〇')
+    ? questionData[this.questionIndex].question.replace(/〇+/g, match => `\n${match}`) // 連続する「〇」を改行後にまとめて表示
+    : questionData[this.questionIndex].question; 
+        this.questionText.setText(formattedQuestionText);
 
         this.tweens.add({
             targets: character,
@@ -290,18 +293,21 @@ class QuizScene extends Phaser.Scene {
         this.rateText = Math.floor(correctRatesData[this.questionIndex] * 100);
 
         // 質問の表示
-        const backgroundRectWidth = 650;  // 背景の幅
-        const backgroundRectHeight = 300; // 背景の高さ
+        const backgroundRectWidth = D_WIDTH / 2;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
+        const backgroundRectHeight = D_HEIGHT /2; // 背景の高さ
         const backgroundRectX = D_WIDTH / 2;
-        const backgroundRectY = 140;
+        const backgroundRectY = D_HEIGHT / 4;
+        const formattedQuestionText = this.questionText.includes('〇')
+    ? this.questionText.replace(/〇+/g, match => `\n${match}`) // 連続する「〇」を改行後にまとめて表示
+    : this.questionText; 
+        console.log(formattedQuestionText);
             
         // 背景の四角を描画
         this.add.graphics()
             .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
             .fillRect(backgroundRectX - backgroundRectWidth / 2, backgroundRectY, backgroundRectWidth, backgroundRectHeight);
-            
         // テキストラベル (questionText) を中央に配置
-        this.questionLabel = this.add.text(D_WIDTH / 2, this.cameras.main.centerY, `${this.questionText}`, {
+        this.questionLabel = this.add.text(D_WIDTH / 2, this.cameras.main.centerY, `${formattedQuestionText}`, {
             fontSize: '43px',
             fill: '#ffffff',
             align: 'center', // テキストの中央揃え
@@ -323,14 +329,14 @@ class QuizScene extends Phaser.Scene {
 
         
         const answerInputRectWidth = D_WIDTH;  // 幅を調整
-        const answerInputRectHeight = 480; // 高さを調整
+        const answerInputRectHeight = D_HEIGHT/1.25; // 高さを調整
     
         // 背景矩形を追加（薄い黒）
         this.add.graphics()
             .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
-            .fillRect(0,answerInputRectHeight,answerInputRectWidth,80);
+            .fillRect(0,answerInputRectHeight,answerInputRectWidth,95);
         // 回答欄の表示
-        this.answerInput = this.add.text(D_WIDTH / 2, 520, '', {
+        this.answerInput = this.add.text(D_WIDTH / 2,  D_HEIGHT/1.15, '', {
             fontSize: '45px',
             fill: '#ffcc00',
             align: 'center',
@@ -441,8 +447,8 @@ class QuizScene extends Phaser.Scene {
             this.input.keyboard.removeListener('keydown');
         });
 
-        this.cursor = this.add.text(D_WIDTH / 2, 520, '|', {
-            fontSize: '50px',
+        this.cursor = this.add.text(D_WIDTH / 2,  D_HEIGHT/1.15, '|', {
+            fontSize: '53px',
             fill: '#ffcc00', // カーソルの色
             align: 'center',
             fontFamily: 'k8x12L',
@@ -551,7 +557,7 @@ class QuizScene extends Phaser.Scene {
                 this.limitSound.destroy(); // インスタンスを破棄
                 this.limitSound = null; // 再利用のためにリセット
             }
-            resultText = '正解！';
+            resultText = '';
             color = '#00ff00';
             this.correctAnswers++;
             progressData[this.questionIndex] = true; 
@@ -631,7 +637,7 @@ class QuizScene extends Phaser.Scene {
         this.progressBar.update(progressData);
         this.registry.set('progressData', progressData);
         // 2秒後に次のシーンへ遷移
-        this.time.delayedCall(2000, () => {
+        this.time.delayedCall(1000, () => {
             this.scene.start('AnswerResultScene', {
                 correctAnswer: this.correctAnswer,
                 questionIndex: this.questionIndex,
@@ -675,15 +681,15 @@ class AnswerResultScene extends Phaser.Scene {
         
         this.registry.set('lastScore', this.registry.get('lastScore') + this.score);
 
-        const backgroundRectWidth = 650;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
-        const backgroundRectHeight = 300; // 背景の高さ
+        const backgroundRectWidth = D_WIDTH ;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
+        const backgroundRectHeight = D_HEIGHT /2; 
         const backgroundRectX = D_WIDTH / 2;
-        const backgroundRectY = 140;
+        const backgroundRectY = D_HEIGHT / 4;
 
     // 背景矩形を追加
     this.add.graphics()
         .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
-        .fillRect(0, backgroundRectY, D_WIDTH, backgroundRectHeight);
+        .fillRect(0, backgroundRectY, backgroundRectWidth, backgroundRectHeight);
         this.answerLabel = this.add.text(D_WIDTH / 2, this.cameras.main.centerY, `正答 \n ${data.correctAnswer}`, {
             fontSize: '45px',
             fill: '#ffffff',

@@ -65,7 +65,7 @@ class BeforeGameController extends Controller
         $mode = $request->input('mode');
         $request->session()->put('mode', $mode);
         if ($mode == 'miss_question') {
-            return redirect('/wrong_answer');
+            return view('user.wrong_select');
         }
         $timeLimits = [
             'java' => [15, 15, 10],
@@ -141,8 +141,11 @@ class BeforeGameController extends Controller
             'TimeLimit' => $timeLimit
         ]);
     }
-    public function wrong_answer()
+
+    public function wrong_answer(Request $request)
     {
+        $mode = $request->input('mode');
+        $modeNumber = ['java' => 0, 'python' => 1, 'php' => 2][$mode] ?? null;
         $flag = true;
         $userDirectory = getenv('APPDATA');
         $appName = 'my_name';
@@ -174,51 +177,77 @@ class BeforeGameController extends Controller
             $flag = false;
         }
 
-        // 4. 正答率が低い順にソート
-        asort($incorrectQuestions); // 正答率が低い順にソート
+        $wrong_questions = Question::whereIn('id', array_keys($incorrectQuestions))->get();
+        $filtered_questions = $wrong_questions->filter(function ($question) use ($modeNumber) {
+            return $question->mode == $modeNumber;
+        });
 
-        // 5. 6問未満の場合、ランダムに追加して6問にする
-        if (count($incorrectQuestions) < 6) {
-            $remainingCount = 6 - count($incorrectQuestions);
-            $allQuestionIds = array_keys($userData);
-            $additionalIds = array_diff($allQuestionIds, array_keys($incorrectQuestions));
+        $accuracyArray = []; // Initialize accuracy array
 
-            if (!empty($additionalIds)) {
-                $randomIds = array_rand($additionalIds, min($remainingCount, count($additionalIds)));
+        if (count($filtered_questions) == 0) {
+            $flag = false;
+        }
+        if (count($filtered_questions) < 6) {
+            $need_questions = 6 - count($filtered_questions);
+            $correct100Percent = array_filter($userData, function ($data) {
+                return $data['誤答数'] === 0;
+            });
+            $correct100Percent = array_keys($correct100Percent);
+            $randomCorrect100Percent = (count($correct100Percent) >= $need_questions)
+                ? array_rand(array_flip($correct100Percent), $need_questions)
+                : $correct100Percent;
+            $correct100Percent_questions = Question::whereIn('id', $randomCorrect100Percent)->get();
+            $questionData = $filtered_questions->merge($correct100Percent_questions);
 
-                // array_rand returns a single value if the count is 1
-                if (!is_array($randomIds)) {
-                    $randomIds = [$randomIds];
-                }
+            foreach ($questionData as $question) {
+                $questionId = $question->id;
+                if (isset($userData[$questionId])) {
+                    $correctCount = $userData[$questionId]['正解数'];
+                    $incorrectCount = $userData[$questionId]['誤答数'];
 
-                foreach ($randomIds as $id) {
-                    $stats = $userData[$additionalIds[$id]];
-                    $correctRate = $stats['正解数'] / ($stats['正解数'] + $stats['誤答数']);
-                    $incorrectQuestions[$additionalIds[$id]] = $correctRate;
+                    // 正答率の計算
+                    $totalAnswers = $correctCount + $incorrectCount;
+
+                    if ($totalAnswers > 0) {
+                        $correctRate = $correctCount / $totalAnswers;
+                    } else {
+                        $correctRate = 0;  // 回答がない場合は0%
+                    }
+                    $accuracyArray[$questionId] = $correctRate; // Store in accuracyArray
+                } else {
+                    // JSONデータに問題IDがない場合は、正答率を0とする
+                    $accuracyArray[$questionId] = 0;
                 }
             }
-        }
+        } else {
+            foreach ($filtered_questions as $question) {
+                $questionId = $question->id;
+                if (isset($userData[$questionId])) {
+                    $correctCount = $userData[$questionId]['正解数'];
+                    $incorrectCount = $userData[$questionId]['誤答数'];
 
-        // 6. 上位6問を選択
-        $incorrectQuestions = array_slice($incorrectQuestions, 0, 6, true);
+                    // 正答率の計算
+                    $totalAnswers = $correctCount + $incorrectCount;
 
-        // 7. DBから問題情報を取得
-        $questions = Question::whereIn('id', array_keys($incorrectQuestions))->get();
-
-        // 8. 配列の順序を対応させる
-        $questionData = [];
-        $correctRates = [];
-        foreach ($questions as $question) {
-            $stats = $userData[$question->id];
-            $correctRate = $stats['正解数'] / ($stats['正解数'] + $stats['誤答数']);
-
-            $questionData[] = $question;
-            $correctRates[] = $correctRate;
+                    if ($totalAnswers > 0) {
+                        $correctRate = $correctCount / $totalAnswers;
+                    } else {
+                        $correctRate = 0;  // 回答がない場合は0%
+                    }
+                    $accuracyArray[$questionId] = $correctRate; // Store in accuracyArray
+                } else {
+                    // JSONデータに問題IDがない場合は、正答率を0とする
+                    $accuracyArray[$questionId] = 0;
+                }
+            }
+            asort($accuracyArray);
+            $accuracyArray = array_slice($accuracyArray, 0, 6, true);
+            $questionData = Question::whereIn('id', array_keys($accuracyArray))->get();
         }
 
         return view('user.miss_display', [
             'question' => $questionData,
-            'correctRates' => $correctRates,
+            'correctRates' => array_values($accuracyArray), // Convert to numeric array
             'timeLimit' => 15,
             'flag' => $flag
         ]);
