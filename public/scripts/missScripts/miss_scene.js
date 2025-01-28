@@ -551,7 +551,7 @@ class QuizScene extends Phaser.Scene {
                 this.limitSound.destroy(); // インスタンスを破棄
                 this.limitSound = null; // 再利用のためにリセット
             }
-            resultText = '正解！';
+            resultText = '';
             color = '#00ff00';
             this.correctAnswers++;
             progressData[this.questionIndex] = true; 

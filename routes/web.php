@@ -53,6 +53,7 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::get('/admin_questionlist', [AdminController::class, 'admin_questionlist'])->name('admin.admin_questionlist');
 Route::post('/admin_questionlist', [AdminController::class, 'admin_questionlist'])->name('admin.admin_questionlist');
+Route::get('/select_reset', [AdminController::class, 'select_reset'])->name('select_reset');
 Route::get('/admin_edit/{id}', [AdminController::class, 'admin_edit'])->name('admin.admin_edit');
 Route::get('/admin_register', [AdminController::class, 'admin_register'])->name('admin.register');
 Route::post('/admin_update/{id}', [AdminController::class, 'admin_update'])->name('admin.admin_update');

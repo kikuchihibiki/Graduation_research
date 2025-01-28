@@ -192,7 +192,10 @@ class AdminController extends Controller
         // リダイレクト
         return redirect('/redirect_ranking')->with('status', 'ランキングがリセットされました。');
     }
-
+    public function select_reset()
+    {
+        return redirect('/admin');
+    }
     public function all_reset()
     {
         Ranking::truncate();

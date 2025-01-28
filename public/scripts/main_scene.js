@@ -102,10 +102,10 @@ class CharacterScene extends Phaser.Scene {
             const scale = Math.max(scaleX, scaleY); // 幅または高さに合わせて拡大
             character.setScale(scale);
         }
-        const backgroundRectWidth = 650;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
-        const backgroundRectHeight = 300; // 背景の高さ
+        const backgroundRectWidth = D_WIDTH / 2.5;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
+        const backgroundRectHeight = D_HEIGHT / 2.5; // 背景の高さ
         const backgroundRectX = D_WIDTH / 2;
-        const backgroundRectY = 140;
+        const backgroundRectY = D_HEIGHT / 4;
 
         this.add.graphics()
         .fillStyle(0x000000, 0.5) // 色: 黒、透明度: 0.5
@@ -276,10 +276,10 @@ class QuizScene extends Phaser.Scene {
         this.questionText = questionData[this.questionIndex].question;
         this.correctAnswer = questionData[this.questionIndex].answer;
         // 質問の表示
-        const backgroundRectWidth = 650;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
-        const backgroundRectHeight = 300; // 背景の高さ
+        const backgroundRectWidth = D_WIDTH / 2.5;  // 背景の幅を調整（テキストの幅に少し余裕を持たせる）
+        const backgroundRectHeight = D_HEIGHT / 2.5; // 背景の高さ
         const backgroundRectX = D_WIDTH / 2;
-        const backgroundRectY = 140;
+        const backgroundRectY = D_HEIGHT / 4;
         
 
     // 背景矩形を追加

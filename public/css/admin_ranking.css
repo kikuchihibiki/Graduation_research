@@ -59,7 +59,7 @@ td {
     text-overflow: ellipsis; /* 超えた部分を省略記号にする */
 }
 
-.rank, .rank2, .rank3, .rank4 {
+.rank1, .rank2, .rank3, .rank4 {
     font-weight: bold;
 }
 

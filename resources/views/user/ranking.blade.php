@@ -293,12 +293,13 @@
 
 </div>
 <div class="ta">
+    <div class="back">
+        <a class="backbotton" href="{{ route('select_mode') }}" style="color:white;">≻戻る</a>
+    </div>
     <div class="re">
         <a class="reset position-reset" href="{{ route('score_reset') }}">スコアリセット</a>
     </div>
-    <div class="back">
-        <a class="reset position-reset" href="{{ route('select_mode') }}" style="color:white;">≻戻る</a>
-    </div>
+
 </div>
 <script src="{{ asset('js/score.js') }}"></script>
 <script src="{{ asset('js/ranking.js') }}">
