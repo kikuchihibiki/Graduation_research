@@ -25,7 +25,7 @@ Route::post('/input_setup', [BeforeGameController::class, 'save_name'])->name('s
 Route::get('/select_mode', [BeforeGameController::class, 'select_mode'])->name('select_mode');
 Route::post('/select_level', [BeforeGameController::class, 'save_mode'])->name('save_mode');
 Route::post('/start_game', [BeforeGameController::class, 'start_game'])->name('start_game');
-Route::get('/wrong_answer', [BeforeGameController::class, 'wrong_answer'])->name('wrong_answer');
+Route::post('/wrong_answer', [BeforeGameController::class, 'wrong_answer'])->name('wrong_answer');
 Route::get('/question_list', [FunctionController::class, 'question_list']);
 Route::get('/ranking', [FunctionController::class, 'ranking'])->name('ranking');
 Route::get('/progress_reset', [FunctionController::class, 'progress_reset'])->name('progress_reset');
