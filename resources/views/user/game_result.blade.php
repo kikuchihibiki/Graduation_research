@@ -21,7 +21,11 @@
             <a href="{{ route('select_mode') }}">トップページへ</a>
             <a href="{{ route('commentary')}}">問題解説</a>
             <a href="{{ route('ranking') }}">ランキング</a>
+            @if(session('missflag'))
+            @else
             <a href="{{ route('game_restart') }}">もう一度遊ぶ</a>
+            @endif
+
         </div>
 
     </div>

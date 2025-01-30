@@ -800,7 +800,7 @@ class EndScene extends Phaser.Scene {
                 const operatingText = this.add.text(
                     D_WIDTH / 2,
                     520,
-                    '---PLEASE ENTER---',
+                    '---PRESS ENTER---',
                     { fontSize: '80px', color: '#ffffff' ,fontFamily: 'k8x12L',}
                 );
         
