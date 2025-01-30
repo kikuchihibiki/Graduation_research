@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class javaquestionseeder extends Seeder
 {
@@ -27,14 +28,14 @@ class javaquestionseeder extends Seeder
         $pram = [
             'question' => '標準出力に改行を伴うメッセージを表示する際に使用するメソッド名は？ 〇〇〇〇〇〇〇',
             'answer' => 'println',
-            'explanation' => '',
+            'explanation' => '出力後改行が入ります',
             'mode' => '0',
             'level' => '0',
         ];
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '無限ループを実現するために使用されるループ構文は？ 〇〇〇',
+            'question' => '繰り返しの回数が事前に決まっており、初期化、条件、更新を一度に記述できるループ構文は？ 〇〇〇',
             'answer' => 'for',
             'explanation' => '',
             'mode' => '0',
@@ -99,7 +100,7 @@ class javaquestionseeder extends Seeder
         $pram = [
             'question' => '標準入力からユーザーからの入力を受け取るために使用するメソッド名は？ 〇〇〇〇〇〇〇〇',
             'answer' => 'nextline',
-            'explanation' => '',
+            'explanation' => 'scanner.nextLineを使うと入力を取得できる。',
             'mode' => '0',
             'level' => '0',
         ];
@@ -117,7 +118,7 @@ class javaquestionseeder extends Seeder
         $pram = [
             'question' => '文字列や配列の長さを取得する際に使用するプロパティ名は？ 〇〇〇〇〇〇',
             'answer' => 'length',
-            'explanation' => '',
+            'explanation' => '文字列の場合 str.length(), 配列の場合 arr.length で取得可能。',
             'mode' => '0',
             'level' => '0',
         ];
@@ -295,7 +296,7 @@ class javaquestionseeder extends Seeder
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '自分自身のインスタンスを指す変数は？ 〇〇〇〇',
+            'question' => 'インスタンスメソッドやコンストラクタ内で、インスタンス変数へのアクセス、他のメソッドの呼び出し、コンストラクタの呼び出しに使用されるキーワードは？ 〇〇〇〇',
             'answer' => 'this',
             'explanation' => '',
             'mode' => '0',
@@ -381,7 +382,7 @@ class javaquestionseeder extends Seeder
             'question' => '整数を2進数文字列に変換するために使用するメソッド名は？ 〇〇〇〇〇〇〇〇〇〇〇〇〇〇',
             'answer' => 'toBinaryString',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '0',
         ];
@@ -391,7 +392,7 @@ class javaquestionseeder extends Seeder
             'question' => '文字列内の特定の部分を置き換えるために使用するメソッド名は？ 〇〇〇〇〇〇〇',
             'answer' => 'replace',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '0',
         ];
@@ -401,7 +402,7 @@ class javaquestionseeder extends Seeder
             'question' => '2つの文字列を比較する際に使用するメソッド名は？ 〇〇〇〇〇〇〇〇〇',
             'answer' => 'compareTo',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '0',
         ];
@@ -411,7 +412,7 @@ class javaquestionseeder extends Seeder
             'question' => '文字列が特定のサフィックスで終わるかを確認するメソッド名は？ 〇〇〇〇〇〇〇〇',
             'answer' => 'endsWith',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '0',
         ];
@@ -421,7 +422,7 @@ class javaquestionseeder extends Seeder
             'question' => '文字列をすべて小文字に変換するために使用するメソッド名は？ 〇〇〇〇〇〇〇〇〇〇〇',
             'answer' => 'toLowerCase',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '0',
         ];
@@ -431,7 +432,7 @@ class javaquestionseeder extends Seeder
             'question' => '文字列をすべて大文字に変換するために使用するメソッド名は？ 〇〇〇〇〇〇〇〇〇〇〇',
             'answer' => 'toUpperCase',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '0',
         ];
@@ -441,7 +442,7 @@ class javaquestionseeder extends Seeder
             'question' => 'ストリーム操作を終了し、結果をコレクションとして返すメソッド名は？ 〇〇〇〇〇〇〇',
             'answer' => 'collect',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '0',
         ];
@@ -451,7 +452,7 @@ class javaquestionseeder extends Seeder
             'question' => 'リストに特定の要素が含まれているかを確認するメソッド名は？ 〇〇〇〇〇〇〇〇',
             'answer' => 'contains',
             'explanation' => 'リストにためこんだ要素を検索したり、重複を除きながらリストに要素を追加したりするのに使います。',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '0',
         ];
@@ -461,7 +462,7 @@ class javaquestionseeder extends Seeder
             'question' => 'インターフェースを実装するクラスが使用するキーワードは？ 〇〇〇〇〇〇〇〇〇〇',
             'answer' => 'implements',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '0',
         ];
@@ -471,7 +472,7 @@ class javaquestionseeder extends Seeder
             'question' => 'Javaアプリケーションのパフォーマンスを分析するために使用されるモニタリングツールのコマンドは？ 〇〇〇〇〇〇〇〇',
             'answer' => 'jconsole',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '0',
         ];
@@ -491,14 +492,14 @@ class javaquestionseeder extends Seeder
         $pram = [
             'question' => '標準出力に改行を伴うメッセージを表示する際に使用するメソッド名は？',
             'answer' => 'println',
-            'explanation' => '',
+            'explanation' => '出力後改行が入ります',
             'mode' => '0',
             'level' => '1',
         ];
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '無限ループを実現するために使用されるループ構文は？',
+            'question' => '繰り返しの回数が事前に決まっており、初期化、条件、更新を一度に記述できるループ構文は？',
             'answer' => 'for',
             'explanation' => '',
             'mode' => '0',
@@ -563,7 +564,7 @@ class javaquestionseeder extends Seeder
         $pram = [
             'question' => '標準入力からユーザーからの入力を受け取るために使用するメソッド名は？',
             'answer' => 'nextline',
-            'explanation' => '',
+            'explanation' => 'scanner.nextLineを使うと入力を取得できる。',
             'mode' => '0',
             'level' => '1',
         ];
@@ -581,7 +582,7 @@ class javaquestionseeder extends Seeder
         $pram = [
             'question' => '文字列や配列の長さを取得する際に使用するプロパティ名は？',
             'answer' => 'length',
-            'explanation' => '',
+            'explanation' => '文字列の場合 str.length(), 配列の場合 arr.length で取得可能。',
             'mode' => '0',
             'level' => '1',
         ];
@@ -759,7 +760,7 @@ class javaquestionseeder extends Seeder
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '自分自身のインスタンスを指す変数は？',
+            'question' => 'インスタンスメソッドやコンストラクタ内で、インスタンス変数へのアクセス、他のメソッドの呼び出し、コンストラクタの呼び出しに使用されるキーワードは？',
             'answer' => 'this',
             'explanation' => '',
             'mode' => '0',
@@ -845,7 +846,7 @@ class javaquestionseeder extends Seeder
             'question' => '整数を2進数文字列に変換するために使用するメソッド名は？',
             'answer' => 'toBinaryString',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '1',
         ];
@@ -855,7 +856,7 @@ class javaquestionseeder extends Seeder
             'question' => '文字列内の特定の部分を置き換えるために使用するメソッド名は？',
             'answer' => 'replace',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '1',
         ];
@@ -865,7 +866,7 @@ class javaquestionseeder extends Seeder
             'question' => '2つの文字列を比較する際に使用するメソッド名は？',
             'answer' => 'compareTo',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '1',
         ];
@@ -875,7 +876,7 @@ class javaquestionseeder extends Seeder
             'question' => '文字列が特定のサフィックスで終わるかを確認するメソッド名は？',
             'answer' => 'endsWith',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '1',
         ];
@@ -885,7 +886,7 @@ class javaquestionseeder extends Seeder
             'question' => '文字列をすべて小文字に変換するために使用するメソッド名は？',
             'answer' => 'toLowerCase',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '1',
         ];
@@ -895,7 +896,7 @@ class javaquestionseeder extends Seeder
             'question' => '文字列をすべて大文字に変換するために使用するメソッド名は？',
             'answer' => 'toUpperCase',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '1',
         ];
@@ -905,7 +906,7 @@ class javaquestionseeder extends Seeder
             'question' => 'ストリーム操作を終了し、結果をコレクションとして返すメソッド名は？',
             'answer' => 'collect',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '1',
         ];
@@ -915,7 +916,7 @@ class javaquestionseeder extends Seeder
             'question' => 'リストに特定の要素が含まれているかを確認するメソッド名は？',
             'answer' => 'contains',
             'explanation' => 'リストにためこんだ要素を検索したり、重複を除きながらリストに要素を追加したりするのに使います。',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '1',
         ];
@@ -925,7 +926,7 @@ class javaquestionseeder extends Seeder
             'question' => 'インターフェースを実装するクラスが使用するキーワードは？',
             'answer' => 'implements',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '1',
         ];
@@ -935,7 +936,7 @@ class javaquestionseeder extends Seeder
             'question' => 'Javaアプリケーションのパフォーマンスを分析するために使用されるモニタリングツールのコマンドは？',
             'answer' => 'jconsole',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '1',
         ];
@@ -1130,7 +1131,7 @@ class javaquestionseeder extends Seeder
             'question' => 'スレッドを作成する際に継承するクラスは？',
             'answer' => 'thread',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '2',
         ];
@@ -1140,7 +1141,7 @@ class javaquestionseeder extends Seeder
             'question' => 'マルチスレッド環境でデータの一貫性を保つために使用するキーワードは？',
             'answer' => 'synchonized',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '2',
         ];
@@ -1150,7 +1151,7 @@ class javaquestionseeder extends Seeder
             'question' => 'パッケージ内でのみアクセス可能にする修飾子は？',
             'answer' => 'default',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '2',
         ];
@@ -1160,7 +1161,7 @@ class javaquestionseeder extends Seeder
             'question' => 'JavaのコレクションAPIで順序付きセットを扱うクラスは？',
             'answer' => 'treeset',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '2',
         ];
@@ -1170,7 +1171,7 @@ class javaquestionseeder extends Seeder
             'question' => 'ファイルを読み込むためのクラスは？',
             'answer' => 'filereder',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '2',
         ];
@@ -1180,7 +1181,7 @@ class javaquestionseeder extends Seeder
             'question' => 'ストリームを使ってデータを書き込むクラスは？',
             'answer' => 'filewriter',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '2',
         ];
@@ -1190,7 +1191,7 @@ class javaquestionseeder extends Seeder
             'question' => '入力ストリームを扱う抽象クラスは？',
             'answer' => 'inputstream',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '2',
         ];
@@ -1200,7 +1201,7 @@ class javaquestionseeder extends Seeder
             'question' => '出力ストリームを扱う抽象クラスは？',
             'answer' => 'outputstream',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '2',
         ];
@@ -1208,9 +1209,9 @@ class javaquestionseeder extends Seeder
 
         $pram = [
             'question' => 'Javaで標準入力を取得するクラスは？',
-            'answer' => '',
+            'answer' => 'scanner',
             'explanation' => '取得した標準入力の情報を使って処理を行いたい場合や、対話型のプログラムで利用します。',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '2',
         ];
@@ -1220,7 +1221,7 @@ class javaquestionseeder extends Seeder
             'question' => 'Javaで例外のスーパークラスは？',
             'answer' => 'throwable',
             'explanation' => '',
-            'defficulty_flag' =>'1',
+            'difficulty_flag' => '1',
             'mode' => '0',
             'level' => '2',
         ];

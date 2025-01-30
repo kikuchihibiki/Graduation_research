@@ -36,6 +36,50 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
   flex-wrap: wrap; /* 必要に応じて折り返し可能にする */
 }
 
+/* Remove the default radio button */
+input[type="radio"] {
+  display: none;
+}
+
+/* Style the label to appear like a button */
+.tab_item {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+/* Blue line appears under the label when checked */
+input[type="radio"]:checked + .tab_item {
+  border-bottom: 3px solid blue;
+}
+
+/* Optional: Style for the "checkBox" class for visual alignment */
+.tab_item.checkBox {
+  font-weight: bold;
+}
+
+/* Change the color of the text when checked */
+input[type="radio"]:checked + .tab_item {
+  color: blue;
+}
+
+/* Style the second set of radio buttons */
+.tab_item2 {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+/* Blue line appears under the label for levels when checked */
+input[type="radio"]:checked + .tab_item2 {
+  border-bottom: 3px solid blue;
+}
+
+
 button {
   border: none;
   background-color: black; /* 背景色を黒に設定 */

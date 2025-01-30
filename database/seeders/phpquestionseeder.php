@@ -26,16 +26,16 @@ class phpquestionseeder extends Seeder
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '配列を作成するために使用するキーワードは？ 〇〇〇〇〇',
-            'answer' => 'array',
-            'explanation' => '複数の値を一つの変数に格納することができます',
+            'question' => '指定された配列の各要素を特定のタイミングで別の関数に渡し、その結果がtrueを返す要素だけを残して新しい配列を返す組み込み関数は？ 〇〇〇〇〇_〇〇〇〇〇〇',
+            'answer' => 'array_filter',
+            'explanation' => '連想配列でもフィルタリングすることが可能です',
             'mode' => '2',
             'level' => '0',
         ];
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '条件分岐に使用するキーワードは？ 〇〇',
+            'question' => '与えれた条件式がtrueと評価された場合プログラム処理を実行し、falseと評価された場合無視を無視する条件分岐に用いられるキーワードは何ですか？ 〇〇',
             'answer' => 'if',
             'explanation' => '',
             'mode' => '2',
@@ -73,7 +73,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => 'メルセンヌツイスタを使ったランダムな数値を生成する関数は？ 〇〇_〇〇〇〇',
             'answer' => 'mt_rand',
-            'explanation' => '',
+            'explanation' => 'メルセンヌツイスタ (Mersenne Twister) は、乱数生成アルゴリズムの一つで、非常に高速で高品質な擬似乱数を生成する',
             'mode' => '2',
             'level' => '0',
         ];
@@ -118,7 +118,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => 'リダイレクトを行うためのHTTPヘッダーを送信する関数は？ 〇〇〇〇〇〇',
             'answer' => 'header',
-            'explanation' => '',
+            'explanation' => 'Location ヘッダーを送信することで、ブラウザを指定されたURLにリダイレクトできます',
             'mode' => '2',
             'level' => '0',
         ];
@@ -199,7 +199,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '変数が空かどうかを確認するために使用する関数は？ 〇〇〇〇〇',
             'answer' => 'empty',
-            'explanation' => '',
+            'explanation' => '変数が未定義であってもエラーを出さずにtrueを返します。',
             'mode' => '2',
             'level' => '0',
         ];
@@ -208,7 +208,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '変数が定義されているかどうかを確認するために使用する関数は？ 〇〇〇〇〇',
             'answer' => 'isset',
-            'explanation' => '',
+            'explanation' => '変数がNULLに設定されていても、それが未定義であってもfalseを返します。',
             'mode' => '2',
             'level' => '0',
         ];
@@ -244,7 +244,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => 'ファイルを読み込む際に使用し、読み込めなかった場合に処理を中断し、かつ同script内で複数同一のファイルが指定されていた場合は読み込みを行わない関数は？ 〇〇〇〇〇〇〇_〇〇〇〇',
             'answer' => 'require_once',
-            'explanation' => '',
+            'explanation' => '既にそのファイルがインクルードされていれば、再度読み込むことはありません。',
             'mode' => '2',
             'level' => '0',
         ];
@@ -262,7 +262,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '配列を指定された文字で区切られた文字列に変換する関数は？ 〇〇〇〇〇〇〇',
             'answer' => 'implode',
-            'explanation' => '',
+            'explanation' => 'implodeを使う際には、必ず配列を渡す必要があります。',
             'mode' => '2',
             'level' => '0',
         ];
@@ -289,7 +289,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '文字列をハッシュ化するために使用する関数は？ 〇〇〇〇',
             'answer' => 'hash',
-            'explanation' => '',
+            'explanation' => '使用するハッシュアルゴリズムを指定して使用できます',
             'mode' => '2',
             'level' => '0',
         ];
@@ -307,7 +307,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '連想キーと要素との関係を維持しつつ配列を昇順にソートする関数は？ 〇〇〇〇〇',
             'answer' => 'asort',
-            'explanation' => '',
+            'explanation' => 'asortは値の並べ替えを行いますが、キーの順序は変更されません。',
             'mode' => '2',
             'level' => '0',
         ];
@@ -316,7 +316,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => 'キーに基づいて配列を並べ替える関数は？ 〇〇〇〇〇',
             'answer' => 'ksort',
-            'explanation' => '',
+            'explanation' => 'ksortはキーを基準に並べ替えますが、値は変更されません。',
             'mode' => '2',
             'level' => '0',
         ];
@@ -361,7 +361,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '文字列を暗号化するために使用される一般的な関数は？ 〇〇〇〇〇〇〇〇_〇〇〇〇',
             'answer' => 'password_hash',
-            'explanation' => '',
+            'explanation' => 'ハッシュアルゴリズムは基本的にbcryptを使用します。',
             'mode' => '2',
             'level' => '0',
         ];
@@ -391,7 +391,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => 'base64方式で指定された文字列を暗号化してハッシュ値を生成する関数は？ 〇〇〇〇〇〇_〇〇〇〇〇〇',
             'answer' => 'base64_encode',
-            'explanation' => '',
+            'explanation' => 'エンコードにより、バイナリデータを安全にテキストデータとして取り扱えるようになりますが、暗号化やセキュリティ目的で使うべきではありません。',
             'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
@@ -399,7 +399,7 @@ class phpquestionseeder extends Seeder
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '文字列を検索し、最後に見つかった位置を返す関数は？ 〇〇〇〇〇〇〇',
+            'question' => '大文字と小文字を区別しながら文字列し、最後に見つかった位置を返す関数は？ 〇〇〇〇〇〇〇',
             'answer' => 'strrpos',
             'explanation' => '',
             'difficulty_flag' => '1',
@@ -411,7 +411,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '指定されたファイルを読み取り専用で開くための関数は？ 〇〇〇〇〇',
             'answer' => 'fopen',
-            'explanation' => '',
+            'explanation' => 'ファイルを開いた後は、必ずfcloseでファイルを閉じるようにしましょう',
             'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
@@ -439,7 +439,7 @@ class phpquestionseeder extends Seeder
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '文字列を部分的に比較する関数は？（ケースを区別しない） 〇〇〇〇〇〇〇',
+            'question' => '大文字と小文字を区別せずに、文字列を部分的に比較する関数は？  〇〇〇〇〇〇〇',
             'answer' => 'stristr',
             'explanation' => '',
             'difficulty_flag' => '1',
@@ -471,7 +471,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '配列をランダムに並べ替える関数は？  〇〇〇〇〇〇〇',
             'answer' => 'shuffle',
-            'explanation' => '',
+            'explanation' => '連想配列（キーと値がセットになっている配列）に対してshuffle()を使うと、キーが無視されてしまいます。',
             'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '0',
@@ -490,16 +490,16 @@ class phpquestionseeder extends Seeder
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '配列を作成するために使用するキーワードは？',
-            'answer' => 'array',
-            'explanation' => '複数の値を一つの変数に格納することが出来ます',
+            'question' => '指定された配列の各要素を特定のタイミングで別の関数に渡し、その結果がtrueを返す要素だけを残して新しい配列を返す組み込み関数は？',
+            'answer' => 'array_filter',
+            'explanation' => '連想配列でもフィルタリングすることが可能です',
             'mode' => '2',
             'level' => '1',
         ];
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '条件分岐に使用するキーワードは？',
+            'question' => '与えれた条件式がtrueと評価された場合プログラム処理を実行し、falseと評価された場合無視を無視する条件分岐に用いられるキーワードは何ですか？',
             'answer' => 'if',
             'explanation' => '',
             'mode' => '2',
@@ -537,7 +537,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => 'メルセンヌツイスタを使ったランダムな数値を生成する関数は？',
             'answer' => 'mt_rand',
-            'explanation' => '',
+            'explanation' => 'メルセンヌツイスタ (Mersenne Twister) は、乱数生成アルゴリズムの一つで、非常に高速で高品質な擬似乱数を生成する',
             'mode' => '2',
             'level' => '1',
         ];
@@ -582,7 +582,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => 'リダイレクトを行うためのHTTPヘッダーを送信する関数は？',
             'answer' => 'header',
-            'explanation' => '',
+            'explanation' => 'Location ヘッダーを送信することで、ブラウザを指定されたURLにリダイレクトできます',
             'mode' => '2',
             'level' => '1',
         ];
@@ -663,7 +663,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '変数が空かどうかを確認するために使用する関数は？',
             'answer' => 'empty',
-            'explanation' => '',
+            'explanation' => '変数が未定義であってもエラーを出さずにtrueを返します。',
             'mode' => '2',
             'level' => '1',
         ];
@@ -672,7 +672,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '変数が定義されているかどうかを確認するために使用する関数は？',
             'answer' => 'isset',
-            'explanation' => '',
+            'explanation' => '変数が NULL に設定されていても、それが未定義であってもfalseを返します。',
             'mode' => '2',
             'level' => '1',
         ];
@@ -708,7 +708,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => 'ファイルを読み込む際に使用し、読み込めなかった場合に処理を中断し、かつ同script内で複数同一のファイルが指定されていた場合は読み込みを行わない関数は？',
             'answer' => 'require_once',
-            'explanation' => '',
+            'explanation' => '既にそのファイルがインクルードされていれば、再度読み込むことはありません。',
             'mode' => '2',
             'level' => '1',
         ];
@@ -726,7 +726,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '配列を指定された文字で区切られた文字列に変換する関数は？',
             'answer' => 'implode',
-            'explanation' => '',
+            'explanation' => 'implodeを使う際には、必ず配列を渡す必要があります。',
             'mode' => '2',
             'level' => '1',
         ];
@@ -753,7 +753,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '文字列をハッシュ化するために使用する関数は？',
             'answer' => 'hash',
-            'explanation' => '',
+            'explanation' => '使用するハッシュアルゴリズムを指定して使用できます',
             'mode' => '2',
             'level' => '1',
         ];
@@ -771,7 +771,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '連想キーと要素との関係を維持しつつ配列を昇順にソートする関数は？',
             'answer' => 'asort',
-            'explanation' => '',
+            'explanation' => 'asortは値の並べ替えを行いますが、キーの順序は変更されません。',
             'mode' => '2',
             'level' => '1',
         ];
@@ -780,7 +780,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => 'キーに基づいて配列を並べ替える関数は？',
             'answer' => 'ksort',
-            'explanation' => '',
+            'explanation' => 'ksortはキーを基準に並べ替えますが、値は変更されません。',
             'mode' => '2',
             'level' => '1',
         ];
@@ -825,7 +825,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '文字列を暗号化するために使用される一般的な関数は？',
             'answer' => 'password_hash',
-            'explanation' => '',
+            'explanation' => 'ハッシュアルゴリズムは基本的にbcryptを使用します。',
             'mode' => '2',
             'level' => '1',
         ];
@@ -855,7 +855,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => 'base64方式で指定された文字列を暗号化してハッシュ値を生成する関数は？',
             'answer' => 'base64_encode',
-            'explanation' => '',
+            'explanation' => 'エンコードにより、バイナリデータを安全にテキストデータとして取り扱えるようになりますが、暗号化やセキュリティ目的で使うべきではありません。',
             'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',
@@ -863,7 +863,7 @@ class phpquestionseeder extends Seeder
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '文字列を検索し、最後に見つかった位置を返す関数は？',
+            'question' => '大文字と小文字を区別しながら文字列し、最後に見つかった位置を返す関数は？',
             'answer' => 'strrpos',
             'explanation' => '',
             'difficulty_flag' => '1',
@@ -875,7 +875,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '指定されたファイルを読み取り専用で開くための関数は？',
             'answer' => 'fopen',
-            'explanation' => '',
+            'explanation' => 'ファイルを開いた後は、必ずfcloseでファイルを閉じるようにしましょう',
             'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',
@@ -903,7 +903,7 @@ class phpquestionseeder extends Seeder
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '文字列を部分的に比較する関数は？（ケースを区別しない）',
+            'question' => '大文字と小文字を区別せずに、文字列を部分的に比較する関数は？',
             'answer' => 'stristr',
             'explanation' => '',
             'difficulty_flag' => '1',
@@ -935,7 +935,7 @@ class phpquestionseeder extends Seeder
         $pram = [
             'question' => '配列をランダムに並べ替える関数は？',
             'answer' => 'shuffle',
-            'explanation' => '',
+            'explanation' => '連想配列（キーと値がセットになっている配列）に対してshuffle()を使うと、キーが無視されてしまいます。',
             'difficulty_flag' => '1',
             'mode' => '2',
             'level' => '1',

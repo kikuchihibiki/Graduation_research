@@ -100,6 +100,7 @@ class CharacterScene extends Phaser.Scene {
         this.questionIndex= data.questionIndex;
         this.totalQuestions= data.totalQuestions;
         this.correctAnswers= data.correctAnswers;
+        console.log(data.totalQuestions);
         this.lives =data.lives;
         this.progress=data.progress;
 
@@ -543,7 +544,7 @@ class QuizScene extends Phaser.Scene {
         let progressData = this.registry.get('progressData');
         // this.progressBar.updateProgress(this.progress);
         // 正解の場合
-        if (this.userAnswer === this.correctAnswer) {
+        if (this.userAnswer.toLowerCase() === this.correctAnswer.toLowerCase()) {
             const attack = this.add.image(this.cameras.main.centerX, 350, 'kogeki');
             this.time.delayedCall(2000, () => {
                 attack.destroy(); // 画像を削除
@@ -738,7 +739,7 @@ class AnswerResultScene extends Phaser.Scene {
         
         // 2秒後に次の問題に進むか終了
         this.time.delayedCall(2000, () => {
-            if (this.lives != 0 === data.questionIndex + 1 < data.totalQuestions) {
+            if (this.lives !== 0 && (data.questionIndex + 1 < data.totalQuestions || this.lives === 0)) {
                 this.scene.start('CharacterScene', {
                     questionIndex: data.questionIndex + 1,
                     totalQuestions: data.totalQuestions,
