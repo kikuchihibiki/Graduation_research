@@ -17,7 +17,6 @@
       <thead>
         <tr class="mode">
 
-
           <th class="lang java">
             <input id="javaCheck" type="radio" name="tab_item" checked value="java">
             <label class="tab_item checkBox kind" for="javaCheck">JAVA</label>
@@ -92,7 +91,7 @@
       @foreach ($questions['java']['easy'] as $index => $question)
       <tr class="java easy">
         <td>{{ $index + 1 }}</td>
-        <td class="question">{{ $question->question }}</td>
+        <td class="question highlight-row ">{{ $question->question }}</td>
         <td class="answer-cell">
           <button class="toggle-answer eye-closed"></button>
           <span class="answer">{{ $question->answer }}</span>
@@ -109,7 +108,7 @@
       @foreach ($questions['java']['normal'] as $index => $question)
       <tr class="java normal sort">
         <td>{{ $index + 1 }}</td>
-        <td class="question">{{ $question->question }}</td>
+        <td class="question highlight-row ">{{ $question->question }}</td>
         <td class="answer-cell">
           <button class="toggle-answer eye-closed"></button>
           <span class="answer">{{ $question->answer }}</span>
@@ -126,7 +125,7 @@
       @foreach ($questions['java']['hard'] as $index => $question)
       <tr class="java hard sort">
         <td>{{ $index + 1 }}</td>
-        <td class="question">{{ $question->question }}</td>
+        <td class="question highlight-row ">{{ $question->question }}</td>
         <td class="answer-cell">
           <button class="toggle-answer eye-closed"></button>
           <span class="answer">{{ $question->answer }}</span>
@@ -143,7 +142,7 @@
       @foreach ($questions['python']['easy'] as $index => $question)
       <tr class="python easy sort" data-status="active">
         <td>{{ $index + 1 }}</td>
-        <td class="question">{{ $question->question }}</td>
+        <td class="question highlight-row ">{{ $question->question }}</td>
         <td class="answer-cell">
           <button class="toggle-answer eye-closed"></button>
           <span class="answer">{{ $question->answer }}</span>
@@ -160,7 +159,7 @@
       @foreach ($questions['python']['normal'] as $index => $question)
       <tr class="python normal sort" data-status="inactive">
         <td>{{ $index + 1 }}</td>
-        <td class="question">{{ $question->question }}</td>
+        <td class="question highlight-row ">{{ $question->question }}</td>
         <td class="answer-cell">
           <button class="toggle-answer eye-closed"></button>
           <span class="answer">{{ $question->answer }}</span>
@@ -177,7 +176,7 @@
       @foreach ($questions['python']['hard'] as $index => $question)
       <tr class="python hard sort" data-status="inactive">
         <td>{{ $index + 1 }}</td>
-        <td class="question">{{ $question->question }}</td>
+        <td class="question highlight-row ">{{ $question->question }}</td>
         <td class="answer-cell">
           <button class="toggle-answer eye-closed"></button>
           <span class="answer">{{ $question->answer }}</span>
@@ -211,7 +210,7 @@
       @foreach ($questions['php']['normal'] as $index => $question)
       <tr class="php normal sort" data-status="inactive">
         <td>{{ $index + 1 }}</td>
-        <td class="question">{{ $question->question }}</td>
+        <td class="question highlight-row ">{{ $question->question }}</td>
         <td class="answer-cell">
           <button class="toggle-answer eye-closed"></button>
           <span class="answer">{{ $question->answer }}</span>
@@ -228,7 +227,7 @@
       @foreach ($questions['php']['hard'] as $index => $question)
       <tr class="php hard sort" data-status="inactive">
         <td>{{ $index + 1 }}</td>
-        <td class="question">{{ $question->question }}</td>
+        <td class="question highlight-row ">{{ $question->question }}</td>
         <td class="answer-cell">
           <button class="toggle-answer eye-closed"></button>
           <span class="answer">{{ $question->answer }}</span>
