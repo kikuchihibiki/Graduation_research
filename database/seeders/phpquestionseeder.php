@@ -26,16 +26,16 @@ class phpquestionseeder extends Seeder
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '配列を作成するために使用するキーワードは？ 〇〇〇〇〇',
-            'answer' => 'array',
-            'explanation' => '複数の値を一つの変数に格納することができます',
+            'question' => '指定された配列の各要素を特定のタイミングで別の関数に渡し、その結果がtrueを返す要素だけを残して新しい配列を返す組み込み関数は？ 〇〇〇〇〇_〇〇〇〇〇〇',
+            'answer' => 'array_filter',
+            'explanation' => '',
             'mode' => '2',
             'level' => '0',
         ];
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '条件分岐に使用するキーワードは？ 〇〇',
+            'question' => '与えれた条件式がtrueと評価された場合プログラム処理を実行し、falseと評価された場合無視を無視する条件分岐に用いられるキーワードは何ですか？ 〇〇',
             'answer' => 'if',
             'explanation' => '',
             'mode' => '2',
@@ -490,16 +490,16 @@ class phpquestionseeder extends Seeder
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '配列を作成するために使用するキーワードは？',
-            'answer' => 'array',
-            'explanation' => '複数の値を一つの変数に格納することが出来ます',
+            'question' => '指定された配列の各要素を特定のタイミングで別の関数に渡し、その結果がtrueを返す要素だけを残して新しい配列を返す組み込み関数は？',
+            'answer' => 'array_filter',
+            'explanation' => '',
             'mode' => '2',
             'level' => '1',
         ];
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '条件分岐に使用するキーワードは？',
+            'question' => '与えれた条件式がtrueと評価された場合プログラム処理を実行し、falseと評価された場合無視を無視する条件分岐に用いられるキーワードは何ですか？',
             'answer' => 'if',
             'explanation' => '',
             'mode' => '2',
