@@ -7,6 +7,7 @@ use App\Models\Ranking;
 use App\Models\question;
 use Illuminate\Support\Facades\DB;
 use App\Models\ranking_result;
+use GrahamCampbell\ResultType\Success;
 
 class FunctionController extends Controller
 {
@@ -43,7 +44,7 @@ class FunctionController extends Controller
             'userData' => $userData,
         ]);
     }
-    public function ranking()
+    public function ranking(request $request)
     {
         $modes = [0 => 'java', 1 => 'python', 2 => 'php'];
         $levels = [0 => 'easy', 1 => 'normal', 2 => 'hard'];
@@ -65,52 +66,42 @@ class FunctionController extends Controller
 
 
         // ファイルパスの設定
-        $userDirectory = getenv('APPDATA');
-        $appName = 'my_name';
-        $subDirectory = 'user_data';
-        $filename = 'score_data.json';
-        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
-        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
-
-        // JSONファイル読み込み
-        if (file_exists($filePath)) {
-            $scores = json_decode(file_get_contents($filePath), true);
-        } else {
-            $scores = [];
-        }
+        $scores = $request->input('scores', []);
 
         $scoreMode = ['java', 'python', 'php'];
         $scoreLevel = ['easy', 'normal', 'hard'];
 
-        foreach ($modes as $modeKey => $mode) {
-            foreach ($levels as $levelKey => $level) {
+        // ランキングのリセット情報を取得
+        $ranking_reset = [];
+        foreach ($scoreMode as $modeKey => $mode) {
+            foreach ($scoreLevel as $levelKey => $level) {
                 $ranking_reset["{$mode}{$level}"] = ranking_result::where('mode', $modeKey)
                     ->where('level', $levelKey)
                     ->orderBy('created_at', 'desc')
                     ->first();
             }
         }
-        // jsonファイルのスコアからモードと難易度の組み合わせごとに配列に格納する
-        // モードと難易度ごとにスコアを配列に格納する
+
+        // JSONファイルのスコアをモードと難易度ごとにグループ化
+        $fileScore = [];
         foreach ($scoreMode as $mode) {
             foreach ($scoreLevel as $level) {
-                // 条件に一致するスコアをフィルタリングして格納
                 $fileScore["{$mode}{$level}"] = array_filter($scores, function ($score) use ($mode, $level) {
                     return $score['m'] === $mode && $score['l'] === $level;
                 });
             }
         }
 
+        // スコアが有効かどうかをフィルタリング
+        $validScores = [];
         foreach ($scoreMode as $mode) {
             foreach ($scoreLevel as $level) {
                 $key = "{$mode}{$level}";
                 if (isset($ranking_reset[$key]) && isset($ranking_reset[$key]->created_at)) {
-                    // $ranking_reset[$key] が存在し、created_at がある場合のみフィルタリング
                     $validScores[$key] = array_filter($fileScore[$key], function ($score) use ($ranking_reset, $key) {
                         return $score['d'] > $ranking_reset[$key]->created_at;
                     });
                 } else {
-                    // $ranking_reset[$key] が存在しない場合は元のデータをそのまま使用
                     $validScores[$key] = $fileScore[$key];
                 }
 
@@ -120,12 +111,24 @@ class FunctionController extends Controller
                         return ($carry === null || $item['s'] > $carry['s']) ? $item : $carry;
                     });
                 } else {
-                    // スコアが存在しない場合は null を設定
                     $highestScores[$key] = null;
                 }
             }
         }
-        return view('user.ranking', ['rankings' => $rankings, 'validScores' => $highestScores]);
+        session(([
+            'rankings' => $rankings,
+            'validScores' => $highestScores
+        ]));
+        return response()->json(["success" => true]);
+    }
+    public function show_ranking()
+    {
+        $rankings = session('rankings');
+        $validScores = session('validScores');
+        return view('user.ranking', [
+            'rankings' => $rankings,
+            'validScores' => $validScores
+        ]);
     }
     public function miss_question()
     {
