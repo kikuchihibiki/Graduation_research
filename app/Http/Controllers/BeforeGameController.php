@@ -116,23 +116,9 @@ class BeforeGameController extends Controller
         $mode = $request->input('mode');
         $modeNumber = ['java' => 0, 'python' => 1, 'php' => 2][$mode] ?? null;
         $flag = true;
-        $userDirectory = getenv('APPDATA');
-        $appName = 'my_name';
-        $subDirectory = 'user_data';
-        $filename = 'user_data.json';
         session(['missflag' => true]);
-
-        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
-        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
-
-        // 2. JSONファイルを読み込む
-        if (!file_exists($filePath)) {
-            return response()->json(['error' => 'File not found'], 404);
-        }
-
-        $jsonData = file_get_contents($filePath);
-        $userData = json_decode($jsonData, true);
-
+        $userDataJson = $request->input('user_data', '{}');
+        $userData = json_decode($userDataJson, true);
         // 3. 誤答数が1以上の問題IDを抽出
         $incorrectQuestions = [];
         foreach ($userData as $id => $stats) {

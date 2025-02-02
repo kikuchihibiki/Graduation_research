@@ -18,9 +18,10 @@
     <label for="python"><span>python</span></label>
     <input type="radio" name="mode" value="php" id="php">
     <label for="php"><span>php</span></label>
+    <input type="hidden" name="user_data" id="user_data">
     <input type="submit" style="display:none;">
 </form>
 
 <button id="title_back_button" onclick="location.href='/'">タイトルに戻る</button>
-<script src="{{ asset('js/select_mode.js') }}"></script>
+<script src="{{ asset('js/select_wrong.js') }}"></script>
 @endsection
