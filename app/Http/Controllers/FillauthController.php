@@ -96,6 +96,7 @@ class FillauthController extends Controller
         $quizData = [
             'newScore'  => $newScore,
             'idJson' => $idJson,
+            'clearFlag' => $clearFlag,
         ];
         return response()->json($quizData);
     }

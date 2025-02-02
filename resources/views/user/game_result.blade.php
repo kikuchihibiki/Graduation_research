@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>クイズスコア画面</title>
     <link rel="stylesheet" href="{{ asset('css/game_result.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 
 <body>
     <div class="result-container">
         <h1 class="title">リザルト</h1>
+        <h1 class="title">クリアでランキングに記録されます</h1>
         <div class="result-box">
             <p class="score-info">{{ session ('correctAnswers') }}/{{ session ('totalQuestions') }}問　正解</p>
             <p class="hint-count">お手付き回数{{session('missCount')}}回</p>
@@ -45,11 +47,6 @@
             });
         }
     });
-    for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i); // キーを取得
-        let value = localStorage.getItem(key); // 値を取得
-        console.log(key + ': ' + value); // キーと値を出力
-    }
 </script>
 <script>
     document.getElementById('ranking_list').addEventListener('click', function(event) {

@@ -31,8 +31,6 @@ Route::post('/question_list', [FunctionController::class, 'question_list']);
 Route::get('/show_question_list', [FunctionController::class, 'show_question_list']);
 Route::post('/ranking', [FunctionController::class, 'ranking']);
 Route::get('/show_ranking', [FunctionController::class, 'show_ranking'])->name('show_ranking');
-Route::get('/progress_reset', [FunctionController::class, 'progress_reset'])->name('progress_reset');
-Route::get('/score_reset', [FunctionController::class, 'score_reset'])->name('score_reset');
 Route::get('/miss_question', [FunctionController::class, 'miss_question']);
 Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
 Route::get('/admin_select', [AdminController::class, 'admin_select'])->name('admin_select');

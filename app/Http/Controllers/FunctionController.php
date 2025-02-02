@@ -13,6 +13,7 @@ class FunctionController extends Controller
 {
     public function question_list(Request $request)
     {
+        session()->forget(['questions', 'user_data']);
         $userData = $request->input('user_data', []);
         $questionModes = [0 => 'java', 1 => 'python', 2 => 'php']; // 言語の名前
         $questionLevels = [0 => 'easy', 1 => 'normal', 2 => 'hard']; // 難易度の名前
@@ -45,6 +46,7 @@ class FunctionController extends Controller
     }
     public function ranking(request $request)
     {
+        session()->forget(['rankings', 'validScores']);
         $modes = [0 => 'java', 1 => 'python', 2 => 'php'];
         $levels = [0 => 'easy', 1 => 'normal', 2 => 'hard'];
 
@@ -132,53 +134,5 @@ class FunctionController extends Controller
     public function miss_question()
     {
         return view('user.miss_question');
-    }
-
-    public function progress_reset()
-    {
-        $userDirectory = getenv('APPDATA');
-        $appName = 'my_name';
-        $subDirectory = 'user_data';
-        $filename = 'user_data.json';
-
-        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
-        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
-
-        if (file_exists($filePath)) {
-            $userData = json_decode(file_get_contents($filePath), true);
-        } else {
-            $userData = [];
-        }
-
-        // 配列をリセット（中身を空にする）
-        $userData = [];
-
-        // 必要であれば、リセット後にその内容をファイルに保存することもできます
-        file_put_contents($filePath, json_encode($userData, JSON_PRETTY_PRINT));
-        return redirect('/question_list');
-    }
-
-    public function score_reset()
-    {
-        $userDirectory = getenv('APPDATA');
-        $appName = 'my_name';
-        $subDirectory = 'user_data';
-        $filename = 'score_data.json';
-
-        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
-        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
-
-        if (file_exists($filePath)) {
-            $userData = json_decode(file_get_contents($filePath), true);
-        } else {
-            $userData = [];
-        }
-
-        // 配列をリセット（中身を空にする）
-        $userData = [];
-
-        // 必要であれば、リセット後にその内容をファイルに保存することもできます
-        file_put_contents($filePath, json_encode($userData, JSON_PRETTY_PRINT));
-        return redirect('/ranking');
     }
 }

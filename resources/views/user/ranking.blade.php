@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{ asset('css/ranking.css') }}">
 @endsection
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="q-body">
     <h1 class="title">ランキング</h1>
 
@@ -297,7 +298,7 @@
         <a class="backbotton" href="{{ route('select_mode') }}" style="color:white;">≻戻る</a>
     </div>
     <div class="re">
-        <a class="reset position-reset" href="{{ route('score_reset') }}">スコアリセット</a>
+        <a class="reset position-reset" id="resetScore">スコアリセット</a>
     </div>
 
 </div>

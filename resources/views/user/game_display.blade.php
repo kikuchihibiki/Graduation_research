@@ -39,7 +39,7 @@
     <div id="phaser-example"></div>
     <script>
         var questionData = @json($question);
-        var timeLimitData = @json(1);
+        var timeLimitData = @json($TimeLimit);
         var modeData = @json($mode);
         var levelData = @json($level);
     </script>
