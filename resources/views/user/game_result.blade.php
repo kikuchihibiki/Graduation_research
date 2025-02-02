@@ -20,7 +20,7 @@
         <div class="button-container">
             <a href="{{ route('select_mode') }}">トップページへ</a>
             <a href="{{ route('commentary')}}">問題解説</a>
-            <a href="{{ route('ranking') }}">ランキング</a>
+            <a href="#" id="ranking_list">ランキング</a>
             @if(session('missflag'))
             @else
             <a href="{{ route('game_restart') }}">もう一度遊ぶ</a>
@@ -50,6 +50,45 @@
         let value = localStorage.getItem(key); // 値を取得
         console.log(key + ': ' + value); // キーと値を出力
     }
+</script>
+<script>
+    document.getElementById('ranking_list').addEventListener('click', function(event) {
+        event.preventDefault(); // デフォルトのリンク動作をキャンセル
+
+        const scores = JSON.parse(localStorage.getItem('quizScores')) || []; // スコアがない場合は空配列を設定
+        const csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
+
+        if (!csrfTokenElement) {
+            console.error('CSRF token not found');
+            return; // CSRFトークンが見つからない場合、処理を中止
+        }
+
+        const csrfToken = csrfTokenElement.getAttribute('content');
+
+        fetch('/ranking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({
+                    scores: scores
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // 成功した場合にランキングページにリダイレクト
+                window.location.href = '/show_ranking';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
 </script>
 
 </html>

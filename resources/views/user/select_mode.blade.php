@@ -7,7 +7,7 @@
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="top-right-links">
-    <a href="/question_list">問題一覧</a>
+    <a href="#" id="question_list">問題一覧</a>
     <a href="#" id="ranking_list">ランキング</a>
 </div>
 <h1>モード選択</h1>
@@ -27,10 +27,10 @@
 <button id="title_back_button" onclick="location.href='/'">タイトルに戻る</button>
 <script src="{{ asset('js/select_mode.js') }}"></script>
 <script>
-    document.getElementById('ranking_list').addEventListener('click', function(event) {
+    document.getElementById('question_list').addEventListener('click', function(event) {
         event.preventDefault(); // デフォルトのリンク動作をキャンセル
 
-        const scores = JSON.parse(localStorage.getItem('quizScores')) || []; // スコアがない場合は空配列を設定
+        const user_data = JSON.parse(localStorage.getItem('user_data')) || []; // スコアがない場合は空配列を設定
         const csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
 
         if (!csrfTokenElement) {
@@ -40,14 +40,14 @@
 
         const csrfToken = csrfTokenElement.getAttribute('content');
 
-        fetch('/ranking', {
+        fetch('/question_list', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({
-                    scores: scores
+                    user_data: user_data
                 })
             })
             .then(response => {
@@ -58,12 +58,17 @@
             })
             .then(data => {
                 // 成功した場合にランキングページにリダイレクト
-                window.location.href = '/show_ranking';
+                window.location.href = '/show_question_list';
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     });
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i); // キーを取得
+        let value = localStorage.getItem(key); // 値を取得
+        console.log(key + ': ' + value); // キーと値を出力
+    }
 </script>
 
 @endsection

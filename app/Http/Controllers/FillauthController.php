@@ -95,6 +95,7 @@ class FillauthController extends Controller
         ]));
         $quizData = [
             'newScore'  => $newScore,
+            'idJson' => $idJson,
         ];
         return response()->json($quizData);
     }
@@ -136,7 +137,10 @@ class FillauthController extends Controller
             'idJson' => $idJson,
             'questionData' => $questionData,
         ]));
-        return response()->json(['success' => true]);
+        $quizData = [
+            'idJson' => $idJson,
+        ];
+        return response()->json($quizData);
     }
     /**
      * Display the specified resource.

@@ -890,19 +890,36 @@ class EndScene extends Phaser.Scene {
                 }),
             })
 
-        .then((response)=>{
-            if(!response.ok){
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then((result) => {
-            if(result.success){
-                window.location.href = "/miss_result_show";
-            }else{
-                console.log('失敗');
-            }
-        })
+        .then(response => response.json())
+        .then(data => {
+            const idJson = data.idJson;
+            let progress_data = JSON.parse(localStorage.getItem('user_data')) || {};
+
+            // idJsonをループして、正解数と誤答数をカウント
+            idJson.forEach(idJsons => {
+                const questionId = idJsons.id;
+                const isCorrect = idJsons.answer;
+            
+                if (isCorrect === null) {
+                    return; // 解答がnullの場合はスキップ
+                }
+            
+                if (!progress_data[questionId]) {
+                    progress_data[questionId] = { '正解数': 0, '誤答数': 0 }; // 初めての質問IDの場合は初期化
+                }
+            
+                if (isCorrect === true) {
+                    progress_data[questionId]['正解数']++; // 正解数をインクリメント
+                } else if (isCorrect === false) {
+                    progress_data[questionId]['誤答数']++; // 誤答数をインクリメント
+                }
+            });
+
+            // 更新したデータをローカルストレージに保存
+            localStorage.setItem('user_data', JSON.stringify(progress_data, null, 2));
+            // 結果ページにリダイレクト
+            window.location.href = "/game_result_show";
+          })
         });
     }
 }

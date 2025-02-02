@@ -11,21 +11,9 @@ use GrahamCampbell\ResultType\Success;
 
 class FunctionController extends Controller
 {
-    public function question_list()
+    public function question_list(Request $request)
     {
-        $userDirectory = getenv('APPDATA');
-        $appName = 'my_name';
-        $subDirectory = 'user_data';
-        $filename = 'user_data.json';
-
-        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
-        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
-
-        if (file_exists($filePath)) {
-            $userData = json_decode(file_get_contents($filePath), true);
-        } else {
-            $userData = [];
-        }
+        $userData = $request->input('user_data', []);
         $questionModes = [0 => 'java', 1 => 'python', 2 => 'php']; // 言語の名前
         $questionLevels = [0 => 'easy', 1 => 'normal', 2 => 'hard']; // 難易度の名前
 
@@ -39,9 +27,20 @@ class FunctionController extends Controller
                     ->get();
             }
         }
-        return view('user.question_list', [
+        session(([
             'questions' => $questions,
             'userData' => $userData,
+        ]));
+        return response()->json(["success" => true]);
+    }
+
+    public function show_question_list()
+    {
+        $questions = session('questions');
+        $userData = session('userData');
+        return view('user.question_list', [
+            'questions' => $questions,
+            'userData' => $userData
         ]);
     }
     public function ranking(request $request)
