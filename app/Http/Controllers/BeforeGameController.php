@@ -62,6 +62,9 @@ class BeforeGameController extends Controller
 
     public function save_mode(Request $request)
     {
+        if (session()->has('missflag')) {
+            session()->forget('missflag');
+        }
         $mode = $request->input('mode');
         $request->session()->put('mode', $mode);
         if ($mode == 'miss_question') {
@@ -151,6 +154,7 @@ class BeforeGameController extends Controller
         $appName = 'my_name';
         $subDirectory = 'user_data';
         $filename = 'user_data.json';
+        session(['missflag' => true]);
 
         $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
         $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
