@@ -45,6 +45,11 @@
             });
         }
     });
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i); // キーを取得
+        let value = localStorage.getItem(key); // 値を取得
+        console.log(key + ': ' + value); // キーと値を出力
+    }
 </script>
 
 </html>

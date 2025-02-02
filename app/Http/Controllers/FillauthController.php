@@ -46,42 +46,6 @@ class FillauthController extends Controller
         $clearFlag = $request->input('clearFlag');
         $missCount = $request->input('missCount');
 
-        $userDirectory = getenv('APPDATA');
-        $appName = 'my_name';
-        $subDirectory = 'user_data';
-        $filename = 'score_data.json';
-
-        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
-        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
-
-        // ディレクトリを作成
-        if (!is_dir($directoryPath)) {
-            if (!mkdir($directoryPath, 0777, true)) {
-                return response()->json(['message' => 'ディレクトリの作成に失敗しました'], 500);
-            }
-        }
-
-        // JSONファイルを作成または既存のデータを読み取る
-        if (!file_exists($filePath)) {
-            // ファイルが存在しない場合、空の配列を初期化
-            $scoreData = [];
-            if (file_put_contents($filePath, json_encode($scoreData, JSON_PRETTY_PRINT)) === false) {
-                return response()->json(['message' => 'JSONファイルの作成に失敗しました'], 500);
-            }
-        } else {
-            // ファイルが存在する場合、内容を読み取る
-            $fileContents = file_get_contents($filePath);
-            $scoreData = json_decode($fileContents, true);
-
-            // JSONデータが不正な場合、空の配列を初期化
-            if ($scoreData === null && json_last_error() !== JSON_ERROR_NONE) {
-                $scoreData = [];
-                if (file_put_contents($filePath, json_encode($scoreData, JSON_PRETTY_PRINT)) === false) {
-                    return response()->json(['message' => '不正なJSONファイルです'], 500);
-                }
-            }
-        }
-
         // リクエストデータを受け取り、新しいスコアデータを作成
         $level = $request->input('level');
         $mode = $request->input('mode');
@@ -97,15 +61,7 @@ class FillauthController extends Controller
             's' => $resultScore,
             'd' => $date,
         ];
-        $scoreData[] = $newScore;
 
-        // JSONファイルに保存
-        if ($clearFlag) {
-            // スコアデータをJSONにエンコードしてファイルに書き込み
-            if (file_put_contents($filePath, json_encode($scoreData, JSON_PRETTY_PRINT)) === false) {
-                return response()->json(['message' => 'JSONファイルへの書き込みに失敗しました'], 500);
-            }
-        }
         $idJson = [];
         for ($i = 0; $i < count($idArry); $i++) {
             $idJson[] = [
@@ -135,8 +91,12 @@ class FillauthController extends Controller
             'questionData' => $questionData,
             'clearFlag' => $clearFlag,
             'missCount' => $missCount,
+            'newScore'  => $newScore
         ]));
-        return response()->json(['success' => true]);
+        $quizData = [
+            'newScore'  => $newScore,
+        ];
+        return response()->json($quizData);
     }
 
     public function miss_result(Request $request)

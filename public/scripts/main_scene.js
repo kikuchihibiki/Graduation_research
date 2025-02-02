@@ -875,20 +875,29 @@ class EndScene extends Phaser.Scene {
                     missCount: this.registry.get('newmissCount'),
                 }),
             })
-
-        .then((response)=>{
-            if(!response.ok){
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then((result) => {
-            if(result.success){
+            .then(response => response.json())
+            .then(data => {
+                // 受け取ったデータから newScore を取り出す
+                const newScore = data.newScore;
+            
+                // ローカルストレージに保存されているスコアデータを取得
+                let savedScores = JSON.parse(localStorage.getItem('quizScores')) || [];
+            
+                // newScoreをフラットな形式で保存
+                savedScores.push({
+                    l: newScore.l,  // レベル
+                    m: newScore.m,  // モード
+                    s: newScore.s,  // スコア
+                    d: newScore.d   // 日付
+                });
+            
+                // ローカルストレージに再保存
+                localStorage.setItem('quizScores', JSON.stringify(savedScores));
+            
+                // 結果ページにリダイレクト
                 window.location.href = "/game_result_show";
-            }else{
-                console.log('失敗');
-            }
-        })
+            })
+            
         });
     }
 }

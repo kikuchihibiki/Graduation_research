@@ -11,42 +11,8 @@ class BeforeGameController extends Controller
 {
     public function title_display()
     {
-        $userDirectory = getenv('APPDATA');
 
-        $appName = 'my_name';
-        $subDirectory = 'user_data';
-        $filename = 'user_data.json';
-
-        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
-        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
-
-        if (!is_dir($directoryPath)) {
-            if (!mkdir($directoryPath, 0777, true)) {
-                $message = "ディレクトリの作成に失敗しました";
-            }
-        }
-
-        if (!file_exists($filePath)) {
-            $emptyData = json_encode([]);
-            if (file_put_contents($filePath, $emptyData) === false) {
-                $message = "jsonファイルの作成に失敗しました";
-            }
-        } else {
-            $fileContents = file_get_contents($filePath);
-            $data = json_decode($fileContents, true);
-
-            if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
-                $emptyData = json_encode([]);
-                if (file_put_contents($filePath, $emptyData) === false) {
-                    $message = "不正なjsonファイルです";
-                }
-                $message = "jsonファイルを初期化しました";
-            } else {
-                $message = "内容を保持しています";
-            }
-        }
-
-        return view('user.title', ['massage' => $message]);
+        return view('user.title');
     }
     public function save_name(Request $request)
     {
