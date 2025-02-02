@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(phpquestionseeder::class);
+        $this->call(javaquestionseeder::class);
+        $this->call(pythonquestionseeder::class);
     }
 }

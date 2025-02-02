@@ -269,7 +269,7 @@ class phpquestionseeder extends Seeder
         DB::table('question')->insert($pram);
 
         $pram = [
-            'question' => '指定した変数がnullかどうか調べる関数は？ 〇〇_〇〇〇',
+            'question' => '指定した変数がnullかどうか調べる関数は？ 〇〇_〇〇〇〇',
             'answer' => 'is_null',
             'explanation' => '',
             'mode' => '2',

@@ -89,7 +89,7 @@
     <tbody>
 
       @foreach ($questions['java']['easy'] as $index => $question)
-      <tr class="java easy">
+      <tr class="java easy sort">
         <td>{{ $index + 1 }}</td>
         <td class="question highlight-row ">{{ $question->question }}</td>
         <td class="answer-cell">
@@ -311,7 +311,14 @@
   function searchTable() {
     const searchField = document.getElementById('searchField').value;
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
-    const rows = document.querySelectorAll("tbody tr:not(.hidden)"); // 非表示でない行だけを選択
+    const rows = document.querySelectorAll("tbody tr"); // すべての行を取得
+
+    if (searchInput.trim() === "") {
+      // 検索ボックスが空ならすべての行を表示
+      rows.forEach(row => row.classList.remove("hidden"));
+      return;
+    }
+
     let matchFound = false;
 
     rows.forEach(row => {
@@ -330,6 +337,7 @@
       alert('該当する項目が見つかりませんでした。');
     }
   }
+
 
 
   document.addEventListener("DOMContentLoaded", () => {
