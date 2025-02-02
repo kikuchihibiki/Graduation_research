@@ -21,3 +21,49 @@ document.addEventListener('DOMContentLoaded', function () {
         if (target) target.style.display = 'block'; // 対象のみ表示
     }
 });
+
+document.getElementById('resetScore').addEventListener('click', function() {
+    // localStorage から quizScores を削除
+    localStorage.removeItem('quizScores');
+
+    // 必要なら sessionStorage も削除
+    sessionStorage.removeItem('quizScores');
+});
+
+document.getElementById('resetScore').addEventListener('click', function(event) {
+    event.preventDefault(); // デフォルトのリンク動作をキャンセル
+
+    const scores = JSON.parse(localStorage.getItem('quizScores')) || []; // スコアがない場合は空配列を設定
+    const csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
+
+    if (!csrfTokenElement) {
+        console.error('CSRF token not found');
+        return; // CSRFトークンが見つからない場合、処理を中止
+    }
+
+    const csrfToken = csrfTokenElement.getAttribute('content');
+
+    fetch('/ranking', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({
+                scores: scores
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // 成功した場合にランキングページにリダイレクト
+            window.location.href = '/show_ranking';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});

@@ -9,7 +9,6 @@ class StartScene extends Phaser.Scene {
         this.load.audio('enter','/assets/audio/enter.mp3')
     }
     create() {
-        console.log(`Phaser version: ${Phaser.VERSION}`);
         const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
         const answerInputRectWidth = D_WIDTH;  // 幅を調整
@@ -19,7 +18,6 @@ class StartScene extends Phaser.Scene {
             const music = this.sound.add('bgm', { loop: true });
             music.play();
         }
-        console.log(questionData)
         // 背景矩形を追加（薄い黒）
         this.add.graphics()
             .fillStyle(0x000000, 0.7) // 色: 黒、透明度: 0.5
@@ -37,8 +35,6 @@ class StartScene extends Phaser.Scene {
         this.registry.set('questionData',questionData);
         this.registry.set('level',levelData);
         this.registry.set('clearFlag',true);
-        console.log(this.registry.get('mode'));
-        console.log(this.registry.get('level'));
         
         this.newScore = 0;
         this.newmissCount = 0;
@@ -48,7 +44,6 @@ class StartScene extends Phaser.Scene {
         this.registry.set('questionId',questionData.id);
         const id = questionData.map(obj => obj.id);
         this.registry.set('questionId',id);
-        console.log(this.registry.get('questionId'))
         this.input.keyboard.on('keydown-ENTER', () => {
             const enterSound = this.sound.add('enter'); // 効果音のオーディオをロード済みと仮定
             enterSound.play({
@@ -77,7 +72,6 @@ class CharacterScene extends Phaser.Scene {
 
         const characterIndex = this.progress <= 1 ? 1 : this.progress <= 3 ? 2 : 3;
         const characterPath = `assets/${this.registry.get('mode')}/character${this.registry.get('level')}.png`;
-        console.log(characterPath);
         this.registry.set('characterPath', characterPath);
         this.load.image('character', characterPath);
 
@@ -136,7 +130,6 @@ class CharacterScene extends Phaser.Scene {
                     ease: 'Expo.In',
                     onComplete: () => {
                         this.time.delayedCall(1000, () => {
-                        console.log("Starting QuizScene...");
                         this.scene.start('QuizScene', {
                             questionIndex: this.questionIndex,
                             totalQuestions: this.totalQuestions,
@@ -202,7 +195,6 @@ class ProgressBar {
     update() {
         // 現在の進捗データを元に更新
         const progressData = this.scene.registry.get('progressData');
-        console.log(progressData);
         for (let i = 0; i < this.steps.length; i++) {
             const step = this.steps[i];
             if (progressData[i] === true) {
@@ -241,7 +233,6 @@ class QuizScene extends Phaser.Scene {
     }
 
     create(data) {
-        console.log(`after${this.registry.get('characterPath')}`);
         const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
 
@@ -255,7 +246,6 @@ class QuizScene extends Phaser.Scene {
             const scale = Math.max(scaleX, scaleY); // 幅または高さに合わせて拡大
             this.qCharacter.setScale(scale);
         }
-        console.log(data.progress);
         this.questionIndex = data.questionIndex;
         this.totalQuestions = data.totalQuestions;
         this.correctAnswers = data.correctAnswers;
@@ -285,7 +275,6 @@ class QuizScene extends Phaser.Scene {
         const formattedQuestionText = this.questionText.includes('〇')
     ? this.questionText.replace(/〇+/g, match => `\n${match}`) // 連続する「〇」を改行後にまとめて表示
     : this.questionText; 
-        console.log(formattedQuestionText);
 
     // 背景矩形を追加
     this.add.graphics()
@@ -377,9 +366,7 @@ class QuizScene extends Phaser.Scene {
         }).setOrigin(0.5).setAlpha(0);
         this.time.delayedCall(500, () => {
             this.startTime = this.time.now; 
-            console.log('タイマー開始！');
         });
-        console.log('計測開始: ', this.startTime);
         this.timerEvent = this.time.addEvent({
             delay: 1000,
             callback: this.updateTimer,
@@ -451,7 +438,6 @@ class QuizScene extends Phaser.Scene {
     updateTimer() {
         this.timeLimit--;
         this.blinking = false;
-        console.log('残り時間: ', this.timeLimit);
         // timeLimitが5以下の場合はカウントダウンテキストを表示
         if (this.timeLimit <= 5) {
             this.timerText.setText(`${this.timeLimit}`);
@@ -539,15 +525,11 @@ class QuizScene extends Phaser.Scene {
             this.correctAnswers++;
             progressData[this.questionIndex] = true; 
             const elapsedTime = (this.time.now - this.startTime) / 1000;
-            console.log('経過時間: ' + elapsedTime + '秒');
             if (this.timerEvent) this.timerEvent.remove();
             const timePenalty = (elapsedTime / this.registry.get('timeLimit')) * 100;
-            console.log(this.registry.get('timeLimit'));
-            console.log('時間ペナルティ: ' + timePenalty);
             const missPenalty = this.missCount * 10;
             // スコア計算
             this.score = Math.floor(200 - (timePenalty - missPenalty));
-            console.log('スコア: ' + this.score);
             this.score = this.score < 0 ? 0 : this.score;
             this.input.keyboard.removeListener('keydown');
 
@@ -650,7 +632,6 @@ class AnswerResultScene extends Phaser.Scene {
         background.setDisplaySize(D_WIDTH, D_HEIGHT);
 
         this.lives = data.lives;
-        console.log(this.lives);
         this.progress = data.progress;
         this.missCount = data.missCount;
         this.score = data.score;
@@ -716,7 +697,6 @@ class AnswerResultScene extends Phaser.Scene {
         scoreBg.fillRect(80 - 8, 100 - 8, scoretextWidth + 30, scoretextHeight + 16);
         
         this.scoreresultText = this.add.text(80, 130., `+${this.score}`, { fontSize: '33px', fill: '#ff0000' ,fontFamily: 'k8x12L',}).setPadding(6);
-        console.log(data.questionIndex);
         // 2秒後に次の問題に進むか終了
         this.time.delayedCall(3000, () => {
             if (this.lives !== 0 && (data.questionIndex + 1 < data.totalQuestions || this.lives === 0)) {
@@ -758,7 +738,6 @@ class EndScene extends Phaser.Scene {
     create(data) {
         if (this.sound.get('bgm')) {
             this.sound.stopByKey('bgm');
-            console.log("BGM stopped successfully.");
         }
         
         const background = this.add.image(D_WIDTH / 2, D_HEIGHT / 2, 'background');
@@ -875,20 +854,53 @@ class EndScene extends Phaser.Scene {
                     missCount: this.registry.get('newmissCount'),
                 }),
             })
+            .then(response => response.json())
+            .then(data => {
+                if(data.clearFlag){
+                    // 受け取ったデータから newScore を取り出す
+                const newScore = data.newScore;
+                // ローカルストレージに保存されているスコアデータを取得
+                let savedScores = JSON.parse(localStorage.getItem('quizScores')) || [];
+                // newScoreをフラットな形式で保存
+                savedScores.push({
+                    l: newScore.l,  // レベル
+                    m: newScore.m,  // モード
+                    s: newScore.s,  // スコア
+                    d: newScore.d   // 日付
+                });
+                // ローカルストレージに再保存
+                localStorage.setItem('quizScores', JSON.stringify(savedScores));
+                }
 
-        .then((response)=>{
-            if(!response.ok){
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then((result) => {
-            if(result.success){
+                const idJson = data.idJson;
+                let progress_data = JSON.parse(localStorage.getItem('user_data')) || {};
+
+                // idJsonをループして、正解数と誤答数をカウント
+                idJson.forEach(idJsons => {
+                    const questionId = idJsons.id;
+                    const isCorrect = idJsons.answer;
+                
+                    if (isCorrect === null) {
+                        return; // 解答がnullの場合はスキップ
+                    }
+                
+                    if (!progress_data[questionId]) {
+                        progress_data[questionId] = { '正解数': 0, '誤答数': 0 }; // 初めての質問IDの場合は初期化
+                    }
+                
+                    if (isCorrect === true) {
+                        progress_data[questionId]['正解数']++; // 正解数をインクリメント
+                    } else if (isCorrect === false) {
+                        progress_data[questionId]['誤答数']++; // 誤答数をインクリメント
+                    }
+                });
+
+                // 更新したデータをローカルストレージに保存
+                localStorage.setItem('user_data', JSON.stringify(progress_data, null, 2));
+                // 結果ページにリダイレクト
                 window.location.href = "/game_result_show";
-            }else{
-                console.log('失敗');
-            }
-        })
+            })
+            
         });
     }
 }

@@ -26,10 +26,11 @@ Route::get('/select_mode', [BeforeGameController::class, 'select_mode'])->name('
 Route::post('/select_level', [BeforeGameController::class, 'save_mode'])->name('save_mode');
 Route::post('/start_game', [BeforeGameController::class, 'start_game'])->name('start_game');
 Route::post('/wrong_answer', [BeforeGameController::class, 'wrong_answer'])->name('wrong_answer');
-Route::get('/question_list', [FunctionController::class, 'question_list']);
-Route::get('/ranking', [FunctionController::class, 'ranking'])->name('ranking');
-Route::get('/progress_reset', [FunctionController::class, 'progress_reset'])->name('progress_reset');
-Route::get('/score_reset', [FunctionController::class, 'score_reset'])->name('score_reset');
+Route::get('/show_wrong_answer', [BeforeGameController::class, 'show_wrong_answer'])->name('show_wrong_answer');
+Route::post('/question_list', [FunctionController::class, 'question_list']);
+Route::get('/show_question_list', [FunctionController::class, 'show_question_list']);
+Route::post('/ranking', [FunctionController::class, 'ranking']);
+Route::get('/show_ranking', [FunctionController::class, 'show_ranking'])->name('show_ranking');
 Route::get('/miss_question', [FunctionController::class, 'miss_question']);
 Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
 Route::get('/admin_select', [AdminController::class, 'admin_select'])->name('admin_select');

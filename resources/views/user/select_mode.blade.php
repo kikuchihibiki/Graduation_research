@@ -5,9 +5,10 @@
 <link rel="stylesheet" href="{{ asset('css/select_mode.css') }}">
 @endsection
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="top-right-links">
-    <a href="/question_list">問題一覧</a>
-    <a href="/ranking">ランキング</a>
+    <a href="#" id="question_list">問題一覧</a>
+    <a href="#" id="ranking_list">ランキング</a>
 </div>
 <h1>モード選択</h1>
 <form action="{{ route('save_mode') }}" method="post" id="mode_form">

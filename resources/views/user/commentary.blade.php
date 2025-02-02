@@ -32,7 +32,7 @@
     <!-- 下部メニュー -->
     <div class="bottom-menu">
         <a href="{{ route('back_commentary') }}" class="menu-btn">リザルト画面へ戻る</a>
-        <a href="{{ route('start_game') }}" class="menu-btn">もう一度プレイ</a>
+        <a href="{{ route('game_restart') }}" class="menu-btn">もう一度プレイ</a>
     </div>
 </body>
 

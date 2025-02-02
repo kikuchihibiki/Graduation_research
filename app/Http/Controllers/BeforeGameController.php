@@ -11,42 +11,8 @@ class BeforeGameController extends Controller
 {
     public function title_display()
     {
-        $userDirectory = getenv('APPDATA');
 
-        $appName = 'my_name';
-        $subDirectory = 'user_data';
-        $filename = 'user_data.json';
-
-        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
-        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
-
-        if (!is_dir($directoryPath)) {
-            if (!mkdir($directoryPath, 0777, true)) {
-                $message = "ディレクトリの作成に失敗しました";
-            }
-        }
-
-        if (!file_exists($filePath)) {
-            $emptyData = json_encode([]);
-            if (file_put_contents($filePath, $emptyData) === false) {
-                $message = "jsonファイルの作成に失敗しました";
-            }
-        } else {
-            $fileContents = file_get_contents($filePath);
-            $data = json_decode($fileContents, true);
-
-            if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
-                $emptyData = json_encode([]);
-                if (file_put_contents($filePath, $emptyData) === false) {
-                    $message = "不正なjsonファイルです";
-                }
-                $message = "jsonファイルを初期化しました";
-            } else {
-                $message = "内容を保持しています";
-            }
-        }
-
-        return view('user.title', ['massage' => $message]);
+        return view('user.title');
     }
     public function save_name(Request $request)
     {
@@ -150,23 +116,9 @@ class BeforeGameController extends Controller
         $mode = $request->input('mode');
         $modeNumber = ['java' => 0, 'python' => 1, 'php' => 2][$mode] ?? null;
         $flag = true;
-        $userDirectory = getenv('APPDATA');
-        $appName = 'my_name';
-        $subDirectory = 'user_data';
-        $filename = 'user_data.json';
         session(['missflag' => true]);
-
-        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
-        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
-
-        // 2. JSONファイルを読み込む
-        if (!file_exists($filePath)) {
-            return response()->json(['error' => 'File not found'], 404);
-        }
-
-        $jsonData = file_get_contents($filePath);
-        $userData = json_decode($jsonData, true);
-
+        $userDataJson = $request->input('user_data', '{}');
+        $userData = json_decode($userDataJson, true);
         // 3. 誤答数が1以上の問題IDを抽出
         $incorrectQuestions = [];
         foreach ($userData as $id => $stats) {
@@ -259,43 +211,6 @@ class BeforeGameController extends Controller
 
     public function game_result_show()
     {
-        $userDirectory = getenv('APPDATA');
-
-        $appName = 'my_name';
-        $subDirectory = 'user_data';
-        $filename = 'user_data.json';
-
-        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
-        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
-        $idJson = session('idJson');
-
-        $data = [];
-        if (file_exists($filePath)) {
-            $data = json_decode(file_get_contents($filePath), true);
-        }
-
-        foreach ($idJson as $idJsons) {
-            $questionId = $idJsons['id'];
-            $isCorrect = $idJsons['answer'];
-
-            if (is_null($isCorrect)) {
-                continue;
-            }
-
-            if (!isset($data[$questionId])) {
-                $data[$questionId] = ['正解数' => 0, '誤答数' => 0];
-            }
-
-            if ($isCorrect === true) {
-                $data[$questionId]['正解数']++;
-            } elseif ($isCorrect === false) {
-                $data[$questionId]['誤答数']++;
-            }
-        }
-
-        file_put_contents($filePath, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
-
-
         $name = session()->get('name');
         $mode = session()->get('mode');
         $level = session()->get('level');
@@ -338,41 +253,7 @@ class BeforeGameController extends Controller
 
     public function miss_result_show()
     {
-        $userDirectory = getenv('APPDATA');
 
-        $appName = 'my_name';
-        $subDirectory = 'user_data';
-        $filename = 'user_data.json';
-
-        $directoryPath = $userDirectory . DIRECTORY_SEPARATOR . $appName . DIRECTORY_SEPARATOR . $subDirectory;
-        $filePath = $directoryPath . DIRECTORY_SEPARATOR . $filename;
-        $idJson = session('idJson');
-
-        $data = [];
-        if (file_exists($filePath)) {
-            $data = json_decode(file_get_contents($filePath), true);
-        }
-
-        foreach ($idJson as $idJsons) {
-            $questionId = $idJsons['id'];
-            $isCorrect = $idJsons['answer'];
-
-            if (is_null($isCorrect)) {
-                continue;
-            }
-
-            if (!isset($data[$questionId])) {
-                $data[$questionId] = ['正解数' => 0, '誤答数' => 0];
-            }
-
-            if ($isCorrect === true) {
-                $data[$questionId]['正解数']++;
-            } elseif ($isCorrect === false) {
-                $data[$questionId]['誤答数']++;
-            }
-        }
-
-        file_put_contents($filePath, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
         return view('user.game_result');
     }
 

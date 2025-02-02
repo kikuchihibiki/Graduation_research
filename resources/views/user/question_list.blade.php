@@ -6,11 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>問題一覧</title>
   <link rel="stylesheet" href="{{ asset('css/question_list.blade.css') }}">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
   <h1>問題一覧</h1>
-  <a class="reset position-reset" href="{{ route('progress_reset') }}">進捗リセット</a>
+  <a class="reset position-reset" id="question_list">進捗リセット</a>
 
   <div class="button-container">
     <form id="settingBox">
@@ -426,5 +427,51 @@
         modal.style.display = "none"; // モーダルを非表示
       }
     });
+  });
+
+  document.getElementById('question_list').addEventListener('click', function(event) {
+    event.preventDefault(); // デフォルトのリンク動作をキャンセル
+
+    const user_data = JSON.parse(localStorage.getItem('user_data')) || []; // スコアがない場合は空配列を設定
+    const csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
+
+    if (!csrfTokenElement) {
+      console.error('CSRF token not found');
+      return; // CSRFトークンが見つからない場合、処理を中止
+    }
+
+    const csrfToken = csrfTokenElement.getAttribute('content');
+
+    fetch('/question_list', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({
+          user_data: user_data
+        })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // 成功した場合にランキングページにリダイレクト
+        window.location.href = '/show_question_list';
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
+
+  document.getElementById('question_list').addEventListener('click', function() {
+    // localStorage から quizScores を削除
+    localStorage.removeItem('user_data');
+
+    // 必要なら sessionStorage も削除
+    sessionStorage.removeItem('user_data');
   });
 </script>
