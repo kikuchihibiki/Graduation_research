@@ -65,7 +65,7 @@ class FunctionController extends Controller
             }
         }
 
-
+        dd($rankings);
         // ファイルパスの設定
         $scores = $request->input('scores', []);
 
